@@ -23,9 +23,9 @@ TODO: Write usage instructions here
 
 ## Compatibility
 
-As a baseline `usmu` will pull in Slim for layouts and Redcarpet for content written in Markdown. However, we use the
+As a baseline `usmu` will pull in Slim for layouts and Redcarpet for content written in Markdown. However we use the
 Tilt API to render all layouts and content, therefore you should be able to use anything supported by Tilt including
-Sass, Less, Textile and [many others][tilt-support] you just need to ensure you have the correct gems installed.
+Sass, Less, Textile and [many others][tilt-support], you just need to ensure you have the correct gems installed.
 
 If you want to further [configure the way your template's are processed][template-options] then you can specify 
 configurations for each file extension. Just add it to your `usmu.yml`:
