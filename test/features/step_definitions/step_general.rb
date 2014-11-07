@@ -1,6 +1,6 @@
 
 Given(/^I have a site at "([^"]*)"$/) do |location|
-  @site = Writer.new(location)
+  @site = Usmu.new(location)
 end
 
 When(/^I generate the site$/) do
