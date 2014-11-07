@@ -45,5 +45,6 @@ slim:
 
   [gh-contrib]: https://github.com/usmu/usmu/graphs/contributors
   [gh-issues]: https://github.com/usmu/usmu/issues
+  [license]: https://github.com/usmu/usmu/blob/master/LICENSE.md
   [tilt-support]: https://github.com/rtomayko/tilt/blob/master/README.md
   [template-options]: https://github.com/rtomayko/tilt/blob/master/docs/TEMPLATES.md
