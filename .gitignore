@@ -12,3 +12,6 @@
 *.o
 *.a
 mkmf.log
+
+# Generated test site
+/test/site/site
