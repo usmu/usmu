@@ -3,4 +3,9 @@
 source: content
 destination: site
 
-title: Test website
+default meta:
+  title: Test website
+  layout: html
+
+slim:
+  :pretty: true
