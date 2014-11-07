@@ -1,0 +1,3 @@
+--color
+-I test/spec
+--require spec_helper
