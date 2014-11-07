@@ -19,7 +19,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'slim', '~> 2.1'
   spec.add_dependency 'tilt', '~> 2.0'
-  spec.add_dependency 'redcarpet', '~> 3.2'
+  # For now yard requires redcarpet < 3.2
+  # See: https://github.com/lsegal/yard/issues/812
+  spec.add_dependency 'redcarpet', '~> 3.1.2'
 
   spec.add_development_dependency 'bundler', '~> 1.6'
   spec.add_development_dependency 'rake', '~> 10.0'

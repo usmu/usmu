@@ -1,6 +1,6 @@
 # usmu
 
-**Source:** https://github.com/usmu/usmu  
+**Source:** [https://github.com/usmu/usmu](https://github.com/usmu/usmu)  
 **Author:** Matthew Scharley  
 **Contributors:** [See contributors on GitHub][gh-contrib]  
 **Bugs/Support:** [Github Issues][gh-issues]  
