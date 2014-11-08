@@ -15,4 +15,4 @@ desc 'Run all test scripts'
 task :test => [:spec, :features]
 
 desc 'Run CI test suite'
-task :ci => [:test]
+task :ci => [:spec]
