@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   # For now yard requires redcarpet < 3.2
   # See: https://github.com/lsegal/yard/issues/812
   spec.add_dependency 'redcarpet', '~> 3.1.2'
+  spec.add_dependency 'deep_merge', '~> 1.0'
   spec.add_dependency 'trollop', '~> 2.0'
   spec.add_dependency 'highline', '~> 1.6'
 
