@@ -1,4 +1,4 @@
-# usmu
+# usmu [![Build Status](https://travis-ci.org/usmu/usmu.svg?branch=master)](https://travis-ci.org/usmu/usmu)
 
 **Source:** [https://github.com/usmu/usmu](https://github.com/usmu/usmu)  
 **Author:** Matthew Scharley  
