@@ -1,4 +1,5 @@
 language: ruby
+script: rake ci
 rvm:
   - 2.0
   - 2.1
@@ -7,8 +8,25 @@ rvm:
   - jruby-head
   - rbx-2
   - rbx-head
-script: rake ci
+gemfile:
+  - Gemfile
+  - Gemfile-jruby
 matrix:
+  exclude:
+    - rvm: 2.0
+      gemfile: Gemfile-jruby
+    - rvm: 2.1
+      gemfile: Gemfile-jruby
+    - rvm: ruby-head
+      gemfile: Gemfile-jruby
+    - rvm: jruby-19mode
+      gemfile: Gemfile
+    - rvm: jruby-head
+      gemfile: Gemfile
+    - rvm: rbx-2
+      gemfile: Gemfile-jruby
+    - rvm: rbx-head
+      gemfile: Gemfile-jruby
   allow_failures:
     - rvm: jruby-19mode
     - rvm: jruby-head
