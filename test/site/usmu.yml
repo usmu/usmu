@@ -2,6 +2,7 @@
 
 source: content
 destination: site
+title: Testing website
 
 default meta:
   title: Test website

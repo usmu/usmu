@@ -1,6 +1,12 @@
 
 module Usmu
-  class Page
+  class Page < Layout
 
+
+    protected
+
+    def content_path
+      @configuration.source_path
+    end
   end
 end
