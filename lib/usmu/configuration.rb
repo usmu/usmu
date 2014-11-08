@@ -13,12 +13,16 @@ module Usmu
       self.new(hash, config_path)
     end
 
-    def source
-      get_path @config['source']
+    def source_path
+      get_path @config['source'] || 'src'
     end
 
-    def destination
-      get_path @config['destination']
+    def destination_path
+      get_path @config['destination'] || 'site'
+    end
+
+    def layouts_path
+      get_path @config['layouts'] || 'layouts'
     end
 
     def [](index)

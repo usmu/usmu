@@ -1,6 +1,6 @@
-require 'usmu/version'
-require 'usmu/configuration'
-
-module Usmu
-  # Your code goes here...
-end
+%W{
+  usmu/version
+  usmu/configuration
+  usmu/layout
+  usmu/page
+}.each { |f| require f }

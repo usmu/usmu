@@ -10,7 +10,7 @@ When(/^I generate the site$/) do
 end
 
 Then(/^the destination directory should match "([^"]*)"$/) do |test_folder|
-  run = %W{diff -qr #{@site.configuration.destination} #{test_folder}}
+  run = %W{diff -qr #{@site.configuration.destination_path} #{test_folder}}
   Open3.popen2e(*run) do |i, o, t|
     output = run.join(' ') + "\n" + o.read
     fail output if t.value != 0
