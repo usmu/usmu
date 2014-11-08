@@ -1,12 +1,18 @@
+require 'usmu/ui/console'
+require 'open3'
 
 Given(/^I have a site at "([^"]*)"$/) do |location|
-  @site = Usmu.new(location)
+  @site = Usmu::Ui::Console.new([location])
 end
 
 When(/^I generate the site$/) do
-  @site.generate
+  @site.execute
 end
 
-Then(/^the "([^"]*)" file should match "([^"]*)"$/) do |original, test|
-
+Then(/^the destination directory should match "([^"]*)"$/) do |test_folder|
+  run = %W{diff -qr #{@site.configuration.destination} #{test_folder}}
+  Open3.popen2e(*run) do |i, o, t|
+    output = run.join(' ') + "\n" + o.read
+    fail output if t.value != 0
+  end
 end
