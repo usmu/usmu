@@ -7,3 +7,7 @@ rvm:
   - jruby-19mode
   - jruby-head
 script: rake ci
+matrix:
+  allow_failures:
+    - rvm: jruby-19mode
+    - rvm: jruby-head
