@@ -28,7 +28,5 @@ matrix:
     - rvm: rbx-head
       gemfile: Gemfile-jruby
   allow_failures:
-    - rvm: jruby-19mode
-    - rvm: jruby-head
     - rvm: rbx-2
     - rvm: rbx-head
