@@ -1,3 +1,5 @@
 --color
 -I test/spec
 --require spec_helper
+--format progress
+--no-profile
