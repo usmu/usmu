@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'slim', '~> 2.1'
   spec.add_dependency 'tilt', '~> 2.0'
-  spec.add_dependency 'maruku'
+  spec.add_dependency 'kramdown', '~> 1.5'
   spec.add_dependency 'deep_merge', '~> 1.0'
   spec.add_dependency 'trollop', '~> 2.0'
   spec.add_dependency 'highline', '~> 1.6'
