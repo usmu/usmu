@@ -38,14 +38,14 @@ module Usmu
       end
       @metadata = metadata
 
-      @parent = unless metadata['layout'].nil?
+      @parent = if metadata['layout'].nil?
+                  nil
+                else
                   if metadata['layout'].class.name == 'String'
                     Usmu::Layout.new(configuration, metadata['layout'])
                   else
                     metadata['layout']
                   end
-                else
-                  nil
                 end
     end
 
