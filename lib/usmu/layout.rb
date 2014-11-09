@@ -55,8 +55,10 @@ module Usmu
     end
 
     def render(variables)
-      content = ::Tilt.default_mapping[@type].
-          new("#{@name}.#{@type}", 1, @configuration[@type]) { @content }.
+      template_class = ::Tilt.default_mapping[@type]
+      provider = Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first[1].split('/').last
+
+      content = template_class.new("#{@name}.#{@type}", 1, @configuration[provider]) { @content }.
           render(nil, get_variables(variables))
       has_cr = content.index("\r")
       content += (has_cr ? "\r\n" : "\n") if content[-1] != "\n"

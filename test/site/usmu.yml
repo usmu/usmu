@@ -10,3 +10,6 @@ default meta:
 
 slim:
   :pretty: true
+
+kramdown:
+  :auto_ids: false
