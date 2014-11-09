@@ -3,6 +3,9 @@ require 'deep_merge'
 
 module Usmu
   class Layout
+    attr_reader :name
+    attr_reader :type
+
     def initialize(configuration, name, type = nil, content = nil, metadata = nil)
       @configuration = configuration
       @name = name

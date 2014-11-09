@@ -6,6 +6,18 @@ RSpec.shared_examples 'a layout' do
   let(:meta_with_title) { {'title' => 'title'} }
   let(:content) { "title \#{title}\nbody\n  #container\n    | \#{{content}}" }
 
+  it 'and has a name' do
+    layout = Usmu::Layout.new(empty_configuration, 'body', 'slim', content, meta_with_title)
+    expect(layout.respond_to? :name).to eq(true)
+    expect(layout.name).to eq('body')
+  end
+
+  it 'and has a type' do
+    layout = Usmu::Layout.new(empty_configuration, 'body', 'slim', content, meta_with_title)
+    expect(layout.respond_to? :type).to eq(true)
+    expect(layout.type).to eq('slim')
+  end
+
   it 'and has metadata' do
     layout = Usmu::Layout.new(empty_configuration, 'body', 'slim', content, meta_with_title)
     expect(layout.respond_to? :metadata).to eq(true)
