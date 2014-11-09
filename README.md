@@ -28,7 +28,7 @@ Tilt API to render all layouts and content, therefore you should be able to use 
 Sass, Less, Textile and [many others][tilt-support], you just need to ensure you have the correct gems installed.
 
 If you want to further [configure the way your template's are processed][template-options] then you can specify 
-configurations for each file extension. Just add it to your `usmu.yml`:
+configurations for each template engine. Just add it to your `usmu.yml`:
 
 ```yaml
 slim:
