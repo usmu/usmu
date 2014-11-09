@@ -32,15 +32,7 @@ module Usmu
       end
       @metadata = metadata
 
-      @parent = if metadata['layout'].nil?
-                  nil
-                else
-                  if metadata['layout'].class.name == 'String'
-                    Layout.find_layout(configuration, metadata['layout'])
-                  else
-                    metadata['layout']
-                  end
-                end
+      @parent = Layout.find_layout(configuration, metadata['layout'])
     end
 
     def metadata
@@ -52,10 +44,7 @@ module Usmu
     end
 
     def render(variables = {})
-      template_class = ::Tilt.default_mapping[@type]
-      provider = Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first[1].split('/').last
-
-      content = template_class.new("#{@name}.#{@type}", 1, @configuration[provider]) { @content }.
+      content = template_class.new("#{@name}.#{@type}", 1, @configuration[provider_name]) { @content }.
           render(nil, get_variables(variables))
       has_cr = content.index("\r")
       content += (has_cr ? "\r\n" : "\n") if content[-1] != "\n"
@@ -67,15 +56,31 @@ module Usmu
     end
 
     def self.find_layout(configuration, name)
-      Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
-        filename = File.basename(f)
-        if filename != "#{name}.meta.yml"
-          return new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
+      if name.nil?
+        nil
+      else
+        if name.class.name == 'String'
+          Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
+            filename = File.basename(f)
+            if filename != "#{name}.meta.yml"
+              return new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
+            end
+          end
+        else
+          name
         end
       end
     end
 
     protected
+
+    def template_class
+      @template_class ||= ::Tilt.default_mapping[@type]
+    end
+
+    def provider_name
+      Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first[1].split('/').last
+    end
 
     def content_path
       @configuration.layouts_path
