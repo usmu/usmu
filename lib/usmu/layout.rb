@@ -1,29 +1,23 @@
 require 'tilt'
 require 'deep_merge'
+require 'usmu/static_file'
 
 module Usmu
-  class Layout
-    attr_reader :name
+  class Layout < StaticFile
     attr_reader :type
 
     def initialize(configuration, name, type = nil, content = nil, metadata = nil)
-      @configuration = configuration
-      @name = name
-      path = File.join("#{content_path}", "#{name}")
+      super(configuration, name)
 
       if type.nil?
-        Dir["#{path}.*"].each do |f|
-          filename = File.basename(f)
-          if filename != "#{name}.meta.yml"
-            type = filename[(name.length + 1)..filename.length]
-          end
-        end
-
-        raise "Unable to find a find a #{self.class.name.split('::').last.downcase} named #{name} in #{content_path}." if type.nil?
+        type = name.split('.').last
+        raise "Templates of type '#{type}' aren't recognised by Tilt." unless ::Tilt.default_mapping[type]
       end
       @type = type
+      path = File.join("#{content_path}", "#{name[0, name.length - type.length - 1]}")
 
       if content.nil?
+        p "#{path}.#{type}"
         content = File.read("#{path}.#{type}")
       end
       @content = content
@@ -42,7 +36,7 @@ module Usmu
                   nil
                 else
                   if metadata['layout'].class.name == 'String'
-                    Usmu::Layout.new(configuration, metadata['layout'])
+                    Layout.find_layout(configuration, metadata['layout'])
                   else
                     metadata['layout']
                   end
@@ -57,7 +51,7 @@ module Usmu
       end
     end
 
-    def render(variables)
+    def render(variables = {})
       template_class = ::Tilt.default_mapping[@type]
       provider = Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first[1].split('/').last
 
@@ -69,6 +63,15 @@ module Usmu
         content
       else
         @parent.render({'content' => content})
+      end
+    end
+
+    def self.find_layout(configuration, name)
+      Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
+        filename = File.basename(f)
+        if filename != "#{name}.meta.yml"
+          return new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
+        end
       end
     end
 
