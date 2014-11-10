@@ -13,5 +13,9 @@ module Usmu
     def render(variables = {})
       @content || File.read(File.join(@configuration.source_path, @name))
     end
+
+    def output_filename
+      @name
+    end
   end
 end

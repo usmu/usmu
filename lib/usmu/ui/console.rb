@@ -12,7 +12,7 @@ module Usmu
       end
 
       def execute
-
+        Usmu::SiteGenerator.new(@configuration).generate
       end
     end
   end

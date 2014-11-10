@@ -68,6 +68,11 @@ RSpec.shared_examples 'a layout with metadata' do
       EOF
     end
   end
+
+  it 'and it has a html output filename' do
+    layout = described_class.new(empty_configuration, 'index.md', 'md', content, {})
+    expect(layout.output_filename).to eq('index.html')
+  end
 end
 
 RSpec.shared_examples 'an embeddable layout' do

@@ -11,7 +11,12 @@ Cucumber::Rake::Task.new(:features) do |t|
 end
 
 desc 'Run all test scripts'
-task :test => [:spec, :features]
+task :test => [:clean, :spec, :features]
 
 desc 'Run CI test suite'
-task :ci => [:spec, :features]
+task :ci => [:test]
+
+desc 'Clean up after tests'
+task :clean do
+  rm_r 'test/site/site' if File.exist? 'test/site/site'
+end

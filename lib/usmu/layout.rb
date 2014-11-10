@@ -11,13 +11,14 @@ module Usmu
 
       if type.nil?
         type = name.split('.').last
-        raise "Templates of type '#{type}' aren't recognised by Tilt." unless ::Tilt.default_mapping[type]
+        unless ::Tilt.default_mapping[type]
+          raise "Templates of type '#{type}' aren't currently supported by Tilt. Do you have the required gem installed?"
+        end
       end
       @type = type
       path = File.join("#{content_path}", "#{name[0, name.length - type.length - 1]}")
 
       if content.nil?
-        p "#{path}.#{type}"
         content = File.read("#{path}.#{type}")
       end
       @content = content
@@ -55,6 +56,14 @@ module Usmu
       end
     end
 
+    def output_extension
+      'html'
+    end
+
+    def output_filename
+      @name[0..@name.rindex('.')] + output_extension
+    end
+
     def self.find_layout(configuration, name)
       if name.nil?
         nil
@@ -70,6 +79,11 @@ module Usmu
           name
         end
       end
+    end
+
+    def self.is_valid_file?(folder_type, name)
+      type = name.split('.').last
+      ::Tilt.default_mapping[type] ? true : false
     end
 
     protected
