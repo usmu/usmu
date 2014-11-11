@@ -1,4 +1,3 @@
-require 'rspec'
 require 'usmu/site_generator'
 
 RSpec.describe Usmu::SiteGenerator do

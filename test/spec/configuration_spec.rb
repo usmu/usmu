@@ -1,5 +1,3 @@
-require 'rspec'
-require 'usmu/configuration'
 
 RSpec.describe Usmu::Configuration do
   context 'should prepend configuration folder' do

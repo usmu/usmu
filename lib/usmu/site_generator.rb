@@ -5,6 +5,7 @@ module Usmu
   class SiteGenerator
     # @param [Usmu::Configuration] configuration The configuration to use for generating the website
     def initialize(configuration)
+      @log = Logging.logger[self]
       @configuration = configuration
     end
 
@@ -44,7 +45,11 @@ module Usmu
     #
     # @return [void]
     def generate
+      @log.info("Source: #{@configuration.source_path}")
+      @log.info("Destination: #{@configuration.destination_path}")
+
       renderables.each do |page|
+        @log.success("creating #{page.output_filename}...")
         file = File.join(@configuration.destination_path, page.output_filename)
         directory = File.dirname(file)
 

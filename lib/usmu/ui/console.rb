@@ -11,8 +11,19 @@ module Usmu
 
       # @param [Array<String>] args Command line arguments. Typically ARGV should be passed here.
       def initialize(args)
+        @log = Logging.logger[self]
+        @log.info("Usmu v#{Usmu::VERSION}")
+        @log.info('')
         @args = args
-        @configuration = Usmu::Configuration.from_file(File.join(args[0] || '.', 'usmu.yml'))
+
+        config_file = File.join(@args[0] || '.', 'usmu.yml')
+        if File.readable? config_file
+          @configuration = Usmu::Configuration.from_file(config_file)
+          @log.info("Configuration: #{config_file}")
+        else
+          @log.fatal("Unable to find configuration file at #{config_file}")
+          exit 1
+        end
       end
 
       # This will run the command as setup in `#initialize`
@@ -20,6 +31,11 @@ module Usmu
       # @return [void]
       def execute
         Usmu::SiteGenerator.new(@configuration).generate
+      rescue StandardError => e
+        @log.error('There was an unforeseen error, please use --trace or --log for more details.')
+        @log.error(e.message)
+        Usmu.disable_stdout_logging
+        e.backtrace.each {|l| @log.error(l)}
       end
     end
   end

@@ -1,6 +1,4 @@
-require 'rspec'
 require 'support/shared_layout'
-require 'usmu/page'
 
 RSpec.describe Usmu::Page do
   it_behaves_like 'an embeddable layout'

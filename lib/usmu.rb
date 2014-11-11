@@ -1,3 +1,48 @@
+require 'logging'
+
+Logging.init :debug, :info, :success, :warn, :error, :fatal
+Logging.color_scheme(
+    'console',
+    :lines => {
+      :success  => :green,
+      :warn  => :yellow,
+      :error => :red,
+      :fatal => :red,
+    },
+)
+
+# This module contains all the code for the Usmu site generator
+module Usmu
+  @log = Logging.logger['Usmu']
+  @log.level = :info
+  @log.additive = false
+  @log.appenders = Logging.appenders.stdout(
+      'usmu-stdout',
+      :layout => Logging.layouts.pattern(
+          :pattern => '%m\n',
+          :color_scheme => 'console',
+      ),
+  )
+
+  # Adds a file-based logger
+  #
+  # @param [String] filename Filename of the file to log to.
+  # @return [void]
+  def self.add_file_logger(filename)
+    @log.add_appenders(Logging.appenders.file(filename, :filename => filename, :level => :all))
+    nil
+  end
+
+  # Disables stdout logging across the application. This is used to hide stack traces but still log them to the file
+  # log if it is in use.
+  #
+  # @return [void]
+  def self.disable_stdout_logging
+    @log.remove_appenders('usmu-stdout')
+    nil
+  end
+end
+
 %W{
   usmu/version
   usmu/configuration
@@ -6,7 +51,3 @@
   usmu/page
   usmu/site_generator
 }.each { |f| require f }
-
-# This module contains all the code for the Usmu site generator
-module Usmu
-end

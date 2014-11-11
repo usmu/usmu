@@ -4,6 +4,8 @@ module Usmu
   # This class is used to represent a configuration file. This file should be a YAML file and called `usmu.yml`
   # by default.
   class Configuration
+    @log = Logging.logger[self]
+
     # @!attribute [r] config_file
     # @return [String] the name of the file used to load the configuration.
     attr_reader :config_file
@@ -15,6 +17,7 @@ module Usmu
     #
     # @return [Usmu::Configuration]
     def self.from_file(filename)
+      @log.debug("Loading configuration from #{filename}")
       from_hash(YAML.load_file(filename), filename)
     end
 
@@ -63,6 +66,7 @@ module Usmu
     # @see Usmu::Configuration.from_file
     # @see Usmu::Configuration.from_hash
     def initialize(hash, config_path)
+      @log = Logging.logger[self]
       @config = hash
       @config_file = config_path
       @config_dir = config_path ? File.dirname(config_path) : nil

@@ -3,6 +3,8 @@ module Usmu
   # Represents a static file which should be transferred to the destination unchanged. This also acts as the base
   # class for all layouts and page types. The basic interface defined here is used to process all types of files.
   class StaticFile
+    @log = Logging.logger[self]
+
     # @!attribute [r] name
     # @return [String] the name of the file in the source directory
     attr_reader :name
