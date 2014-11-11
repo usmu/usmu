@@ -20,7 +20,8 @@ module Usmu
       if type.nil?
         type = name.split('.').last
         unless ::Tilt.default_mapping[type]
-          raise "Templates of type '#{type}' aren't currently supported by Tilt. Do you have the required gem installed?"
+          raise "Templates of type '#{type}' aren't currently supported by Tilt. " +
+                'Do you have the required gem installed?'
         end
       end
       @type = type
