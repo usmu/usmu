@@ -58,6 +58,7 @@ module Usmu
         end
 
         File.write file, page.render
+        FileUtils.touch file, :mtime => File.stat(page.input_path).mtime
       end
       nil
     end

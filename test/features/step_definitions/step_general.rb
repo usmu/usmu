@@ -16,3 +16,9 @@ Then(/^the destination directory should match "([^"]*)"$/) do |test_folder|
     fail output if t.value != 0
   end
 end
+
+Then(/^the modification time for the input file "([^"]*)" should match the output file "([^"]*)"$/) do |input, output|
+  input_mtime = File.stat(File.join(@site.configuration.source_path, input)).mtime
+  output_mtime = File.stat(File.join(@site.configuration.destination_path, output)).mtime
+  expect(input_mtime).to eq(output_mtime)
+end

@@ -27,7 +27,13 @@ module Usmu
     # @param variables [Hash] Variables to be used in the template.
     # @return [String] The rendered file
     def render(variables = {})
-      @content || File.read(File.join(@configuration.source_path, @name))
+      @content || File.read(input_path)
+    end
+
+    # @!attribute [r] input_path
+    # @return [String] the full path to the file in the source directory
+    def input_path
+      File.join(@configuration.source_path, @name)
     end
 
     # @!attribute [r] output_filename

@@ -11,6 +11,13 @@ RSpec.describe Usmu::StaticFile do
     expect(rendered).to eq(File.read('test/expected-site/robots.txt'))
   end
 
+  it 'has an input path' do
+    configuration = Usmu::Configuration.from_hash({})
+    page = Usmu::StaticFile.new(configuration, 'robots.txt', 'txt', '', {})
+    expect(page.respond_to? :input_path).to eq(true)
+    expect(page.input_path).to eq('src/robots.txt')
+  end
+
   it 'has an output filename that matches input' do
     file = Usmu::StaticFile.new(configuration, 'robots.txt')
     expect(file.output_filename).to eq('robots.txt')

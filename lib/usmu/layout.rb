@@ -75,6 +75,12 @@ module Usmu
       end
     end
 
+    # @!attribute [r] input_path
+    # @return [String] the full path to the file in the source directory
+    def input_path
+      File.join(content_path, @name)
+    end
+
     # @!attribute [r] output_extension
     # @return [String] the extension to use with the output file.
     def output_extension

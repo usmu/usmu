@@ -22,4 +22,11 @@ RSpec.describe Usmu::Layout do
 </html>
     EOF
   end
+
+  it 'has an input path' do
+    configuration = Usmu::Configuration.from_hash({})
+    layout = Usmu::Layout.new(configuration, 'html.slim', 'slim', "head\nbody", {})
+    expect(layout.respond_to? :input_path).to eq(true)
+    expect(layout.input_path).to eq('layouts/html.slim')
+  end
 end
