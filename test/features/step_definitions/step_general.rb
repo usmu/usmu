@@ -2,7 +2,7 @@ require 'usmu/ui/console'
 require 'open3'
 
 Given(/^I have a site at "([^"]*)"$/) do |location|
-  @site = Usmu::Ui::Console.new([location])
+  @site = Usmu::Ui::Console.new(['--config', "#{location}/usmu.yml"])
 end
 
 When(/^I generate the site$/) do
