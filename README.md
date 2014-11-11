@@ -35,14 +35,6 @@ slim:
   :pretty: true
 ```
 
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
   [gh-contrib]: https://github.com/usmu/usmu/graphs/contributors
   [gh-issues]: https://github.com/usmu/usmu/issues
   [license]: https://github.com/usmu/usmu/blob/master/LICENSE.md
