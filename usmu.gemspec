@@ -33,4 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'cucumber', '~> 1.3'
   spec.add_development_dependency 'yard', '~> 0.8'
   spec.add_development_dependency 'cane', '~> 2.6'
+  spec.add_development_dependency 'simplecov', '~> 0.9'
 end

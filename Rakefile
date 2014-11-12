@@ -26,8 +26,13 @@ task :ci => [:test]
 
 desc 'Clean up after tests'
 task :clean do
-  rm_r 'test/site/site' if File.exist? 'test/site/site'
-  current_gems.each {|f| rm f }
+  [
+      'coverage',
+      'test/site/site',
+      current_gems,
+  ].flatten.each do |f|
+    rm_r f if File.exist? f
+  end
 end
 
 namespace :gem do
