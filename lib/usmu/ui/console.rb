@@ -22,13 +22,15 @@ module Usmu
           banner ''
 
           opt :config, 'Specify a configuration file.', :type => :string, :default => 'usmu.yml'
+          opt :verbose, 'Output more information to the console.'
           opt :log, 'Log to a file', :type => :string
           opt :trace, 'Show full exception traces'
         end
 
-        if @opts[:log]
-          Usmu.add_file_logger @opts[:log]
-        end
+        Logging.appenders['usmu-stdout'].level = :all if @opts[:verbose]
+        Usmu.add_file_logger @opts[:log] if @opts[:log]
+
+        Usmu.load_plugins
 
         @log.info("Usmu v#{Usmu::VERSION}")
         @log.info('')
