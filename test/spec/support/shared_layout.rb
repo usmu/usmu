@@ -89,6 +89,24 @@ RSpec.shared_examples 'an embeddable layout' do
     EOF
   end
 
+  it 'and respects templates from default metadata' do
+    parent = described_class.new(empty_configuration, 'html.slim', 'slim', wrapper, {})
+    default_layout_configuration = Usmu::Configuration.from_hash({'default meta' => {'layout' => parent}})
+    layout = described_class.new(default_layout_configuration, 'body.slim', 'slim', content, {'title' => 'test title'})
+    expect(layout.render({'content' => 'test'})).to eq(<<-EOF)
+<html><title>test title</title><body><div id="container">test</div></body>
+</html>
+    EOF
+  end
+
+  it 'and uses a template of "none" to explicitly disable the parent template' do
+    default_layout_configuration = Usmu::Configuration.from_hash({'default meta' => {'layout' => 'html'}})
+    layout = described_class.new(default_layout_configuration, 'body.slim', 'slim', content, {'layout' => 'none', 'title' => 'test title'})
+    expect(layout.render({'content' => 'test'})).to eq(<<-EOF)
+<title>test title</title><body><div id="container">test</div></body>
+    EOF
+  end
+
   context 'and prioritises' do
     it 'metadata over parent metadata' do
       parent = described_class.new(empty_configuration, 'html.slim', 'slim', wrapper, {'title' => 'title'})

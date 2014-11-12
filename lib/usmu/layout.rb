@@ -42,7 +42,8 @@ module Usmu
       end
       @metadata = metadata
 
-      @parent = Layout.find_layout(configuration, metadata['layout'])
+      @parent = nil
+      @parent = Layout.find_layout(configuration, self.metadata['layout'])
     end
 
     # @!attribute [r] metadata
@@ -53,9 +54,9 @@ module Usmu
     # This will include any metadata from parent templates and default metadata
     def metadata
       if @parent.nil?
-        @metadata.deep_merge(@configuration['default meta'] || {})
+        (@configuration['default meta'] || {}).dup.deep_merge!(@metadata)
       else
-        @metadata.deep_merge(@parent.metadata)
+        @parent.metadata.deep_merge!(@metadata)
       end
     end
 
@@ -106,13 +107,16 @@ module Usmu
     #   that name is nilable and can also be passed in as an Usmu::Layout already for testing purposes.
     # @return [Usmu::Layout]
     def self.find_layout(configuration, name)
-      if name.class.name == 'String'
+      if name === 'none'
+        nil
+      elsif name.class.name == 'String'
         Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
           filename = File.basename(f)
           if filename != "#{name}.meta.yml"
             return new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
           end
         end
+        nil
       else
         name
       end
@@ -166,7 +170,7 @@ module Usmu
     #
     # @return [Hash]
     def get_variables(variables)
-      variables.deep_merge(metadata).deep_merge({site: @configuration})
+      {site: @configuration}.deep_merge!(metadata).deep_merge!(variables)
     end
   end
 end
