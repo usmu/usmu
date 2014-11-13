@@ -35,6 +35,68 @@ RSpec.shared_examples 'a layout' do
 <title>title</title><body><div id="container">test</div></body>
     EOF
   end
+
+  context 'and when it\'s type' do
+    it 'is erb then it\'s output type should be taken from it\'s filename' do
+      layout = described_class.new(empty_configuration, 'body.txt.erb', 'erb', '', {})
+      expect(layout.output_filename).to eq('body.txt')
+    end
+
+    it 'is rhtml then it\'s output type should be taken from it\'s filename' do
+      layout = described_class.new(empty_configuration, 'body.txt.rhtml', 'rhtml', '', {})
+      expect(layout.output_filename).to eq('body.txt')
+    end
+
+    it 'is erubis then it\'s output type should be taken from it\'s filename' do
+      layout = described_class.new(empty_configuration, 'body.txt.erubis', 'erubis', '', {})
+      expect(layout.output_filename).to eq('body.txt')
+    end
+
+    it 'is markdown then it\'s output type should be html' do
+      layout = described_class.new(empty_configuration, 'body.markdown', 'markdown', '', {})
+      expect(layout.output_filename).to eq('body.html')
+    end
+
+    it 'is mkd then it\'s output type should be html' do
+      layout = described_class.new(empty_configuration, 'body.mkd', 'mkd', '', {})
+      expect(layout.output_filename).to eq('body.html')
+    end
+
+    it 'is md then it\'s output type should be html' do
+      layout = described_class.new(empty_configuration, 'body.md', 'md', '', {})
+      expect(layout.output_filename).to eq('body.html')
+    end
+
+    it 'is coffee then it\'s output type should be js' do
+      layout = described_class.new(empty_configuration, 'body.coffee', 'coffee', '', {})
+      expect(layout.output_filename).to eq('body.js')
+    end
+
+    it 'is less then it\'s output type should be css' do
+      layout = described_class.new(empty_configuration, 'body.less', 'less', '', {})
+      expect(layout.output_filename).to eq('body.css')
+    end
+
+    it 'is liquid then it\'s output type should be taken from it\'s filename' do
+      layout = described_class.new(empty_configuration, 'body.txt.liquid', 'liquid', '', {})
+      expect(layout.output_filename).to eq('body.txt')
+    end
+
+    it 'is sass then it\'s output type should be scss' do
+      layout = described_class.new(empty_configuration, 'body.sass', 'sass', '', {})
+      expect(layout.output_filename).to eq('body.css')
+    end
+
+    it 'is scss then it\'s output type should be css' do
+      layout = described_class.new(empty_configuration, 'body.scss', 'scss', '', {})
+      expect(layout.output_filename).to eq('body.css')
+    end
+
+    it 'is slim then it\'s output type should be html' do
+      layout = described_class.new(empty_configuration, 'body.slim', 'slim', '', {})
+      expect(layout.output_filename).to eq('body.html')
+    end
+  end
 end
 
 RSpec.shared_examples 'a layout with metadata' do

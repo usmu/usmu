@@ -85,7 +85,16 @@ module Usmu
     # @!attribute [r] output_extension
     # @return [String] the extension to use with the output file.
     def output_extension
-      'html'
+      case @type
+        when 'erb', 'rhtml', 'erubis', 'liquid'
+          nil
+        when 'coffee'
+          'js'
+        when 'less', 'sass', 'scss'
+          'css'
+        else
+          'html'
+      end
     end
 
     # @!attribute [r] output_filename
@@ -93,7 +102,11 @@ module Usmu
     #
     # Returns the filename to use for the output directory with any modifications to the input filename required.
     def output_filename
-      @name[0..@name.rindex('.')] + output_extension
+      if output_extension
+        @name[0..@name.rindex('.')] + output_extension
+      else
+        @name[0..@name.rindex('.') - 1]
+      end
     end
 
     # Static method to create a layout for a given configuration by it's name if it exists. This differs from
