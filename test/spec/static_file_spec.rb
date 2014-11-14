@@ -1,4 +1,5 @@
 require 'support/shared_layout'
+require 'usmu/static_file'
 
 RSpec.describe Usmu::StaticFile do
   it_behaves_like 'a renderable file'

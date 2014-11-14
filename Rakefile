@@ -27,7 +27,7 @@ task :ci => [:test]
 desc 'Clean up after tests'
 task :clean do
   [
-      'coverage',
+      'test/coverage',
       'test/site/site',
       current_gems,
   ].flatten.each do |f|

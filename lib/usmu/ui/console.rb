@@ -23,11 +23,13 @@ module Usmu
 
           opt :config, 'Specify a configuration file.', :type => :string, :default => 'usmu.yml'
           opt :verbose, 'Output more information to the console.'
+          opt :quiet, 'Silence output to the console unless something goes wrong'
           opt :log, 'Log to a file', :type => :string
           opt :trace, 'Show full exception traces'
         end
 
         Logging.appenders['usmu-stdout'].level = :all if @opts[:verbose]
+        Logging.appenders['usmu-stdout'].level = :error if @opts[:quiet]
         Usmu.add_file_logger @opts[:log] if @opts[:log]
 
         Usmu.load_plugins
