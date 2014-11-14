@@ -26,6 +26,22 @@ module Usmu
       ),
   )
 
+  # Enable logging of all events to the console
+  #
+  # @return [void]
+  def self.verbose_logging
+    Logging.appenders['usmu-stdout'].level = :all
+    nil
+  end
+
+  # Disable all log messages other than errors. Warnings will be suppressed.
+  #
+  # @return [void]
+  def self.quiet_logging
+    Logging.appenders['usmu-stdout'].level = :error
+    nil
+  end
+
   # Adds a file-based logger
   #
   # @param [String] filename Filename of the file to log to.
@@ -35,6 +51,9 @@ module Usmu
     nil
   end
 
+  # :nocov:
+  # This is primarily a testing helper
+
   # Disables stdout logging across the application. This is used to hide stack traces but still log them to the file
   # log if it is in use.
   #
@@ -43,6 +62,11 @@ module Usmu
     @log.remove_appenders('usmu-stdout')
     nil
   end
+  # :nocov:
+
+  # :nocov:
+  # The plugin system can't be tested directly easily since it auto-detects gems, and we have plugins in the core
+  # repositories that are tested as part of the full system to find bugs.
 
   # Loads all plugins that are available as gems. This is determined by looking at the gem's name. Anything prefixed
   # with the string 'usmu-' will be recognised as a plugin. This will load the gem according to the RubyGems
@@ -68,6 +92,7 @@ module Usmu
   def self.plugins
     @plugins ||= []
   end
+  # :nocov:
 end
 
 %W{

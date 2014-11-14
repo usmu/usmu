@@ -37,6 +37,10 @@ RSpec.shared_examples 'a layout' do
   end
 
   context 'and when it\'s type' do
+    it 'is invalid' do
+      expect {described_class.new(empty_configuration, 'body.foo', nil, '', {})}.to raise_error()
+    end
+
     it 'is erb then it\'s output type should be taken from it\'s filename' do
       layout = described_class.new(empty_configuration, 'body.txt.erb', 'erb', '', {})
       expect(layout.output_filename).to eq('body.txt')

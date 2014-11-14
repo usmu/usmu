@@ -8,6 +8,9 @@ module Usmu
       # @!attribute [r] configuration
       # @return [Usmu::Configuration] the configuration for the site we will generate.
       attr_reader :configuration
+      # @!attribute [r] opts
+      # @return [Hash] the command line options as passed by the user
+      attr_reader :opts
 
       # @param [Array<String>] args Command line arguments. Typically ARGV should be passed here.
       def initialize(args)
@@ -28,9 +31,14 @@ module Usmu
           opt :trace, 'Show full exception traces'
         end
 
-        Logging.appenders['usmu-stdout'].level = :all if @opts[:verbose]
-        Logging.appenders['usmu-stdout'].level = :error if @opts[:quiet]
-        Usmu.add_file_logger @opts[:log] if @opts[:log]
+        if @opts[:verbose]
+          Usmu.verbose_logging
+        elsif @opts[:quiet]
+          Usmu.quiet_logging
+        end
+        if @opts[:log]
+          Usmu.add_file_logger @opts[:log]
+        end
 
         Usmu.load_plugins
 
@@ -42,7 +50,7 @@ module Usmu
           @log.info("Configuration: #{@opts[:config]}")
         else
           @log.fatal("Unable to find configuration file at #{@opts[:config]}")
-          exit 1
+          raise
         end
       end
 
@@ -56,6 +64,7 @@ module Usmu
         @log.error(e.message)
         Usmu.disable_stdout_logging unless @opts[:trace]
         e.backtrace.each {|l| @log.error(l)}
+        raise
       end
     end
   end
