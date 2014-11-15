@@ -11,6 +11,9 @@ module Usmu
       # @!attribute [r] opts
       # @return [Hash] the command line options as passed by the user
       attr_reader :opts
+      # @!attribute [r] site_generator
+      # @return [Usmu::SiteGenerator]
+      attr_reader :site_generator
 
       # @param [Array<String>] args Command line arguments. Typically ARGV should be passed here.
       def initialize(args)
@@ -52,13 +55,15 @@ module Usmu
           @log.fatal("Unable to find configuration file at #{@opts[:config]}")
           raise
         end
+
+        @site_generator = Usmu::SiteGenerator.new(@configuration)
       end
 
       # This will run the command as setup in `#initialize`
       #
       # @return [void]
       def execute
-        Usmu::SiteGenerator.new(@configuration).generate
+        @site_generator.generate
       rescue StandardError => e
         @log.error('There was an unforeseen error, please use --trace or --log for more details.')
         @log.error(e.message)
