@@ -20,7 +20,7 @@ RSpec.shared_examples 'a layout' do
   include_examples 'a renderable file'
 
   let(:title_configuration) { Usmu::Configuration.from_hash({'default meta' => {'title' => 'title'}}) }
-  let(:meta_with_title) { {'title' => 'title'} }
+  let(:meta_with_title) { {'title' => 'meta title'} }
   let(:content) { "title \#{title}\nbody\n  #container\n    | \#{{content}}" }
 
   it 'and has a type' do
@@ -127,10 +127,10 @@ RSpec.shared_examples 'a layout with metadata' do
       EOF
     end
 
-    it 'variables over default metadata' do
-      layout = described_class.new(empty_configuration, 'body.slim', 'slim', content, {})
-      expect(layout.render({'content' => 'test', 'title' => 'overridden title'})).to eq(<<-EOF)
-<title>overridden title</title><body><div id="container">test</div></body>
+    it 'metadata over default metadata' do
+      layout = described_class.new(title_configuration, 'body.slim', 'slim', content, meta_with_title)
+      expect(layout.render({'content' => 'test'})).to eq(<<-EOF)
+<title>meta title</title><body><div id="container">test</div></body>
       EOF
     end
   end

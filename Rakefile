@@ -9,7 +9,7 @@ def current_gems
 end
 
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = 'test/spec/**/*_spec.rb'
+  t.pattern = 'test/spec'
 end
 
 desc 'Run all test scripts'

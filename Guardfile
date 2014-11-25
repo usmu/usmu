@@ -4,6 +4,7 @@
 guard :rspec, cmd: 'rspec', spec_paths: ['test/spec'] do
   watch(%r{^test/spec/.+_spec\.rb$})
   watch(%r{^lib/usmu/(.+)\.rb$})     { |m| "test/spec/#{m[1]}_spec.rb" }
+  watch(%r{^test/spec/support})      { 'test/spec' }
   watch('test/spec/spec_helper.rb')  { 'test/spec' }
 
   # Turnip features and steps
