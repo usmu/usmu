@@ -1,3 +1,4 @@
+require 'usmu/layout'
 
 module Usmu
   # Represents a page in the source directory of the website.

@@ -1,3 +1,4 @@
+require 'usmu/configuration'
 
 module Usmu
   # Represents a static file which should be transferred to the destination unchanged. This also acts as the base

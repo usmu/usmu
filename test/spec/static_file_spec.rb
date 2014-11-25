@@ -24,4 +24,3 @@ RSpec.describe Usmu::StaticFile do
     expect(file.output_filename).to eq('robots.txt')
   end
 end
-

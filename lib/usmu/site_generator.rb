@@ -1,4 +1,7 @@
 require 'fileutils'
+require 'usmu/configuration'
+require 'usmu/page'
+require 'usmu/static_file'
 
 module Usmu
   # This is the class that brings everything together to generate a new website.
