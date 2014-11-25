@@ -2,8 +2,6 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rspec/core/rake_task'
-require 'cucumber'
-require 'cucumber/rake/task'
 require 'usmu/version'
 
 def current_gems
@@ -14,12 +12,8 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'test/spec/**/*_spec.rb'
 end
 
-Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = 'test/features'
-end
-
 desc 'Run all test scripts'
-task :test => [:clean, :spec, :features]
+task :test => [:clean, :spec]
 
 desc 'Run CI test suite'
 task :ci => [:test]
