@@ -88,3 +88,6 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
+
+# Load turnip step definitions
+Dir['test/spec/**/*_steps.rb'].each {|f| require f[10..f.length] }
