@@ -9,7 +9,7 @@ module Usmu
     # @!attribute [r] config_file
     # @return [String] the name of the file used to load the configuration.
     attr_reader :config_file
-    # @!attribute [r] config_file
+    # @!attribute [r] config_dir
     # @return [String] the folder that the configuration was loaded from.
     attr_reader :config_dir
 
