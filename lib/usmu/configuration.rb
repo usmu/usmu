@@ -34,6 +34,12 @@ module Usmu
       get_path @config['source'] || 'src'
     end
 
+    # @!attribute [r] source_files
+    # @return [Array<String>] a list of renderable files in the source folder
+    def source_files
+      get_files source_path
+    end
+
     # @!attribute [r] destination_path
     # @return [String] the full path to the destination folder
     def destination_path
@@ -44,6 +50,12 @@ module Usmu
     # @return [String] the full path to the layouts folder
     def layouts_path
       get_path @config['layouts'] || 'layouts'
+    end
+
+    # @!attribute [r] layouts_files
+    # @return [Array<String>] a list of renderable files in the layouts folder
+    def layouts_files
+      get_files layouts_path
     end
 
     # An index accessor to directly access the configuration file. It should be noted that `['source']` and
@@ -82,6 +94,28 @@ module Usmu
       else
         File.join(@config_dir, path)
       end
+    end
+
+    # Helper to determine if a filename is excluded according to the exclude configuration parameter.
+    #
+    # @return [Boolean]
+    def excluded?(filename)
+      (@config['exclude'] || []).each do |f|
+        f += '**/*' if f[-1] == '/'
+        return true if File.fnmatch(f, filename, File::FNM_EXTGLOB | File::FNM_PATHNAME)
+      end
+      false
+    end
+
+    # Helper function to search a directory recursively and return a list of files that are renderable.
+    #
+    # @param [String] directory the directory to search
+    # @param [Boolean] layout is this directory a layouts_path
+    # @return [Array<Usmu::Layout>, Array<Usmu::StaticFile>] Either an array of Layouts or StaticFiles in the directory
+    def get_files(directory)
+      Dir["#{directory}/**/*"].select {|f| !f.match(/\.meta.yml$/) }.map do |f|
+        f[(directory.length + 1)..f.length]
+      end.select {|f| not excluded? f}
     end
   end
 end

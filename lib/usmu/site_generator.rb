@@ -15,7 +15,7 @@ module Usmu
     # @!attribute [r] layouts
     # @return [Array<Usmu::Layout>] a list of layouts available in this website.
     def layouts
-      get_renderables @configuration.layouts_path, true
+      @configuration.layouts_files.map {|l| Usmu::Layout.new(@configuration, l) }
     end
 
     # @!attribute [r] renderables
@@ -28,7 +28,13 @@ module Usmu
     # The only guarantee made for individual files is that they will conform to the interface defined by
     # Usmu::StaticFile and thus be renderable, however most files will be one of the subclasses of that class.
     def renderables
-      get_renderables @configuration.source_path, false
+      @configuration.source_files.map do |filename|
+        if Usmu::Layout.is_valid_file? 'source', filename
+          Usmu::Page.new(@configuration, filename)
+        else
+          Usmu::StaticFile.new(@configuration, filename)
+        end
+      end
     end
 
     # @!attribute [r] pages
@@ -64,28 +70,6 @@ module Usmu
         FileUtils.touch file, :mtime => File.stat(page.input_path).mtime
       end
       nil
-    end
-
-    private
-
-    # Helper function to search a directory recursively and return a list of files that are renderable.
-    #
-    # @param [String] directory the directory to search
-    # @param [Boolean] layout is this directory a layouts_path
-    # @return [Array<Usmu::Layout>, Array<Usmu::StaticFile>] Either an array of Layouts or StaticFiles in the directory
-    def get_renderables(directory, layout)
-      Dir["#{directory}/**/*"].select {|f| !f.match(/\.meta.yml$/) }.map do |f|
-        filename = f[(directory.length + 1)..f.length]
-        if layout
-          Usmu::Layout.new(@configuration, filename)
-        else
-          if Usmu::Layout.is_valid_file? 'source', filename
-            Usmu::Page.new(@configuration, filename)
-          else
-            Usmu::StaticFile.new(@configuration, filename)
-          end
-        end
-      end
     end
   end
 end

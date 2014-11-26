@@ -26,6 +26,5 @@ RSpec.describe Usmu::SiteGenerator do
 
   it 'should be able to generate a site' do
     expect(generator.respond_to? :generate).to eq(true)
-    # Further testing is exercised at the system integration level in the cukes.
   end
 end
