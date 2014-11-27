@@ -91,6 +91,12 @@ RSpec.describe Usmu::Configuration do
       expect(@configuration.source_files).to eq(%w(index.md test/foo/foo.md))
     end
 
+    it 'and * ignores folders without a trailing /' do
+      @configuration = Usmu::Configuration.from_hash({'exclude' => ['*']})
+      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo.md src/test.md))
+      expect(@configuration.source_files).to eq(%w(test/foo.md))
+    end
+
     it 'and honor **' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['**/foo.md']})
       allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
