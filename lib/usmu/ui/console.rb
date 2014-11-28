@@ -43,7 +43,7 @@ module Usmu
           Usmu.add_file_logger @opts[:log]
         end
 
-        Usmu.load_plugins
+        Usmu.plugins.load_plugins
 
         @log.info("Usmu v#{Usmu::VERSION}")
         @log.info('')

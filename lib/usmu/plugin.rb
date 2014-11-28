@@ -1,0 +1,51 @@
+
+module Usmu
+  class Plugin
+    def initialize
+      @log = Logging.logger['Usmu::Plugin']
+    end
+
+    # Loads all plugins that are available as gems. This is determined by looking at the gem's name. Anything prefixed
+    # with the string 'usmu-' will be recognised as a plugin. This will load the gem according to the RubyGems
+    # recommendations for naming schemes. A gem named `usmu-s3_uploader` will be loaded by requiring the path
+    # `'usmu/s3_uploader'` and then then the class `Usmu::S3Uploader` will be instantiated as the plugins interface.
+    #
+    # @return [void]
+    def load_plugins
+      loaded = []
+      plugins.push Usmu::Plugin::Core.new
+      Gem::Specification.find_all { |s| s.name =~ /^usmu-/ }.each do |spec|
+        load_path = spec.name.gsub('-', '/')
+        require load_path
+
+        if !loaded.include? load_path
+          loaded << load_path
+          klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
+          @log.debug("Loading plugin #{klass} from '#{load_path}'")
+          plugins.push Object.const_get(klass).new
+        end
+      end
+    end
+
+    # @!attribute [r] plugins
+    # @return [Array] a list of all plugins discovered and loaded.
+    def plugins
+      @plugins ||= []
+    end
+
+    # Call all plugins and collate any data returned. nil can be returned explicitly to say this plugin has nothing to
+    # return.
+    # @param [Symbol] method The name of the method to call. This should be namespaced somehow. For example, a plugin
+    #                        called `usmu-s3` could use the method namespace `s3` and have a hook called `:s3_upload`
+    # @param [Array] args The arguments to pass through to plugins. Can be empty.
+    def invoke(method, *args)
+      plugins.map do |p|
+        if p.respond_to? method
+          p.public_send method, *args
+        else
+          nil
+        end
+      end.select {|i| i}
+    end
+  end
+end

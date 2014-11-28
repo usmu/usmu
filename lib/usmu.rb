@@ -64,35 +64,9 @@ module Usmu
   end
   # :nocov:
 
-  # :nocov:
-  # The plugin system can't be tested directly easily since it auto-detects gems, and we have plugins in the core
-  # repositories that are tested as part of the full system to find bugs.
-
-  # Loads all plugins that are available as gems. This is determined by looking at the gem's name. Anything prefixed
-  # with the string 'usmu-' will be recognised as a plugin. This will load the gem according to the RubyGems
-  # recommendations for naming schemes. A gem named `usmu-s3_uploader` will be loaded by requiring the path
-  # `'usmu/s3_loader'` and then then the class `Usmu::S3Loader` will be instantiated as the plugins interface.
-  #
-  # @return [void]
-  def self.load_plugins
-    Gem::Specification.find_all { |s| s.name =~ /^usmu-/ }.each do |spec|
-      load_path = spec.name.gsub('-', '/')
-      # Only load once in case there's multiple versions installed. rubygems will only load one version that
-      # should work anyway. If the user is using Bundler there will only be one version available to include.
-      if require load_path
-        klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
-        @log.debug("Loading plugin #{klass} from '#{load_path}'")
-        plugins.push Object.const_get(klass).new
-      end
-    end
-  end
-
-  # @!attribute [r] plugins
-  # @return [Array] a list of all plugins discovered and loaded.
   def self.plugins
-    @plugins ||= []
+    @plugins || Usmu::Plugin.new
   end
-  # :nocov:
 end
 
 %W{
@@ -102,4 +76,6 @@ end
   usmu/layout
   usmu/page
   usmu/site_generator
+  usmu/plugin
+  usmu/plugin/core
 }.each { |f| require f }
