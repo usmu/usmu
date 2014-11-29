@@ -10,7 +10,7 @@ module Usmu
       attr_reader :site_generator
 
       # @!attribute [r] configuration
-      # Do not access this till your command starts running, eg. in Hooks#commands otherwise you may not get the right
+      # Do not access this till your command starts running, eg. in Hooks#commands, otherwise you may not get the right
       # value for the configuration as option parsing may not have happened yet.
       # @return [Usmu::Configuration] the configuration for the site we will generate.
       def configuration

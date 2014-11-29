@@ -100,9 +100,10 @@ module Usmu
     #
     # @return [Boolean]
     def excluded?(filename)
+      flags = defined?(File::FNM_EXTGLOB) ? File::FNM_EXTGLOB | File::FNM_PATHNAME : File::FNM_PATHNAME
       (@config['exclude'] || []).each do |f|
         f += '**/*' if f[-1] == '/'
-        return true if File.fnmatch(f, filename, File::FNM_EXTGLOB | File::FNM_PATHNAME)
+        return true if File.fnmatch(f, filename, flags)
       end
       false
     end

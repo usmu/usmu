@@ -24,7 +24,7 @@ module Usmu
           loaded << load_path
           klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
           @log.debug("Loading plugin #{klass} from '#{load_path}'")
-          plugins.push Object.const_get(klass).new
+          plugins.push plugin_get(klass)
         end
       end
       @log.debug("Loaded: #{plugins.inspect}")
@@ -51,6 +51,15 @@ module Usmu
           nil
         end
       end.select {|i| i}
+    end
+
+    private
+
+    def plugin_get(klass)
+      object.const_get(klass).new
+    rescue NameError
+      # Ruby 1.9.3, dowp
+      klass.split('::').reduce(Object) {|memo, o| memo.const_get o }.new
     end
   end
 end
