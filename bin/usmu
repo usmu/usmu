@@ -7,8 +7,4 @@ rescue LoadError
   require 'usmu/ui/console'
 end
 
-begin
-  Usmu::Ui::Console.new(ARGV).execute
-rescue StandardError
-  exit 1
-end
+Usmu::Ui::Console.new(ARGV)
