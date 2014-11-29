@@ -45,25 +45,25 @@ RSpec.describe Usmu::Configuration do
 
   it 'should have a list of source files' do
     @configuration = Usmu::Configuration.from_hash({})
-    allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test.md))
+    allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test.md))
     expect(@configuration.source_files).to eq(%w(index.md test.md))
   end
 
   it 'should ignore metadata files in the source folder' do
     @configuration = Usmu::Configuration.from_hash({})
-    allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/index.meta.yml src/test.md))
+    allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/index.meta.yml src/test.md))
     expect(@configuration.source_files).to eq(%w(index.md test.md))
   end
 
   it 'should have a list of layouts files' do
     @configuration = Usmu::Configuration.from_hash({})
-    allow(Dir).to receive(:'[]').with('layouts/**/*').and_return(%w(layouts/html.slim layouts/page.slim))
+    allow(Dir).to receive(:'[]').with('layouts/**/{*,.??*}').and_return(%w(layouts/html.slim layouts/page.slim))
     expect(@configuration.layouts_files).to eq(%w(html.slim page.slim))
   end
 
   it 'should ignore metadata files in the layouts folder' do
     @configuration = Usmu::Configuration.from_hash({})
-    allow(Dir).to receive(:'[]').with('layouts/**/*').and_return(%w(layouts/html.slim layouts/html.meta.yml layouts/page.slim))
+    allow(Dir).to receive(:'[]').with('layouts/**/{*,.??*}').and_return(%w(layouts/html.slim layouts/html.meta.yml layouts/page.slim))
     expect(@configuration.layouts_files).to eq(%w(html.slim page.slim))
   end
 
@@ -75,37 +75,37 @@ RSpec.describe Usmu::Configuration do
   context 'should exclude files from source' do
     it 'as specified' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['foo.md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/foo.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/foo.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
     it 'in ignored folders if trailing "/" is used' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['test/']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo/test.md src/test/foo.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test/foo/test.md src/test/foo.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
     it 'and honor *' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['*/foo.md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
       expect(@configuration.source_files).to eq(%w(index.md test/foo/foo.md))
     end
 
     it 'and * ignores folders without a trailing /' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['*']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo.md src/test.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test/foo.md src/test.md))
       expect(@configuration.source_files).to eq(%w(test/foo.md))
     end
 
     it 'and honor **' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['**/foo.md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
     it 'and honor []' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['[ab].md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/a.md src/b.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/a.md src/b.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
@@ -114,26 +114,26 @@ RSpec.describe Usmu::Configuration do
     if defined?(File::FNM_EXTGLOB)
       it 'and honor {a,b}' do
         @configuration = Usmu::Configuration.from_hash({'exclude' => ['{a,b}.md']})
-        allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/a.md src/b.md))
+        allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/a.md src/b.md))
         expect(@configuration.source_files).to eq(%w(index.md))
       end
     end
 
     it 'and honor \\ as an escape' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['\*.md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/*.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/*.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
     it 'and honor ?' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['?.md']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/a.md src/b.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/a.md src/b.md))
       expect(@configuration.source_files).to eq(%w(index.md))
     end
 
     it 'and ignore files inside folders specified via globs with trailing "/"' do
       @configuration = Usmu::Configuration.from_hash({'exclude' => ['test/*/']})
-      allow(Dir).to receive(:'[]').with('src/**/*').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/test/foo/foo.md src/test/foo.md))
       expect(@configuration.source_files).to eq(%w(index.md test/foo.md))
     end
   end

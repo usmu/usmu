@@ -114,7 +114,7 @@ module Usmu
     # @param [Boolean] layout is this directory a layouts_path
     # @return [Array<Usmu::Layout>, Array<Usmu::StaticFile>] Either an array of Layouts or StaticFiles in the directory
     def get_files(directory)
-      Dir["#{directory}/**/*"].select {|f| !f.match(/\.meta.yml$/) }.map do |f|
+      Dir["#{directory}/**/{*,.??*}"].select {|f| !f.match(/\.meta.yml$/) }.map do |f|
         f[(directory.length + 1)..f.length]
       end.select {|f| not excluded? f}
     end

@@ -5,12 +5,16 @@ step 'I have a site at :location' do |location|
   @location = "#{location}/usmu.yml"
 end
 
-step 'I generate the site' do
-  @site = Usmu::Ui::Console.new(['generate', '--config', @location])
+step 'I run usmu with the arguments :args' do |args|
+  args = args.split(' ')
+  if @location
+    args << '--config' << @location
+  end
+  @site = Usmu::Ui::Console.new(args)
 end
 
-step 'the destination directory should match :test_folder' do |test_folder|
-  run = %W{diff -qr --strip-trailing-cr #{@site.configuration.destination_path} #{test_folder}}
+step 'the directory :destination should match :test_folder' do |destination, test_folder|
+  run = %W{diff -qr --strip-trailing-cr #{destination} #{test_folder}}
   Open3.popen2e(*run) do |i, o, t|
     output = run.join(' ') + "\n" + o.read
     fail output if t.value != 0

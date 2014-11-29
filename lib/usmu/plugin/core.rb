@@ -42,7 +42,7 @@ module Usmu
         from = File.realpath(File.join(File.dirname(__FILE__), '../../../share/init-site'))
 
         @log.info("Copying #{from} -> #{path}")
-        Dir["#{from}/**/*"].each do |file|
+        Dir["#{from}/**/{*,.??*}"].each do |file|
           output_name = file[(from.length + 1)..file.length]
           @log.success "Creating #{output_name}..."
           if File.directory? file
