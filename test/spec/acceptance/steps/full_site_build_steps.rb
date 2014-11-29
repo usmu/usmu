@@ -2,11 +2,11 @@ require 'usmu/ui/console'
 require 'open3'
 
 step 'I have a site at :location' do |location|
-  @site = Usmu::Ui::Console.new(['--config', "#{location}/usmu.yml"])
+  @location = "#{location}/usmu.yml"
 end
 
 step 'I generate the site' do
-  @site.execute
+  @site = Usmu::Ui::Console.new(['generate', '--config', @location])
 end
 
 step 'the destination directory should match :test_folder' do |test_folder|

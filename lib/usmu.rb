@@ -65,7 +65,7 @@ module Usmu
   # :nocov:
 
   def self.plugins
-    @plugins || Usmu::Plugin.new
+    @plugins ||= Usmu::Plugin.new
   end
 end
 
