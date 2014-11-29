@@ -9,6 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Matthew Scharley']
   spec.email         = ['matt.scharley@gmail.com']
   spec.summary       = %q{A static site generator with a web-based frontend for editing.}
+  spec.description   = <<-EOD
+    Usmu is a static site generator built in Ruby that leverages the Tilt API to support many different template
+    engines. It supports local generation but is designed to be used with the web-based editor.
+  EOD
   spec.homepage      = 'https://github.com/usmu/usmu'
   spec.license       = 'MIT'
 
