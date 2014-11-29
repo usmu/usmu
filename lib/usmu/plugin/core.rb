@@ -2,8 +2,11 @@
 module Usmu
   class Plugin
     class Core
-      def commands(ui, c)
+      def initialize
         @log = Logging.logger[self]
+      end
+
+      def commands(ui, c)
         @log.debug('Adding core console commands...')
         @ui = ui
         c.command(:generate) do |command|
