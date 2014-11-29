@@ -10,6 +10,7 @@ step 'I run usmu with the arguments :args' do |args|
   if @location
     args << '--config' << @location
   end
+  args << '--trace'
   @site = Usmu::Ui::Console.new(args)
 end
 
