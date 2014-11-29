@@ -10,7 +10,7 @@ step 'I generate the site' do
 end
 
 step 'the destination directory should match :test_folder' do |test_folder|
-  run = %W{diff -qr #{@site.configuration.destination_path} #{test_folder}}
+  run = %W{diff -qr --strip-trailing-cr #{@site.configuration.destination_path} #{test_folder}}
   Open3.popen2e(*run) do |i, o, t|
     output = run.join(' ') + "\n" + o.read
     fail output if t.value != 0
