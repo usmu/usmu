@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'usmu'
+
+## Add any Usmu plugins you need for your site here.
+#gem 'usmu-s3'
