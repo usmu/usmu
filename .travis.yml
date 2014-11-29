@@ -14,7 +14,7 @@ gemfile:
   - Gemfile-jruby
 matrix:
   exclude:
-    - rvm: 1.93
+    - rvm: 1.9.3
       gemfile: Gemfile-jruby
     - rvm: 2.0
       gemfile: Gemfile-jruby
