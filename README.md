@@ -35,8 +35,17 @@ slim:
   :pretty: true
 ```
 
+### Ruby Compatibility
+
+Officially, we support MRI 1.9.3 and onwards, however we recommend the latest versions. [1.9.3 is no longer maintained][ruby-maint]
+and is only supported here to help out the Rubinius and JRuby folks.
+
+We only officially support MRI, however Travis does run against both Rubinius and JRuby to track compatibility and
+there's a reasonable track record so far. Compatibility patches are very welcome.
+
   [gh-contrib]: https://github.com/usmu/usmu/graphs/contributors
   [gh-issues]: https://github.com/usmu/usmu/issues
   [license]: https://github.com/usmu/usmu/blob/master/LICENSE.md
   [tilt-support]: https://github.com/rtomayko/tilt/blob/master/README.md
   [template-options]: https://github.com/rtomayko/tilt/blob/master/docs/TEMPLATES.md
+  [ruby-maint]: https://bugs.ruby-lang.org/projects/ruby/wiki/ReleaseEngineering
