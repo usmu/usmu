@@ -33,8 +33,6 @@ matrix:
       gemfile: Gemfile-jruby
     - rvm: rbx-2.2
       gemfile: Gemfile-jruby
-    - rvm: rbx-head
-      gemfile: Gemfile-jruby
   allow_failures:
     - rvm: jruby-19mode
     - rvm: jruby-head
