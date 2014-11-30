@@ -45,10 +45,10 @@ module Usmu
         Dir["#{from}/**/{*,.??*}"].each do |file|
           output_name = file[(from.length + 1)..file.length]
           @log.success "Creating #{output_name}..."
-          if File.directory? file
-            FileUtils.mkdir_p "#{path}/#{output_name}"
-          else
-            FileUtils.copy(file, "#{path}/#{output_name}")
+          unless File.directory? file
+            output_path = "#{path}/#{output_name}"
+            FileUtils.mkdir_p File.dirname(output_path) unless File.directory? File.dirname(output_path)
+            FileUtils.copy(file, output_path)
           end
         end
       end
