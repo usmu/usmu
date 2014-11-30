@@ -11,14 +11,14 @@ rvm:
 matrix:
   include:
     - rvm: jruby
-      gemfile: Gemfile-ruby
+      gemfile: Gemfile-jruby
     - rvm: jruby
-      gemfile: Gemfile-ruby
+      gemfile: Gemfile-jruby
       env: JRUBY_OPTS='--2.0'
     - rvm: jruby-head
-      gemfile: Gemfile-ruby
+      gemfile: Gemfile-jruby
     - rvm: jruby-head
-      gemfile: Gemfile-ruby
+      gemfile: Gemfile-jruby
       env: JRUBY_OPTS='--2.0'
   allow_failures:
     - rvm: jruby
