@@ -26,7 +26,7 @@ matrix:
       gemfile: Gemfile-jruby
     - rvm: ruby-head
       gemfile: Gemfile-jruby
-    - rvm: jruby-19mode
+    - rvm: jruby
       gemfile: Gemfile
     - rvm: jruby-head
       gemfile: Gemfile
