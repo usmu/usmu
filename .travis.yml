@@ -16,6 +16,7 @@ gemfile:
 matrix:
   include:
     - rvm: jruby
+      gemfile: Gemfile-ruby
       env: JRUBY_OPTS='--2.0'
   exclude:
     - rvm: 1.9.3
@@ -28,9 +29,6 @@ matrix:
       gemfile: Gemfile-jruby
     - rvm: jruby
       gemfile: Gemfile
-    - rvm: jruby
-      gemfile: Gemfile
-      env: JRUBY_OPTS='--2.0'
     - rvm: jruby-head
       gemfile: Gemfile
     - rvm: rbx-2.1
