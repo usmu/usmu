@@ -5,38 +5,21 @@ rvm:
   - 2.0
   - 2.1
   - ruby-head
-  - jruby
-  - jruby-head
   - rbx-2.1
   - rbx-2.2
   - rbx-2.3
-gemfile:
-  - Gemfile
-  - Gemfile-jruby
 matrix:
   include:
     - rvm: jruby
       gemfile: Gemfile-ruby
-      env: JRUBY_OPTS='--2.0'
-  exclude:
-    - rvm: 1.9.3
-      gemfile: Gemfile-jruby
-    - rvm: 2.0
-      gemfile: Gemfile-jruby
-    - rvm: 2.1
-      gemfile: Gemfile-jruby
-    - rvm: ruby-head
-      gemfile: Gemfile-jruby
     - rvm: jruby
-      gemfile: Gemfile
+      gemfile: Gemfile-ruby
+      env: JRUBY_OPTS='--2.0'
     - rvm: jruby-head
-      gemfile: Gemfile
-    - rvm: rbx-2.1
-      gemfile: Gemfile-jruby
-    - rvm: rbx-2.2
-      gemfile: Gemfile-jruby
-    - rvm: rbx-2.3
-      gemfile: Gemfile-jruby
+      gemfile: Gemfile-ruby
+    - rvm: jruby-head
+      gemfile: Gemfile-ruby
+      env: JRUBY_OPTS='--2.0'
   allow_failures:
     - rvm: jruby
     - rvm: jruby-head
