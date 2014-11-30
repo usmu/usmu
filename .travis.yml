@@ -7,7 +7,6 @@ rvm:
   - ruby-head
   - jruby-19mode
   - jruby-head
-  - rbx-2.0
   - rbx-2.1
   - rbx-2.2
 gemfile:
@@ -27,8 +26,6 @@ matrix:
       gemfile: Gemfile
     - rvm: jruby-head
       gemfile: Gemfile
-    - rvm: rbx-2.0
-      gemfile: Gemfile-jruby
     - rvm: rbx-2.1
       gemfile: Gemfile-jruby
     - rvm: rbx-2.2
@@ -36,6 +33,5 @@ matrix:
   allow_failures:
     - rvm: jruby-19mode
     - rvm: jruby-head
-    - rvm: rbx-2.0
     - rvm: rbx-2.1
     - rvm: rbx-2.2
