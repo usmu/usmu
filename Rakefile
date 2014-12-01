@@ -59,3 +59,29 @@ namespace :gem do
     sh "git tag #{Usmu::VERSION}" if File.exist? '.git'
   end
 end
+
+# (mostly) borrowed from: https://gist.github.com/mcansky/802396
+desc 'generate changelog with nice clean output'
+task :changelog, :since_c, :until_c do |t,args|
+  since_c = args[:since_c] || `git tag | head -1`.chomp
+  until_c = args[:until_c]
+  cmd=`git log --pretty='format:%ci::::%an <%ae>::::%s::::%H' #{since_c}..#{until_c}`
+
+  entries = Hash.new
+  changelog_content = "\#\# #{Usmu::VERSION}\n\n"
+
+  cmd.lines.each do |entry|
+    date, author, subject, hash = entry.chomp.split('::::')
+    entries[author] = Array.new unless entries[author]
+    day = date.split(' ').first
+    entries[author] << "#{subject} (#{hash})" unless subject =~ /Merge/
+  end
+
+  # generate clean output
+  entries.keys.each do |author|
+    changelog_content += author + "\n\n"
+    entries[author].reverse.each { |entry| changelog_content += "* #{entry}\n" }
+  end
+
+  puts changelog_content
+end
