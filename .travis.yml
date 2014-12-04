@@ -23,6 +23,7 @@ matrix:
       gemfile: Gemfile-jruby
       env: JRUBY_OPTS='--2.0'
   allow_failures:
+    - rvm: 1.9.3
     - rvm: jruby
     - rvm: jruby-head
     - rvm: mruby-head
