@@ -75,7 +75,9 @@ end
   usmu/site_generator
   usmu/plugin
   usmu/plugin/core
-  usmu/template/static_file
+  usmu/template/helpers
+  usmu/template/include
   usmu/template/layout
   usmu/template/page
+  usmu/template/static_file
 }.each { |f| require f }

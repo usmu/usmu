@@ -1,5 +1,6 @@
 require 'tilt'
 require 'deep_merge'
+require 'usmu/template/helpers'
 require 'usmu/template/static_file'
 
 module Usmu
@@ -67,7 +68,7 @@ module Usmu
       # @return [String] The rendered file.
       def render(variables = {})
         content = template_class.new("#{@name}.#{@type}", 1, @configuration[provider_name]) { @content }.
-            render(nil, get_variables(variables))
+            render(helpers, get_variables(variables))
         has_cr = content.index("\r")
         content += (has_cr ? "\r\n" : "\n") if content[-1] != "\n"
         if @parent.nil?
@@ -118,7 +119,7 @@ module Usmu
       # @param name [String]
       #   If name is a string then search for a template with that name. Name here should not include
       #   file extension, eg. body not body.slim. If name is not a string then it will be returned verbatim. This means
-      #   that name is nilable and can also be passed in as an Usmu::Layout already for testing purposes.
+      #   that name is nilable and can also be passed in as an Usmu::Template::Layout already for testing purposes.
       # @return [Usmu::Layout]
       def self.find_layout(configuration, name)
         if name === 'none'
@@ -140,7 +141,7 @@ module Usmu
       #
       # @param folder_type [String]
       #   One of `"source"` or `"layout"` depending on where the template is in the source tree.
-      #   Not used by Usmu::Layout directly but intended to be available for future API.
+      #   Not used by Usmu::Template::Layout directly but intended to be available for future API.
       # @param name [String] The filename to be tested.
       # @return [Boolean]
       def self.is_valid_file?(folder_type, name)
@@ -178,13 +179,19 @@ module Usmu
         @configuration.layouts_path
       end
 
+      # @!attribute [r] helpers
+      # @return [Usmu::Template::Helpers] the Helpers class to use as a scope for templates
+      def helpers
+        @helpers ||= Usmu::Template::Helpers.new(@configuration)
+      end
+
       private
 
       # Utility function which collates variables to pass to the template engine.
       #
       # @return [Hash]
       def get_variables(variables)
-        {site: @configuration}.deep_merge!(metadata).deep_merge!(variables)
+        {'site' => @configuration}.deep_merge!(metadata).deep_merge!(variables)
       end
     end
   end

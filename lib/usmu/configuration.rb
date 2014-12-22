@@ -58,6 +58,18 @@ module Usmu
       get_files layouts_path
     end
 
+    # @!attribute [r] layouts_path
+    # @return [String] the full path to the layouts folder
+    def includes_path
+      get_path @config['includes'] || 'includes'
+    end
+
+    # @!attribute [r] layouts_files
+    # @return [Array<String>] a list of renderable files in the layouts folder
+    def includes_files
+      get_files includes_path
+    end
+
     # An index accessor to directly access the configuration file. It should be noted that `['source']` and
     # `#source_path` and other similar pairs will have different values. `['source']` is the raw value from the
     # configuration file while the latter is a path on the system, potentially altered by the path from the current
