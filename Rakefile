@@ -12,6 +12,11 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'test/spec'
 end
 
+desc 'Start an IRB session with local code available'
+task :irb do
+  exec 'bundle', 'exec', 'irb', '-I', 'lib'
+end
+
 desc 'Run all test scripts'
 task :test => [:clean, :spec]
 
