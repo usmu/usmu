@@ -72,10 +72,10 @@ end
 %W{
   usmu/version
   usmu/configuration
-  usmu/static_file
-  usmu/layout
-  usmu/page
   usmu/site_generator
   usmu/plugin
   usmu/plugin/core
+  usmu/template/static_file
+  usmu/template/layout
+  usmu/template/page
 }.each { |f| require f }

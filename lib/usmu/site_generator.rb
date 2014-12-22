@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'usmu/configuration'
-require 'usmu/page'
-require 'usmu/static_file'
+require 'usmu/template/page'
+require 'usmu/template/static_file'
 
 module Usmu
   # This is the class that brings everything together to generate a new website.
@@ -15,39 +15,39 @@ module Usmu
     # @!attribute [r] layouts
     # @return [Array<Usmu::Layout>] a list of layouts available in this website.
     def layouts
-      @configuration.layouts_files.map {|l| Usmu::Layout.new(@configuration, l) }
+      @configuration.layouts_files.map {|l| Usmu::Template::Layout.new(@configuration, l) }
     end
 
     # @!attribute [r] renderables
-    # @return [Array<Usmu::StaticFile>] a list of renderable files from the source folder.
+    # @return [Array<Usmu::Template::StaticFile>] a list of renderable files from the source folder.
     #   will be a subclass of this class.
     # @see Usmu::StaticFile
     #
     # Returns a list of renderable files from the source folder.
     #
     # The only guarantee made for individual files is that they will conform to the interface defined by
-    # Usmu::StaticFile and thus be renderable, however most files will be one of the subclasses of that class.
+    # Usmu::Template::StaticFile and thus be renderable, however most files will be one of the subclasses of that class.
     def renderables
       @configuration.source_files.map do |filename|
-        if Usmu::Layout.is_valid_file? 'source', filename
-          Usmu::Page.new(@configuration, filename)
+        if Usmu::Template::Layout.is_valid_file? 'source', filename
+          Usmu::Template::Page.new(@configuration, filename)
         else
-          Usmu::StaticFile.new(@configuration, filename)
+          Usmu::Template::StaticFile.new(@configuration, filename)
         end
       end
     end
 
     # @!attribute [r] pages
-    # @return [Array<Usmu::Page>] a list of pages from the source folder. This is any file in the source folder which
-    #   is not static.
+    # @return [Array<Usmu::Template::Page>] a list of pages from the source folder. This is any file in the source
+    #   folder which is not static.
     def pages
-      renderables.select {|r| r.class.name != 'Usmu::StaticFile'}
+      renderables.select {|r| r.class.name != 'Usmu::Template::StaticFile'}
     end
 
     # @!attribute [r] files
-    # @return [Array<Usmu::StaticFile>] a list of static files from the source folder.
+    # @return [Array<Usmu::Template::StaticFile>] a list of static files from the source folder.
     def files
-      renderables.select {|r| r.class.name == 'Usmu::StaticFile'}
+      renderables.select {|r| r.class.name == 'Usmu::Template::StaticFile'}
     end
 
     # Generate the website according to the configuration given.
