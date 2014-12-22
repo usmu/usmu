@@ -7,6 +7,7 @@ RSpec.describe Usmu::Configuration do
           'source' => 'source',
           'destination' => 'destination',
           'layouts' => 'templates',
+          'includes' => 'includes',
       }
       @configuration = Usmu::Configuration.from_hash(hash, 'test/usmu.yaml')
     end
@@ -21,6 +22,10 @@ RSpec.describe Usmu::Configuration do
 
     it 'to layouts' do
       expect(@configuration.layouts_path).to eq('test/templates')
+    end
+
+    it 'to includes' do
+      expect(@configuration.includes_path).to eq('test/includes')
     end
   end
 
@@ -40,6 +45,10 @@ RSpec.describe Usmu::Configuration do
 
     it 'for layouts' do
       expect(@configuration.layouts_path).to eq('layouts')
+    end
+
+    it 'for includes' do
+      expect(@configuration.includes_path).to eq('includes')
     end
   end
 
@@ -65,6 +74,18 @@ RSpec.describe Usmu::Configuration do
     @configuration = Usmu::Configuration.from_hash({})
     allow(Dir).to receive(:'[]').with('layouts/**/{*,.??*}').and_return(%w(layouts/html.slim layouts/html.meta.yml layouts/page.slim))
     expect(@configuration.layouts_files).to eq(%w(html.slim page.slim))
+  end
+
+  it 'should have a list of includes files' do
+    @configuration = Usmu::Configuration.from_hash({})
+    allow(Dir).to receive(:'[]').with('includes/**/{*,.??*}').and_return(%w(includes/footer.slim))
+    expect(@configuration.includes_files).to eq(%w(footer.slim))
+  end
+
+  it 'should ignore metadata files in the includes folder' do
+    @configuration = Usmu::Configuration.from_hash({})
+    allow(Dir).to receive(:'[]').with('includes/**/{*,.??*}').and_return(%w(includes/footer.slim includes/footer.meta.yml))
+    expect(@configuration.includes_files).to eq(%w(footer.slim))
   end
 
   it 'should remember arbitrary configuration' do
