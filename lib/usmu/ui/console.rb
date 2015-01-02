@@ -37,6 +37,10 @@ module Usmu
         @commander.run!
       end
 
+      # Load a configuration from a file
+      #
+      # @param [String] config Name of configuration file to load
+      # @return [Usmu::Configuration] the configuration for the site we will generate.
       def load_configuration(config)
         @log.info("Usmu v#{Usmu::VERSION}")
         @log.info('')
@@ -48,6 +52,7 @@ module Usmu
           @log.fatal("Unable to find configuration file at #{config}")
           raise
         end
+        @configuration
       end
     end
   end

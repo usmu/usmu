@@ -17,4 +17,9 @@ RSpec.describe Usmu::Ui::Console do
     expect(Usmu).to receive(:verbose_logging)
     Usmu::Ui::Console.new(%w{--verbose --config test/site/usmu.yml})
   end
+
+  it '#load_configuration returns a configuration' do
+    config = Usmu::Ui::Console.new(%w{--config test/site/usmu.yml}).load_configuration('test/site/usmu.yml')
+    expect(config.class.name).to eq('Usmu::Configuration')
+  end
 end
