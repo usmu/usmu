@@ -5,8 +5,6 @@ module Usmu
     # Represents a static file which should be transferred to the destination unchanged. This also acts as the base
     # class for all layouts and page types. The basic interface defined here is used to process all types of files.
     class StaticFile
-      @log = Logging.logger[self]
-
       # @!attribute [r] name
       # @return [String] the name of the file in the source directory
       attr_reader :name
@@ -18,6 +16,8 @@ module Usmu
       # @param content [String] The content of the file. Used for testing purposes.
       # @param metadata [String] The metadata for the file. Used for testing purposes.
       def initialize(configuration, name, type = nil, content = nil, metadata = nil)
+        @log = Logging.logger[self]
+
         @configuration = configuration
         @name = name
         @type = type

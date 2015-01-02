@@ -122,19 +122,31 @@ module Usmu
       #   that name is nilable and can also be passed in as an Usmu::Template::Layout already for testing purposes.
       # @return [Usmu::Layout]
       def self.find_layout(configuration, name)
+        @layout_history = @layout_history || {}
+        @layout_history[configuration] = @layout_history[configuration] || {}
+        if @layout_history[configuration][name]
+          Logging.logger[self].debug("Layout loop detected. Current loaded layouts: #{@layout_history[configuration].inspect}")
+          return nil
+        else
+          Logging.logger[self].debug("Loading layout '#{name}'")
+          @layout_history[configuration][name] = true
+        end
+
+        ret = nil
         if name === 'none'
-          nil
         elsif name.class.name == 'String'
           Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
             filename = File.basename(f)
             if filename != "#{name}.meta.yml"
-              return new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
+              ret = new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
             end
           end
-          nil
         else
-          name
+          ret = name
         end
+
+        @layout_history[configuration][name] = nil
+        return ret
       end
 
       # Tests if a given file is a valid Tilt template based on the filename.
