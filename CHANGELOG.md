@@ -1,5 +1,41 @@
 # Usmu Change Log
 
+## 0.2.2
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Bump version to 0.3.0.dev for further dev (896cbde8191b8123a280b5a2c96af524d8055d07)
+* Ignore CR's in generated site to tame diff on Windows (839ab4bfea0bea1a1932b569b636540172d3e633)
+* Setup logging properly in Usmu::Plugin::Core (6b4f6cbc133830dc93248d3bc4fb71a2c2aab5a9)
+* Allow --trace from commander to function properly (815bb4f12ef7128cb404fe93745c130b990e073d)
+* [GH-8] Add an init command (feb3fd659c0180b572449dbdc186d4ada5fb6c61)
+* [GH-8] Add tests for the init command (5bbf4031708278b27b7779d170a2a54ca708dd9f)
+* Clean up the tmp folder with `rake clean` (2efe4a713fe75569d292bc17801dcd9b1ea2aa02)
+* Always use --trace with the acceptance tests (cf9cacccb9faef248d52053c90a0be92f60b7704)
+* Fix bug in init command where directories could be uncreated before usage (c53cf247923c48a6d6f84581fdf3e8845ad9d4da)
+* Update Rubinius runs for Travis (688f32a76a08a95f261fa6f35f12bce23a0daa39)
+* Remove the rbx-head exclude (6ded194e282909f9e7672e645f6c7b626f2ebb1c)
+* Remove rbx-2.0 from Travis again - unsupported (de6d536ac04f16352878e92cc7561c0f9a145f54)
+* Allow rbx-2.3 (7de8f4ca7fc27647edf9ac1e59d138ec2cd8ff1e)
+* Add jruby 2.0 runs (e865e35445ccffb91e20aebf5c17a948ab38f336)
+* Fix matrix excludes for jruby (9fa82f64cddb6096e891c418790aadddb00d58a8)
+* Fix matrix excludes (again) (hopefully) (4b3dd6370369310219cdc38d9c2ed1169ee28eca)
+* Last run at fixing the jruby 2.0 stuff (febb399e8cc5facd29cc1d164a0bddf75c953741)
+* Greatly simplify travis.yml using matrix include instead of exclude (5ad500f8ec428be5d86c400006735f8b4cf1c61f)
+* Fix gemfile name because I'm a derp (10e73938565049e8ff323da99fca35d024a34134)
+* Add a changelog (ea82ed9826517920c7e39d73a5e3df167f9512b4)
+* Enable rbx-2.4 build for testing (34fd5415af64ce0fafad3805188b34b99119f37e)
+* Track mruby compatibility (163cd5a5956f39a1e46fdf9c381c961d2d21e52d)
+* Officially support Rubinius 2.3 (2abe1da65e4f65d065d9d8f084bffae607045043)
+* Update compatibility information (1be9e1cee10f3aab20f514195dfbc17deb8138f4)
+* Bump slim to 3.0 (f258e53bb3f04187406a1ba0736c53be4105ee09)
+* Massive refactor to create the Usmu::Template namespace (425956dd04b199e5ac32582ed5856d01b6251e35)
+* Add an irb task to rake (e7506c686696344b506da2df8705d918bf1b0ba0)
+* [#9] Add tests for includes in slim (95f4c4992e4984fcdd95c0ba66805714da215cfc)
+* [#9] Implement includes (5a4e69aa8b45fac4a697d56814177023f052c585)
+* Remove RBX 2.3 again. (b8675c07d0fe066c466144c27e690f1863a88888)
+* Release 0.2.2 (986f611b167a0503108d41ac0a115e38d6aac2f9)
+
 ## 0.2.1
 
 Matthew Scharley <matt.scharley@gmail.com>
