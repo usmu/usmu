@@ -173,6 +173,15 @@ RSpec.shared_examples 'an embeddable layout' do
     EOF
   end
 
+  it 'only uses a wrapper layout if the output types match' do
+    parent = described_class.new(empty_configuration, 'html.slim', 'slim', wrapper, {})
+    layout = described_class.new(empty_configuration, 'app.scss', 'scss', 'body { color: #000; }', {'layout' => parent})
+    expect(layout.render({'content' => ''})).to eq(<<-EOF)
+body {
+  color: #000; }
+    EOF
+  end
+
   context 'and prioritises' do
     it 'metadata over parent metadata' do
       parent = described_class.new(empty_configuration, 'html.slim', 'slim', wrapper, {'title' => 'title'})

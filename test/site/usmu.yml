@@ -4,6 +4,9 @@ source: content
 destination: site
 title: Testing website
 
+exclude:
+- "**/_*.s[ac]ss"
+
 default meta:
   title: Test website
   layout: html

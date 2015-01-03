@@ -1,5 +1,6 @@
 /.bundle/
 /.yardoc
+/.sass-cache
 /Gemfile*.lock
 /_yardoc/
 /test/coverage/

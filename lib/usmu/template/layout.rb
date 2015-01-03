@@ -46,6 +46,12 @@ module Usmu
 
         @parent = nil
         @parent = Layout.find_layout(configuration, self.metadata['layout'])
+
+        # Don't use the parent if it would result in weirdness
+        unless @parent.nil?
+          @parent = nil unless
+              output_extension == @parent.output_extension || output_extension.nil? || @parent.output_extension.nil?
+        end
       end
 
       # @!attribute [r] metadata
@@ -67,8 +73,10 @@ module Usmu
       # @param variables [Hash] Variables to be used in the template.
       # @return [String] The rendered file.
       def render(variables = {})
-        content = template_class.new("#{@name}.#{@type}", 1, @configuration[provider_name]) { @content }.
+        template_config = add_template_defaults(@configuration[provider_name] || {}, provider_name)
+        content = template_class.new("#{@name}", 1, template_config) { @content }.
             render(helpers, get_variables(variables))
+
         has_cr = content.index("\r")
         content += (has_cr ? "\r\n" : "\n") if content[-1] != "\n"
         if @parent.nil?
@@ -195,6 +203,22 @@ module Usmu
       # @return [Usmu::Template::Helpers] the Helpers class to use as a scope for templates
       def helpers
         @helpers ||= Usmu::Template::Helpers.new(@configuration)
+      end
+
+      # Adds defaults for the given generator engine
+      #
+      # @param [Hash] overrides A hash of options provided by the user
+      # @param [String] engine The name of the rendering engine
+      # @return [Hash] Template options to pass into the engine
+      def add_template_defaults(overrides, engine)
+        case engine
+          when 'sass'
+            {
+                :load_paths => [@configuration.source_path + '/' + File.dirname(@name)]
+            }.deep_merge!(overrides)
+          else
+            overrides
+        end
       end
 
       private

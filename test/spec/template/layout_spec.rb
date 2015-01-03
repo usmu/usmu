@@ -23,4 +23,18 @@ RSpec.describe Usmu::Template::Layout do
     configuration = Usmu::Configuration.from_file('test/site/usmu.yml')
     layout = Usmu::Template::Layout.new(configuration, 'html.slim')
   end
+
+  it 'should add a default load_path for sass templates' do
+    configuration = Usmu::Configuration.from_hash({'source' => 'src'}, 'test/usmu.yml')
+    layout = Usmu::Template::Layout.new(configuration, 'css/app.scss', 'scss', "body{color: #000;}", {})
+    defaults = layout.send :add_template_defaults, {}, 'sass'
+    expect(defaults[:load_paths]).to eq(['test/src/css'])
+  end
+
+  it 'should merge load_path\'s for sass templates' do
+    configuration = Usmu::Configuration.from_hash({'source' => 'src'}, 'test/usmu.yml')
+    layout = Usmu::Template::Layout.new(configuration, 'css/app.scss', 'scss', "body{color: #000;}", {})
+    defaults = layout.send :add_template_defaults, {load_paths: ['test/src/assets/scss']}, 'sass'
+    expect(defaults[:load_paths].sort).to eq(['test/src/assets/scss', 'test/src/css'])
+  end
 end
