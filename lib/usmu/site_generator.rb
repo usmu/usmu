@@ -58,20 +58,28 @@ module Usmu
       @log.info("Destination: #{@configuration.destination_path}")
       @log.info('')
 
-      renderables.each do |page|
-        @log.success("creating #{page.output_filename}...")
-        @log.debug("Rendering #{page.output_filename} from #{page.name}")
-        file = File.join(@configuration.destination_path, page.output_filename)
-        directory = File.dirname(file)
-
-        unless File.directory?(directory)
-          FileUtils.mkdir_p(directory)
-        end
-
-        File.write file, page.render
-        FileUtils.touch file, :mtime => File.stat(page.input_path).mtime
-      end
+      renderables.each &method(:generate_page)
       nil
+    end
+
+    private
+
+    # Helper function to generate a page
+    #
+    # @param [Usmu::Template::Page] page
+    def generate_page(page)
+      output_filename = page.output_filename
+      @log.success("creating #{output_filename}...")
+      @log.debug("Rendering #{output_filename} from #{page.name}")
+      file = File.join(@configuration.destination_path, output_filename)
+      directory = File.dirname(file)
+
+      unless File.directory?(directory)
+        FileUtils.mkdir_p(directory)
+      end
+
+      File.write file, page.render
+      FileUtils.touch file, :mtime => File.stat(page.input_path).mtime
     end
   end
 end

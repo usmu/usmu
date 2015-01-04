@@ -81,7 +81,7 @@ module Usmu
         arguments.each do |i, value|
           args[i.class.name == 'String' ? i : i.to_s] = value
         end
-        
+
         {'site' => @configuration}.deep_merge!(metadata).deep_merge!(args).deep_merge!(variables)
       end
     end

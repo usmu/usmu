@@ -142,7 +142,10 @@ module Usmu
         @layout_history = @layout_history || {}
         @layout_history[configuration] = @layout_history[configuration] || {}
         if @layout_history[configuration][name]
-          Logging.logger[self].debug("Layout loop detected. Current loaded layouts: #{@layout_history[configuration].inspect}")
+          Logging.logger[self].debug(
+              'Layout loop detected. Current loaded layouts: ' +
+              @layout_history[configuration].inspect
+          )
           return nil
         else
           Logging.logger[self].debug("Loading layout '#{name}'")

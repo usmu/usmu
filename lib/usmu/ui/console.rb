@@ -17,18 +17,10 @@ module Usmu
         @configuration || load_configuration('usmu.yml')
       end
 
+      # @param [Array<String>] args Command line arguments, ie. ARGV.
       def initialize(args)
         @log = Logging.logger[self]
-        @commander = Commander::Runner.new args
-
-        @commander.program :version, Usmu::VERSION
-        @commander.program :description, 'Static site generator powered by Tilt'
-        @commander.program :int_message, 'Interrupt received, closing...'
-
-        @commander.global_option('-v', '--verbose') { Usmu.verbose_logging }
-        @commander.global_option('-q', '--quiet') { Usmu.quiet_logging }
-        @commander.global_option('--log STRING', String) {|log| Usmu.add_file_logger(log) }
-        @commander.global_option('--config STRING', String, &method(:load_configuration))
+        @commander = initialize_commander(args)
 
         Usmu.plugins.load_plugins
         Usmu.plugins.invoke :commands, self, @commander
@@ -53,6 +45,25 @@ module Usmu
           raise
         end
         @configuration
+      end
+
+      private
+
+      # Helper function to setup a Commander runner
+      # @return [Commander::Runner]
+      def initialize_commander(args)
+        commander = Commander::Runner.new args
+
+        commander.program :version, Usmu::VERSION
+        commander.program :description, 'Static site generator powered by Tilt'
+        commander.program :int_message, 'Interrupt received, closing...'
+
+        commander.global_option('-v', '--verbose') { Usmu.verbose_logging }
+        commander.global_option('-q', '--quiet') { Usmu.quiet_logging }
+        commander.global_option('--log STRING', String) {|log| Usmu.add_file_logger(log) }
+        commander.global_option('--config STRING', String, &method(:load_configuration))
+
+        commander
       end
     end
   end

@@ -56,14 +56,23 @@ module Usmu
         from = File.realpath(File.join(File.dirname(__FILE__), '../../../share/init-site'))
 
         @log.info("Copying #{from} -> #{path}")
-        Dir["#{from}/**/{*,.??*}"].each do |file|
-          output_name = file[(from.length + 1)..file.length]
-          @log.success "Creating #{output_name}..."
-          unless File.directory? file
-            output_path = "#{path}/#{output_name}"
-            FileUtils.mkdir_p File.dirname(output_path) unless File.directory? File.dirname(output_path)
-            FileUtils.copy(file, output_path)
-          end
+        Dir["#{from}/**/{*,.??*}"].each {|f| init_copy_file(from, path, f) }
+      end
+
+      private
+
+      # Helper to copy a file.
+      #
+      # @param [String] from
+      # @param [String] to
+      # @param [String] file
+      def init_copy_file(from, to, file)
+        output_name = file[(from.length + 1)..file.length]
+        @log.success "Creating #{output_name}..."
+        unless File.directory? file
+          output_path = "#{to}/#{output_name}"
+          FileUtils.mkdir_p File.dirname(output_path) unless File.directory? File.dirname(output_path)
+          FileUtils.copy(file, output_path)
         end
       end
     end

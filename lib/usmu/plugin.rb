@@ -13,21 +13,11 @@ module Usmu
     # recommendations for naming schemes. A gem named `usmu-s3_uploader` will be loaded by requiring the path
     # `'usmu/s3_uploader'` and then then the class `Usmu::S3Uploader` will be instantiated as the plugins interface.
     def load_plugins
-      loaded = []
+      @loaded = []
       @log.debug('Loading plugins')
       @log.debug('Loaded Usmu::Plugin::Core')
       plugins.push Usmu::Plugin::Core.new
-      Gem::Specification.find_all { |s| s.name =~ /^usmu-/ }.each do |spec|
-        load_path = spec.name.gsub('-', '/')
-        require load_path
-
-        unless loaded.include? load_path
-          loaded << load_path
-          klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
-          @log.debug("Loading plugin #{klass} from '#{load_path}'")
-          plugins.push plugin_get(klass)
-        end
-      end
+      Gem::Specification.find_all { |s| s.name =~ /^usmu-/ }.each &method(:load_gem)
       @log.debug("Loaded: #{plugins.inspect}")
     end
 
@@ -67,6 +57,22 @@ module Usmu
     rescue NameError
       # Ruby 1.9.3, dowp
       klass.split('::').reduce(Object) {|memo, o| memo.const_get o }.new
+    end
+
+    # Helper function to load a plugin from a gem specification
+    #
+    # @param [Gem::Specification] spec
+    def load_gem(spec)
+      load_path = spec.name.gsub('-', '/')
+      require load_path
+
+      unless @loaded.include? load_path
+        @loaded << load_path
+        klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
+        @log.debug("Loading plugin #{klass} from '#{load_path}'")
+        plugins.push plugin_get(klass)
+      end
+      nil
     end
   end
 end
