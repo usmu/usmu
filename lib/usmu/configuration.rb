@@ -76,11 +76,33 @@ module Usmu
     # working directory to the configuration file and other factors. The accessor functions such as `#source_path`
     # should be preferred for most usages.
     #
-    # @param [String, Symbol] index The index to return.
-    # @return [Array, Hash, String, Symbol] Returns a value from the hash loaded from YAML. The type of value will
-    #   ultimately depend on the configuration file and the index provided.
-    def [](index)
-      @config[index]
+    # @param [String, Symbol] indices
+    #   A list of indices to use to find the value to return. Can also include an options hash with the
+    #   following options:
+    #
+    #   * `:default`: Sets the default value if the value can't be found.
+    #
+    # @return [Array, Hash, String, Symbol]
+    #   Returns a value from the hash loaded from YAML. The type of value will ultimately depend on the configuration
+    #   file and the indices provided.
+    def [](*indices)
+      if indices[-1].class.name == 'Hash'
+        opts = indices.pop
+      else
+        opts = {}
+      end
+
+      value = @config
+      while indices.length > 0
+        i = indices.shift
+        if value.key? i
+          value = value[i]
+        else
+          return opts[:default]
+        end
+      end
+
+      value
     end
 
     private

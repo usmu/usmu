@@ -158,4 +158,19 @@ RSpec.describe Usmu::Configuration do
       expect(@configuration.source_files).to eq(%w(index.md test/foo.md))
     end
   end
+
+  it 'should allow indexing the configuration file' do
+    configuration = Usmu::Configuration.from_hash({test: 'foo'})
+    expect(configuration[:test]).to eq('foo')
+  end
+
+  it 'should allow indexing the configuration file with a default value' do
+    configuration = Usmu::Configuration.from_hash({test: 'foo'})
+    expect(configuration[:bar, default: 'baz']).to eq('baz')
+  end
+
+  it 'should allow indexing the configuration file using a path of indices' do
+    configuration = Usmu::Configuration.from_hash({test: {bar: 'foo'}})
+    expect(configuration[:test, :bar]).to eq('foo')
+  end
 end
