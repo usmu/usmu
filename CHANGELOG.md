@@ -1,5 +1,15 @@
 # Usmu Change Log
 
+## 0.3.1
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Add gemnasium badge (9449a8e605a3176a5e43d289cf7c0da9f38aa5ea)
+* Add a bunch of documentation (c1eca0f79f7beecaf945237a425f8963846e83a3)
+* Fix a few issues from cane (bae78ee394af4fc86d71d8754434a8c6f04100e7)
+* Small fixups for the build scripts (d14b0b2822c704103896f7b462640709704f04b7)
+* Allow Configuration to be indexed with a full path safely (110965b9058970ba82ee36bf4bc491e110996ad4)
+
 ## 0.3.0
 
 Matthew Scharley <matt.scharley@gmail.com>
