@@ -7,6 +7,8 @@ module Usmu
 
       private
 
+      # Preserved version of the layout metadata logic
+      # @see Usmu::Template::Layout#metadata
       alias :layout_metadata :metadata
 
       public

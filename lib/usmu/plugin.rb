@@ -1,6 +1,9 @@
 
 module Usmu
+  # Singletonish class to load plugins and act as an interface to them. Shouldn't be created directly.
+  # @see Usmu.plugins
   class Plugin
+    # Constructor for the plugin interface.
     def initialize
       @log = Logging.logger['Usmu::Plugin']
     end
@@ -9,8 +12,6 @@ module Usmu
     # with the string 'usmu-' will be recognised as a plugin. This will load the gem according to the RubyGems
     # recommendations for naming schemes. A gem named `usmu-s3_uploader` will be loaded by requiring the path
     # `'usmu/s3_uploader'` and then then the class `Usmu::S3Uploader` will be instantiated as the plugins interface.
-    #
-    # @return [void]
     def load_plugins
       loaded = []
       @log.debug('Loading plugins')
@@ -38,9 +39,11 @@ module Usmu
 
     # Call all plugins and collate any data returned. nil can be returned explicitly to say this plugin has nothing to
     # return.
+    #
     # @param [Symbol] method The name of the method to call. This should be namespaced somehow. For example, a plugin
     #                        called `usmu-s3` could use the method namespace `s3` and have a hook called `:s3_upload`
     # @param [Array] args The arguments to pass through to plugins. Can be empty.
+    # @return [Array] An array of non-nil values returned from plugins
     def invoke(method, *args)
       @log.debug("Invoking plugin API #{method}")
       plugins.map do |p|
@@ -55,6 +58,10 @@ module Usmu
 
     private
 
+    # Helper function to load and instantiate plugin classes
+    #
+    # @param [String] klass The name of the class to load
+    # @return [Object] A plugin object
     def plugin_get(klass)
       object.const_get(klass).new
     rescue NameError

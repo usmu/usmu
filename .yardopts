@@ -1,1 +1,1 @@
---private --protected --hide-void-return -m markdown -M redcarpet lib/**/*.rb - README.md
+--private --protected --default-return void -m markdown -M redcarpet -- lib/**/*.rb - README.md CHANGELOG.md

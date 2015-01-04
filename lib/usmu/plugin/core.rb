@@ -2,11 +2,18 @@ require 'fileutils'
 
 module Usmu
   class Plugin
+    # Usmu Core's plugin. We dog-food several plugin integration points.
     class Core
+      # Basic constructor.
       def initialize
         @log = Logging.logger[self]
       end
 
+      # We add two commands: `generate` and `init [path]`.
+      #
+      # @see #command_generate
+      # @see #command_init
+      # @see Usmu::Plugin::CoreHooks#commands
       def commands(ui, c)
         @log.debug('Adding core console commands...')
         @ui = ui
@@ -23,12 +30,19 @@ module Usmu
         end
       end
 
-      # @return [void]
+      # Command to generate a website.
+      #
+      # @param [Array<String>] args arguments passed by the user.
+      # @param [Hash] options options parsed by Commander
       def command_generate(args, options)
         @site_generator = Usmu::SiteGenerator.new(@ui.configuration)
         @site_generator.generate
       end
 
+      # Command to initialise a new website.
+      #
+      # @param [Array<String>] args arguments passed by the user.
+      # @param [Hash] options options parsed by Commander
       def command_init(args, options)
         @log.info("Usmu v#{Usmu::VERSION}")
         @log.info('')

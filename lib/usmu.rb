@@ -64,6 +64,7 @@ module Usmu
   end
   # :nocov:
 
+  # @return [Usmu::Plugin] a handler to the plugin interface
   def self.plugins
     @plugins ||= Usmu::Plugin.new
   end
