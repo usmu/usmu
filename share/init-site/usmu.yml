@@ -1,3 +1,6 @@
 ---
 
 title: Example site
+
+exclude:
+- '**/_*.s[ca]ss
