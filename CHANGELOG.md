@@ -1,5 +1,20 @@
 # Usmu Change Log
 
+## 0.3.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Ignore vendored gems (5ed00eda230ad69d727d61197a2eff6269bcc640)
+* Bump CHANGELOG to 0.2.2 (daea8c79c04acfd7048aa7f801c9e34462e4a06d)
+* Fix a bug with #load_configuration (ab08a884c346fcbca784bf229b42e65bbff2b63a)
+* Enable rvm 2.2 for the latest and greatest (e28532f0fe25f46c03e18fd9e6a2dd05c388647e)
+* [\[\#12\]][GH-12] Fix layout loop issues finally (b3164c5bd0374837c56c1cab6554a2a7b7b207ef)
+* Add libnotify for guard (e51971a22b7d57bcb892e90fa2feb89571b2311b)
+* [\[\#14\]][GH-14] Don't list directories in Configuration#get_files (e56d81d7bfeae9d3312c84f2cfe3d03e268ca738)
+* [\[\#17\]][GH-17] Fix Sass processing (5b00cc3f29e32ce31d8a13c2979d953509b3a334)
+* [\[\#13\]][GH-13] Add page metadata to parent layouts (c2da294e1f19e6404df178ee650c3818cc0f3846)
+* Add a Sass partials exclude to default init site (4f70d5b1b5958b6c56338b8d077711c780c85763)
+
 ## 0.2.2
 
 Matthew Scharley <matt.scharley@gmail.com>
@@ -8,8 +23,8 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Ignore CR's in generated site to tame diff on Windows (839ab4bfea0bea1a1932b569b636540172d3e633)
 * Setup logging properly in Usmu::Plugin::Core (6b4f6cbc133830dc93248d3bc4fb71a2c2aab5a9)
 * Allow --trace from commander to function properly (815bb4f12ef7128cb404fe93745c130b990e073d)
-* [GH-8] Add an init command (feb3fd659c0180b572449dbdc186d4ada5fb6c61)
-* [GH-8] Add tests for the init command (5bbf4031708278b27b7779d170a2a54ca708dd9f)
+* [\[GH-8\]][GH-8] Add an init command (feb3fd659c0180b572449dbdc186d4ada5fb6c61)
+* [\[GH-8\]][GH-8] Add tests for the init command (5bbf4031708278b27b7779d170a2a54ca708dd9f)
 * Clean up the tmp folder with `rake clean` (2efe4a713fe75569d292bc17801dcd9b1ea2aa02)
 * Always use --trace with the acceptance tests (cf9cacccb9faef248d52053c90a0be92f60b7704)
 * Fix bug in init command where directories could be uncreated before usage (c53cf247923c48a6d6f84581fdf3e8845ad9d4da)
@@ -31,8 +46,8 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Bump slim to 3.0 (f258e53bb3f04187406a1ba0736c53be4105ee09)
 * Massive refactor to create the Usmu::Template namespace (425956dd04b199e5ac32582ed5856d01b6251e35)
 * Add an irb task to rake (e7506c686696344b506da2df8705d918bf1b0ba0)
-* [#9] Add tests for includes in slim (95f4c4992e4984fcdd95c0ba66805714da215cfc)
-* [#9] Implement includes (5a4e69aa8b45fac4a697d56814177023f052c585)
+* [\[\#9\]][GH-9] Add tests for includes in slim (95f4c4992e4984fcdd95c0ba66805714da215cfc)
+* [\[\#9\]][GH-9] Implement includes (5a4e69aa8b45fac4a697d56814177023f052c585)
 * Remove RBX 2.3 again. (b8675c07d0fe066c466144c27e690f1863a88888)
 * Release 0.2.2 (986f611b167a0503108d41ac0a115e38d6aac2f9)
 
@@ -63,10 +78,10 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Remove cucumber from the CI task (d4094db005db5205542eb8256e86f01d9cd49d05)
 * Allow the rspec rake task to find it's own spec files (35d6f7e4486f14034544884090b5cccfd7bd82ad)
 * Use Redcarpet 3.2! (5c7a9d34f5ec2c12089b1e045e174f26f34877f2)
-* [GH-7] Allow for excluding files via usmu.conf (da0f1123316ce1cede23a63cea8e6c46c3a17a01)
+* [\[GH-7\]][GH-7] Allow for excluding files via usmu.conf (da0f1123316ce1cede23a63cea8e6c46c3a17a01)
 * Add one more guard test on exclude globs (143460ea5f5427845e01119a8aba039207382a1b)
-* [GH-5] Add an initial pass at a plugin system (73588da4bfaf03fa27a47747b56f6e31d95c8704)
-* [GH-5] Transition to commander instead of trollop and make `generate` an official command (1aaaf43c0884c70980af3b7e6fcaa8ce57f7474c)
+* [\[GH-5\]][GH-5] Add an initial pass at a plugin system (73588da4bfaf03fa27a47747b56f6e31d95c8704)
+* [\[GH-5\]][GH-5] Transition to commander instead of trollop and make `generate` an official command (1aaaf43c0884c70980af3b7e6fcaa8ce57f7474c)
 * 1.9.3 compatibility (cba51ad465576ac542111d200cfcbb62835c097c)
 * Re-enable 1.9.3 CI and add some compat notes to the readme (cf34053aaaf6a85752ec8be70f7c9969a89990d9)
 * Bump to 0.2.0 release (7e7dde04c180b5ae63268db647ba45ef63a6b3f3)
@@ -116,3 +131,12 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Small stylistic change (ae008aa5492b2463774e4e4659d90666059b45e0)
 * Add new custom rake tasks for building gems and fix a few small issues with the specs (5b1a4241cd9f31f39179ffaad49f7155617c0e6f)
 * Bump to full 0.1.0 release (fb91c2b54f79eeaeb615f98f874c990e4cdddfd3)
+
+  [GH-5]:  https://github.com/usmu/usmu/issues/5
+  [GH-7]:  https://github.com/usmu/usmu/issues/7
+  [GH-8]:  https://github.com/usmu/usmu/issues/8
+  [GH-9]:  https://github.com/usmu/usmu/issues/9
+  [GH-12]: https://github.com/usmu/usmu/issues/12
+  [GH-13]: https://github.com/usmu/usmu/issues/13
+  [GH-14]: https://github.com/usmu/usmu/issues/14
+  [GH-17]: https://github.com/usmu/usmu/issues/17
