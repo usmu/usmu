@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard', '~> 2.8'
   spec.add_development_dependency 'guard-rspec', '~> 4.3'
   spec.add_development_dependency 'turnip', '~> 1.2'
+  spec.add_development_dependency 'sass', '~> 3.4'
 end
