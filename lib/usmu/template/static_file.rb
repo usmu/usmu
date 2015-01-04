@@ -17,6 +17,7 @@ module Usmu
       # @param metadata [String] The metadata for the file. Used for testing purposes.
       def initialize(configuration, name, type = nil, content = nil, metadata = nil)
         @log = Logging.logger[self]
+        @log.debug("Creating <##{self.class.name} @name=\"#{name}\">")
 
         @configuration = configuration
         @name = name

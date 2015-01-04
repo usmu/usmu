@@ -56,9 +56,11 @@ module Usmu
     def generate
       @log.info("Source: #{@configuration.source_path}")
       @log.info("Destination: #{@configuration.destination_path}")
+      @log.info('')
 
       renderables.each do |page|
         @log.success("creating #{page.output_filename}...")
+        @log.debug("Rendering #{page.output_filename} from #{page.name}")
         file = File.join(@configuration.destination_path, page.output_filename)
         directory = File.dirname(file)
 

@@ -8,7 +8,7 @@ exclude:
 - "**/_*.s[ac]ss"
 
 default meta:
-  title: Test website
+  title: Default Title
   layout: html
 
 slim:

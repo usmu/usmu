@@ -68,6 +68,13 @@ module Usmu
         end
       end
 
+      # This is a shortcut to accessing metadata.
+      #
+      # @see #metadata
+      def [](index)
+        metadata[index]
+      end
+
       # Renders the file with any templating language required and returns the result
       #
       # @param variables [Hash] Variables to be used in the template.
@@ -130,6 +137,8 @@ module Usmu
       #   that name is nilable and can also be passed in as an Usmu::Template::Layout already for testing purposes.
       # @return [Usmu::Layout]
       def self.find_layout(configuration, name)
+        return nil if name.nil?
+
         @layout_history = @layout_history || {}
         @layout_history[configuration] = @layout_history[configuration] || {}
         if @layout_history[configuration][name]
@@ -141,7 +150,7 @@ module Usmu
         end
 
         ret = nil
-        if name === 'none'
+        if name === 'none' || name.nil?
         elsif name.class.name == 'String'
           Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
             filename = File.basename(f)
@@ -170,6 +179,17 @@ module Usmu
       end
 
       protected
+
+      # @!attribute [r] parent
+      # @return [Usmu::Template::Layout] The template acting as a wrapper for this template, if any
+      attr_reader :parent
+
+      # Allows for protected level direct access to the metadata store.
+      #
+      # @see #metadata
+      def []=(index, value)
+        @metadata[index] = value
+      end
 
       # @!attribute [r] template_class
       # @return [Tilt::Template] the Tilt template engine for this layout

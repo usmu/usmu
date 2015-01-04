@@ -15,7 +15,7 @@ step 'I run usmu with the arguments :args' do |args|
 end
 
 step 'the directory :destination should match :test_folder' do |destination, test_folder|
-  run = %W{diff -qr --strip-trailing-cr #{destination} #{test_folder}}
+  run = %W{diff -ur --strip-trailing-cr #{test_folder} #{destination}}
   Open3.popen2e(*run) do |i, o, t|
     output = run.join(' ') + "\n" + o.read
     fail output if t.value != 0
