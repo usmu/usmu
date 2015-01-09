@@ -1,5 +1,8 @@
-require 'simplecov'
-SimpleCov.command_name 'RSpec'
+begin
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+rescue LoadError
+end
 
 require 'logging'
 
