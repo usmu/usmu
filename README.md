@@ -1,4 +1,8 @@
-# usmu [![Build Status](https://travis-ci.org/usmu/usmu.svg?branch=master)](https://travis-ci.org/usmu/usmu) [![Dependency Status](https://gemnasium.com/usmu/usmu.svg)](https://gemnasium.com/usmu/usmu)
+# usmu
+
+[![Build Status](https://travis-ci.org/usmu/usmu.svg?branch=master)](https://travis-ci.org/usmu/usmu)
+[![Dependency Status](https://gemnasium.com/usmu/usmu.svg)](https://gemnasium.com/usmu/usmu)
+[![Code Climate](https://codeclimate.com/github/usmu/usmu/badges/gpa.svg)](https://codeclimate.com/github/usmu/usmu)
 
 **Source:** [https://github.com/usmu/usmu](https://github.com/usmu/usmu)  
 **Author:** Matthew Scharley  
