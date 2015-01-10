@@ -22,17 +22,13 @@ task :test => [:clean, :spec, :mutant]
 
 desc 'Run mutation tests'
 task :mutant, [:target] => [:clean] do |t,args|
-  begin
-    old = ENV.delete('CODECLIMATE_REPO_TOKEN')
-    if RUBY_ENGINE != 'ruby' || RUBY_VERSION.to_f > 2.1
-      raise
-    else
-      sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
-    end
-    ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
-  rescue StandardError
+  old = ENV.delete('CODECLIMATE_REPO_TOKEN')
+  if `which mutant 2>&1 > /dev/null; echo \$?`.to_i != 0
     puts 'Mutant isn\'t supported on your platform. Please run these tests on MRI <= 2.1.5.'
+  else
+    sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
   end
+  ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
 end
 
 desc 'Run CI test suite'
