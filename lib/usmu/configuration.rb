@@ -17,6 +17,7 @@ module Usmu
     #
     # @return [Usmu::Configuration]
     def self.from_file(filename)
+      raise 'File not found: #{filename}' if filename.nil? || (not File.exist? filename)
       @log.debug("Loading configuration from #{filename}")
       from_hash(YAML.load_file(filename), filename)
     end
@@ -31,7 +32,7 @@ module Usmu
     # @!attribute [r] source_path
     # @return [String] the full path to the source folder
     def source_path
-      get_path @config['source'] || 'src'
+      get_path self['source'] || 'src'
     end
 
     # @!attribute [r] source_files
@@ -43,13 +44,13 @@ module Usmu
     # @!attribute [r] destination_path
     # @return [String] the full path to the destination folder
     def destination_path
-      get_path @config['destination'] || 'site'
+      get_path self['destination'] || 'site'
     end
 
     # @!attribute [r] layouts_path
     # @return [String] the full path to the layouts folder
     def layouts_path
-      get_path @config['layouts'] || 'layouts'
+      get_path self['layouts'] || 'layouts'
     end
 
     # @!attribute [r] layouts_files
@@ -61,7 +62,7 @@ module Usmu
     # @!attribute [r] layouts_path
     # @return [String] the full path to the layouts folder
     def includes_path
-      get_path @config['includes'] || 'includes'
+      get_path self['includes'] || 'includes'
     end
 
     # @!attribute [r] layouts_files
@@ -106,6 +107,9 @@ module Usmu
     end
 
     private
+
+    attr_reader :log
+    attr_reader :config
 
     # This class has a private constructor.
     #
