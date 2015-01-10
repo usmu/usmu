@@ -68,11 +68,15 @@ module Usmu
 
       unless @loaded.include? load_path
         @loaded << load_path
-        klass = load_path.split('/').map {|s| s.split('_').map(&:capitalize).join }.join('::')
+        klass = path_to_class(load_path)
         @log.debug("Loading plugin #{klass} from '#{load_path}'")
         plugins.push plugin_get(klass)
       end
       nil
+    end
+
+    def path_to_class(load_path)
+      load_path.split('/').map { |s| s.split('_').map(&:capitalize).join }.join('::')
     end
   end
 end

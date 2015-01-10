@@ -22,34 +22,38 @@ module Usmu
         end
         remote_files = @remote_files.files_list
 
-        updated_files = (local_files & remote_files).select do |f|
-          lstat = File.stat("#{@configuration.destination_path}/#{f}")
-          rstat = @remote_files.stat(f)
-          lhash = File.read("#{@configuration.destination_path}/#{f}")
-
-          if not rstat[:md5].nil?
-            rhash = rstat[:md5]
-            hash_comparison = Digest::MD5.hexdigest(lhash) != rhash
-          elsif not rstat[:sha1].nil?
-            rhash = rstat[:sha1]
-            hash_comparison = Digest::SHA1.hexdigest(lhash) != rhash
-          else
-            hash_comparison = false
-          end
-
-          time_comparison = lstat.mtime > rstat[:mtime]
-
-          p f
-          p time_comparison
-          p hash_comparison
-          time_comparison || hash_comparison
-        end
+        updated_files = (local_files & remote_files).select &method(:filter_files)
 
         {
             :local => local_files - remote_files,
             :remote => remote_files - local_files,
             :updated => updated_files,
         }
+      end
+
+      private
+
+      def filter_files(f)
+        lstat = File.stat("#{@configuration.destination_path}/#{f}")
+        rstat = @remote_files.stat(f)
+        lhash = File.read("#{@configuration.destination_path}/#{f}")
+
+        hash_comparison = check_hash(lhash, rstat)
+        time_comparison = lstat.mtime > rstat[:mtime]
+
+        time_comparison || hash_comparison
+      end
+
+      def check_hash(lhash, rstat)
+        if not rstat[:md5].nil?
+          rhash = rstat[:md5]
+          Digest::MD5.hexdigest(lhash) != rhash
+        elsif not rstat[:sha1].nil?
+          rhash = rstat[:sha1]
+          Digest::SHA1.hexdigest(lhash) != rhash
+        else
+          false
+        end
       end
     end
   end
