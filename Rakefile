@@ -18,7 +18,7 @@ task :irb do
 end
 
 desc 'Run all test scripts'
-task :test => [:clean, :spec]
+task :test => [:clean, :spec, :mutant]
 
 desc 'Run mutation tests'
 task :mutant, [:target] => [:clean] do |t,args|
@@ -36,7 +36,7 @@ task :mutant, [:target] => [:clean] do |t,args|
 end
 
 desc 'Run CI test suite'
-task :ci => [:test, :mutant]
+task :ci => [:clean, :spec]
 
 desc 'Clean up after tests'
 task :clean do
