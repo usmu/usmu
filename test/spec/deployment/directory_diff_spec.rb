@@ -20,7 +20,6 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
           {
               'index.html' => {
                   :mtime => now + 100,
-                  :md5 => Digest::MD5.hexdigest(file),
               },
           }
       )
@@ -43,7 +42,6 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
           {
               'index.html' => {
                   :mtime => now,
-                  :md5 => Digest::MD5.hexdigest(file),
               },
           }
       )
@@ -58,7 +56,6 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
           {
               'index.html' => {
                   :mtime => now + 100,
-                  :md5 => Digest::MD5.hexdigest(file),
               },
           }
       )
@@ -73,7 +70,6 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
           {
               'index.html' => {
                   :mtime => now - 100,
-                  :md5 => Digest::MD5.hexdigest(file),
               },
           }
       )
@@ -82,13 +78,28 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
       expect(diff.get_diffs).to eq({local: [], remote: [], updated: ['index.html']})
     end
 
-    it 'returns files with different hashes' do
+    it 'returns files with different md5 hashes' do
       allow(Dir).to receive(:'[]').with('site/**/{*,.??*}').and_return(%w(site/index.html))
       remote_files = Usmu::MockRemoteFiles.new(
           {
               'index.html' => {
                   :mtime => now,
                   :md5 => Digest::MD5.hexdigest(file + 'foo'),
+              },
+          }
+      )
+      diff = Usmu::Deployment::DirectoryDiff.new(configuration, remote_files)
+
+      expect(diff.get_diffs).to eq({local: [], remote: [], updated: ['index.html']})
+    end
+
+    it 'returns files with different sha1 hashes' do
+      allow(Dir).to receive(:'[]').with('site/**/{*,.??*}').and_return(%w(site/index.html))
+      remote_files = Usmu::MockRemoteFiles.new(
+          {
+              'index.html' => {
+                  :mtime => now,
+                  :sha1 => Digest::SHA1.hexdigest(file + 'foo'),
               },
           }
       )
