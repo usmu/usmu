@@ -4,12 +4,12 @@ require 'usmu/template/static_file'
 RSpec.describe Usmu::Template::StaticFile do
   it_behaves_like 'a renderable file'
 
-  let(:configuration) { Usmu::Configuration.from_file('test/site/usmu.yml') }
+  let(:configuration) { Usmu::Configuration.from_file('test-site/usmu.yml') }
 
   it 'uses the \'source\' folder' do
     file = Usmu::Template::StaticFile.new(configuration, 'robots.txt')
     rendered = file.render
-    expect(rendered).to eq(File.read('test/expected-site/robots.txt'))
+    expect(rendered).to eq(File.read('test-site/expected-site/robots.txt'))
   end
 
   it 'has an input path' do

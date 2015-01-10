@@ -10,7 +10,7 @@ Feature:
 
 
   Scenario:
-    Given I have a site at "test/site"
+    Given I have a site at "test-site"
     When I run usmu with the arguments "generate"
-    Then the directory "test/site/site" should match "test/expected-site"
+    Then the directory "test-site/site" should match "test-site/expected-site"
     And the modification time for the input file "index.md" should match the output file "index.html"

@@ -93,7 +93,7 @@ RSpec.configure do |config|
 end
 
 # Load turnip step definitions
-Dir['test/spec/**/*_steps.rb'].each {|f| require f[10..f.length] }
+Dir['spec/**/*_steps.rb'].each {|f| require f[5..f.length] }
 
 # Allow loading of mocks
-$LOAD_PATH.unshift(File.realpath('./test/spec/mock'))
+$LOAD_PATH.unshift(File.realpath('spec/mock'))

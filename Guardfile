@@ -1,11 +1,11 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard :rspec, cmd: 'rspec', spec_paths: ['test/spec'] do
-  watch(%r{^test/spec/.+_spec\.rb$})
-  watch(%r{^lib/usmu/(.+)\.rb$})     { |m| "test/spec/#{m[1]}_spec.rb" }
-  watch(%r{^test/spec/support})      { 'test/spec' }
-  watch('test/spec/spec_helper.rb')  { 'test/spec' }
+guard :rspec, cmd: 'rspec', spec_paths: ['spec'] do
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^lib/usmu/(.+)\.rb$})     { |m| "spec/#{m[1]}_spec.rb" }
+  watch(%r{^test/spec/support})      { 'spec' }
+  watch('test/spec/spec_helper.rb')  { 'spec' }
 
   # Turnip features and steps
   #watch(%r{^spec/acceptance/(.+)\.feature$})

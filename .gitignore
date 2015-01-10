@@ -3,7 +3,6 @@
 /.sass-cache
 /Gemfile*.lock
 /_yardoc/
-/test/coverage/
 /doc/
 /pkg/
 /spec/reports/
@@ -16,4 +15,4 @@
 mkmf.log
 
 # Generated test site
-/test/site/site
+/test-site/site

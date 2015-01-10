@@ -1,7 +1,7 @@
 require 'usmu/site_generator'
 
 RSpec.describe Usmu::SiteGenerator do
-  let(:configuration) { Usmu::Configuration.from_file('test/site/usmu.yml') }
+  let(:configuration) { Usmu::Configuration.from_file('test-site/usmu.yml') }
   let(:generator) { Usmu::SiteGenerator.new(configuration) }
 
   it 'should have layouts' do

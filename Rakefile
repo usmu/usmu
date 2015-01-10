@@ -9,7 +9,7 @@ def current_gems
 end
 
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = 'test/spec'
+  t.pattern = 'spec'
 end
 
 desc 'Start an IRB session with local code available'

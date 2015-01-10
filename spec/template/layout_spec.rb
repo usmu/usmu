@@ -20,7 +20,7 @@ RSpec.describe Usmu::Template::Layout do
   it 'should not allow circular references with #find_layout' do
     # This will also get tested during the acceptance tests, though we test here explicitly to help aid narrow where
     # the bug actually is.
-    configuration = Usmu::Configuration.from_file('test/site/usmu.yml')
+    configuration = Usmu::Configuration.from_file('test-site/usmu.yml')
     layout = Usmu::Template::Layout.new(configuration, 'html.slim')
   end
 
