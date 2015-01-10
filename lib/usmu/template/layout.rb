@@ -7,6 +7,9 @@ module Usmu
   module Template
     # Class to represent files templated with a Tilt library. Most of the custom rendering logic is contained here.
     class Layout < StaticFile
+      @layout_history = Hash.new({})
+      @log = Logging.logger[self]
+
       # @!attribute [r] type
       # @return [String] the type of file this is. This is used to determine which template engine to use.
       attr_reader :type
@@ -44,7 +47,6 @@ module Usmu
         end
         @metadata = metadata
 
-        @parent = nil
         @parent = Layout.find_layout(configuration, self.metadata['layout'])
 
         # Don't use the parent if it would result in weirdness
@@ -139,31 +141,18 @@ module Usmu
       def self.find_layout(configuration, name)
         return nil if name.nil?
 
-        @layout_history = @layout_history || {}
-        @layout_history[configuration] = @layout_history[configuration] || {}
         if @layout_history[configuration][name]
-          Logging.logger[self].debug(
+          @log.debug(
               'Layout loop detected. Current loaded layouts: ' +
               @layout_history[configuration].inspect
           )
           return nil
         else
-          Logging.logger[self].debug("Loading layout '#{name}'")
+          @log.debug("Loading layout '#{name}'")
           @layout_history[configuration][name] = true
         end
 
-        ret = nil
-        if name === 'none' || name.nil?
-        elsif name.class.name == 'String'
-          Dir["#{configuration.layouts_path}/#{name}.*"].each do |f|
-            filename = File.basename(f)
-            if filename != "#{name}.meta.yml"
-              ret = new(configuration, f[(configuration.layouts_path.length + 1)..f.length])
-            end
-          end
-        else
-          ret = name
-        end
+        ret = search_layout(configuration, name)
 
         @layout_history[configuration][name] = nil
         return ret
@@ -251,6 +240,24 @@ module Usmu
       # @return [Hash]
       def get_variables(variables)
         {'site' => @configuration}.deep_merge!(metadata).deep_merge!(variables)
+      end
+
+      # @see Usmu::Template::Layout#find_layout
+      # @return [Usmu::Template::Layout]
+      def self.search_layout(configuration, name)
+        if name === 'none' || name.nil?
+          return nil
+        elsif name.class.name == 'String'
+          layouts_path = configuration.layouts_path
+          Dir["#{layouts_path}/#{name}.*"].each do |f|
+            filename = File.basename(f)
+            if filename != "#{name}.meta.yml"
+              return new(configuration, f[(layouts_path.length + 1)..f.length])
+            end
+          end
+        else
+          return name
+        end
       end
     end
   end

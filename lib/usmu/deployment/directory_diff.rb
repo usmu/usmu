@@ -17,9 +17,7 @@ module Usmu
       #   * `:remote` - remote-only files
       #   * `:updated` - files that were updated
       def get_diffs
-        local_files = Dir[@configuration.destination_path + '/**/{*,.??*}'].map do |f|
-          f[(@configuration.destination_path.length + 1)..f.length]
-        end
+        local_files = local_files_list
         remote_files = @remote_files.files_list
 
         updated_files = (local_files & remote_files).select &method(:filter_files)
@@ -53,6 +51,12 @@ module Usmu
           Digest::SHA1.hexdigest(lhash) != rhash
         else
           false
+        end
+      end
+
+      def local_files_list
+        Dir[@configuration.destination_path + '/**/{*,.??*}'].map do |f|
+          f[(@configuration.destination_path.length + 1)..f.length]
         end
       end
     end
