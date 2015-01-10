@@ -23,7 +23,11 @@ task :test => [:clean, :spec]
 desc 'Run mutation tests'
 task :mutant, [:target] => [:clean] do |t,args|
   old = ENV.delete('CODECLIMATE_REPO_TOKEN')
-  sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
+  if RUBY_ENGINE != 'Ruby' || RUBY_REVISION > 48405
+    puts 'Mutant isn\'t supported on your platform. Please run these tests on MRI <= 2.1.5.'
+  else
+    sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
+  end
   ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
 end
 
