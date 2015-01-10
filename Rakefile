@@ -22,7 +22,9 @@ task :test => [:clean, :spec]
 
 desc 'Run mutation tests'
 task :mutant, [:target] => [:clean] do |t,args|
+  old = ENV.delete('CODECLIMATE_REPO_TOKEN')
   sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
+  ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
 end
 
 desc 'Run CI test suite'
