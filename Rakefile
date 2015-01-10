@@ -20,6 +20,11 @@ end
 desc 'Run all test scripts'
 task :test => [:clean, :spec]
 
+desc 'Run mutation tests'
+task :mutant => [:clean] do
+  sh *%w{bundle exec mutant --include lib --require usmu --use rspec --fail-fast Usmu*}
+end
+
 desc 'Run CI test suite'
 task :ci => [:test]
 
