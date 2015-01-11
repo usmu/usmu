@@ -79,7 +79,7 @@ end
 # (mostly) borrowed from: https://gist.github.com/mcansky/802396
 desc 'generate changelog with nice clean output'
 task :changelog, :since_c, :until_c do |t,args|
-  since_c = args[:since_c] || `git tag | head -1`.chomp
+  since_c = args[:since_c] || `git tag | egrep '^[0-9]+\\.[0-9]+\\.[0-9]+\$' | sort -Vr | head -n 1`.chomp
   until_c = args[:until_c]
   cmd=`git log --pretty='format:%ci::::%an <%ae>::::%s::::%H' #{since_c}..#{until_c}`
 
