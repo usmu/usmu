@@ -17,16 +17,16 @@ module Usmu
     #
     # @return [Usmu::Configuration]
     def self.from_file(filename)
-      raise 'File not found: #{filename}' if filename.nil? || (not File.exist? filename)
+      raise ArgumentError, "File not found: #{filename}" if filename.nil? || (not File.exist? filename)
       @log.debug("Loading configuration from #{filename}")
-      from_hash(YAML.load_file(filename), filename)
+      new(YAML.load_file(filename), filename)
     end
 
     # Load a configuration from a hash.
     #
     # @return [Usmu::Configuration]
     def self.from_hash(hash, config_path = nil)
-      self.new(hash, config_path)
+      new(hash, config_path)
     end
 
     # @!attribute [r] source_path
@@ -87,7 +87,7 @@ module Usmu
     #   Returns a value from the hash loaded from YAML. The type of value will ultimately depend on the configuration
     #   file and the indices provided.
     def [](*indices)
-      if indices[-1].class.name == 'Hash'
+      if indices.last.instance_of? Hash
         opts = indices.pop
       else
         opts = {}
@@ -106,6 +106,13 @@ module Usmu
       value
     end
 
+    # Returns an array of exclusions
+    #
+    # @return [Array]
+    def exclude
+      self['exclude'] || []
+    end
+
     private
 
     attr_reader :log
@@ -119,7 +126,9 @@ module Usmu
       @log = Logging.logger[self]
       @config = hash
       @config_file = config_path
-      @config_dir = config_path ? File.dirname(config_path) : nil
+      @config_dir = if config_path
+                      File.dirname(config_path)
+                    end
     end
 
     # Helper function to transform a relative path in the configuration file to a relative path from the current
@@ -138,10 +147,9 @@ module Usmu
     #
     # @return [Boolean]
     def excluded?(filename)
-      flags = defined?(File::FNM_EXTGLOB) ? File::FNM_EXTGLOB | File::FNM_PATHNAME : File::FNM_PATHNAME
-      (@config['exclude'] || []).each do |f|
-        f += '**/*' if f[-1] == '/'
-        return true if File.fnmatch(f, filename, flags)
+      exclude.each do |f|
+        f += '**/*' if f.end_with? '/'
+        return true if File.fnmatch(f, filename, FILE_GLOB_FLAGS)
       end
       false
     end
@@ -154,7 +162,7 @@ module Usmu
       Dir["#{directory}/**/{*,.??*}"].
           select {|f| not File.directory? f }.
           select {|f| !f.match(/\.meta.yml$/) }.
-          map {|f| f[(directory.length + 1)..f.length] }.
+          map {|f| f[directory.length + 1, f.length] }.
           select {|f| not excluded? f }
     end
   end

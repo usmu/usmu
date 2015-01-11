@@ -6,7 +6,7 @@ RSpec.describe Usmu::Configuration do
         'source' => 'source',
         'destination' => 'destination',
         'layouts' => 'templates',
-        'includes' => 'includes',
+        'includes' => 'inc',
     }
   }
   let (:configuration) { Usmu::Configuration.from_hash(configuration_hash, 'test/usmu.yaml') }
@@ -25,21 +25,40 @@ RSpec.describe Usmu::Configuration do
       configuration = Usmu::Configuration.from_hash(configuration_hash, 'usmu.yaml')
       expect(configuration.config_dir).to eq('.')
     end
+
+    it 'should set config_dir to nil if no config_path is set' do
+      configuration = Usmu::Configuration.from_hash(configuration_hash)
+      expect(configuration.config_dir).to eq(nil)
+    end
   end
 
   context '.from_file' do
-    it 'should take 1 argument' do
-      expect(Usmu::Configuration.method(:from_file).arity).to eq(1)
+    it 'should raise an error if no filename is specified' do
+      expect { Usmu::Configuration.from_file(nil) }.to raise_error(ArgumentError, 'File not found: ')
     end
 
-    it 'should break if no filename is specified' do
-      expect { Usmu::Configuration.from_file(nil) }.to raise_error
+    it 'should raise an error if file does not exist' do
+      expect { Usmu::Configuration.from_file('nonexistent.yml') }.to raise_error(ArgumentError, 'File not found: nonexistent.yml')
+    end
+
+    it 'should pass through the contents of the named file to constructor' do
+      allow(YAML).to receive(:load_file).with('usmu.yml').and_return(configuration_hash)
+      allow(File).to receive(:exist?).with('usmu.yml').and_return(true)
+      expect(Usmu::Configuration).to receive(:new).with(configuration_hash, 'usmu.yml')
+      Usmu::Configuration.from_file('usmu.yml')
+      expect(@log_output.readline).to eq("  DEBUG  Usmu::Configuration : Loading configuration from usmu.yml\n")
     end
   end
 
   context '.from_hash' do
-    it 'should do something' do
+    it 'should pass through it\'s arguments through to constructor' do
+      expect(Usmu::Configuration).to receive(:new).with(configuration_hash, 'usmu.yml')
+      Usmu::Configuration.from_hash(configuration_hash, 'usmu.yml')
+    end
 
+    it 'should have a default of nil for the configuration name' do
+      expect(Usmu::Configuration).to receive(:new).with(configuration_hash, nil)
+      Usmu::Configuration.from_hash(configuration_hash)
     end
   end
 
@@ -75,7 +94,7 @@ RSpec.describe Usmu::Configuration do
 
   context '#includes_path' do
     it 'should prepend configuration folder' do
-      expect(configuration.includes_path).to eq('test/includes')
+      expect(configuration.includes_path).to eq('test/inc')
     end
 
     it 'should have a default path' do
@@ -114,6 +133,16 @@ RSpec.describe Usmu::Configuration do
     end
   end
 
+  context '#exclude' do
+    it 'returns the exclude option in the configuration array' do
+      expect(Usmu::Configuration.from_hash({'exclude' => ['test.md']}).exclude).to eq(['test.md'])
+    end
+
+    it 'has a default value of an empty array' do
+      expect(empty_configuration.exclude).to eq([])
+    end
+  end
+
   context '#[]' do
     it 'should remember arbitrary configuration' do
       configuration = Usmu::Configuration.from_hash({:test => 'foo'})
@@ -134,16 +163,33 @@ RSpec.describe Usmu::Configuration do
       configuration = Usmu::Configuration.from_hash({test: {bar: 'foo'}})
       expect(configuration[:test, :bar]).to eq('foo')
     end
+
+    it 'should return nil if the element does not exist' do
+      expect(empty_configuration[:test]).to eq(nil)
+    end
   end
 
   context '#get_path' do
+    it 'should return input if config_dir is nil' do
+      expect(empty_configuration.send :get_path, 'source').to eq('source')
+    end
 
+    it 'should prepend input with config_dir if it is not nil' do
+      expect(configuration.send :get_path, 'source').to eq('test/source')
+    end
   end
 
   context '#get_files' do
     it 'should ignore metadata files' do
       allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/index.meta.yml src/test.md))
       expect(empty_configuration.send :get_files, 'src').to eq(%w(index.md test.md))
+    end
+
+    it 'should not return folders' do
+      allow(File).to receive(:directory?).and_return(false)
+      allow(File).to receive(:directory?).with('src/test').and_return(true)
+      allow(Dir).to receive(:'[]').with('src/**/{*,.??*}').and_return(%w(src/index.md src/index.meta.yml src/test src/test/test.md))
+      expect(empty_configuration.send :get_files, 'src').to eq(%w(index.md test/test.md))
     end
 
     it 'should exclude files' do
