@@ -1,5 +1,26 @@
 # Usmu Change Log
 
+## 0.3.2
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Add Code Climate (740713e6fb181036fa0e071149b0f85fbb44e520)
+* Use Code Climate's coverage tracking (536365b3c821d7ab145fd9e6241a1cd5302ca986)
+* First pass of a directory diff for deployment plugins (47f0dccbb3b330dcf8821248d4cd964b0564e50c)
+* Add some more tests for coverage of DirectoryDiff (8ae3a9311c395a3f09f3cc4d0e6753a24a6b9f99)
+* Cleanup code complexity (2d4cbfc9ae78cda8a0607c3998bda016b65f041b)
+* Try to cleanup Layout a little (a2c6ce32fa16075ba332932b9a542ff1c8a35732)
+* Install mutant (6f170c6a3181c9a071c930a949058e3d6e760b6b)
+* Move spec folder into root directory (571451ddd9403ede4f097072facf443178428953)
+* Finalise mutant configuration (2e6fd8239112ca7f3cb9ab75424b82606835b944)
+* Don't allow reporting code climate for mutant tests (cca22b243a052165173e04dde8294864aa639c0c)
+* Add a guard to only run on MRI (1035ea042f12dfe7bd9ce7d632245b7c59e48d3f)
+* Stop mutant attempting to run where it won't (38aa6c042c9d8bb3eacd75e7b8a937c538ca729f)
+* Don't run mutant on CI (b5d6d9f6f50e9331a0ec07d50596d605829d0d8e)
+* Don't mask errors from mutant (6257b3b02749ba07f697014562f2768198cd12c0)
+* Convert existing coverage for Configuration to proper unit tests (536df7c3a17268920bbb7bbc4de74f38d224755f)
+* 100% mutant coverage for Configuration (6d616736dd01971c842f870164b1b0612ebd80aa)
+
 ## 0.3.1
 
 Matthew Scharley <matt.scharley@gmail.com>
