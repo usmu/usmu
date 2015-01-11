@@ -5,7 +5,7 @@ require 'rspec/core/rake_task'
 require 'usmu/version'
 
 def current_gems
-  Dir["pkg/usmu-#{Usmu::VERSION}*.gem"]
+  Dir["pkg/usmu-#{Usmu::VERSION}*.gem"].sort_by &:length
 end
 
 RSpec::Core::RakeTask.new(:spec) do |t|
