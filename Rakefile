@@ -8,13 +8,17 @@ def current_gems
   Dir["pkg/usmu-#{Usmu::VERSION}*.gem"].sort_by &:length
 end
 
+def platforms
+  %w(ruby java)
+end
+
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec'
 end
 
 desc 'Start an IRB session with local code available'
 task :irb do
-  exec 'bundle', 'exec', 'irb', '-I', 'lib'
+  exec *%w{bundle exec irb}
 end
 
 desc 'Run all test scripts'
@@ -49,9 +53,16 @@ end
 namespace :gem do
   desc 'Build gems'
   task :build => [:clean] do
+    if ENV['BUNDLE_GEMFILE']
+      STDERR.puts 'This command will fail if run via bundler. If you are using RVM, please try running the following command:'
+      STDERR.puts "  NOEXEC_DISABLE=1 #{File.basename($0)} #{ARGV.join(' ')}"
+      exit 1
+    end
+
     mkdir 'pkg' unless File.exist? 'pkg'
-    Dir['*.gemspec'].each do |gemspec|
-      sh "gem build #{gemspec}"
+    platforms.each do |p|
+      ENV['BUILD_PLATFORM'] = p
+      sh *%w{gem build usmu.gemspec}
     end
     Dir['*.gem'].each do |gem|
       mv gem, "pkg/#{gem}"
@@ -61,18 +72,18 @@ namespace :gem do
   desc 'Install gem'
   task :install => ['gem:build'] do
     if RUBY_PLATFORM == 'java'
-      sh "gem install pkg/usmu-#{Usmu::VERSION}-java.gem"
+      sh *%W{gem install pkg/usmu-#{Usmu::VERSION}-java.gem}
     else
-      sh "gem install pkg/usmu-#{Usmu::VERSION}.gem"
+      sh *%W{gem install pkg/usmu-#{Usmu::VERSION}.gem}
     end
   end
 
   desc 'Deploy gems to rubygems'
   task :deploy => ['gem:build'] do
     current_gems.each do |gem|
-      sh "gem push #{gem}"
+      sh *%W{gem push #{gem}}
     end
-    sh "git tag #{Usmu::VERSION}" if File.exist? '.git'
+    sh *%W{git tag #{Usmu::VERSION}} if File.exist? '.git'
   end
 end
 

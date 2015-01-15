@@ -18,12 +18,11 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.test_files    = spec.files.grep(%r{^(test-site|spec)/})
   spec.require_paths = ['lib']
 
   spec.add_dependency 'slim', '~> 3.0'
   spec.add_dependency 'tilt', '~> 2.0'
-  spec.add_dependency 'redcarpet', '~> 3.2', '>= 3.2.1'
   spec.add_dependency 'deep_merge', '~> 1.0'
   spec.add_dependency 'commander', '~> 4.2'
   spec.add_dependency 'logging', '~> 1.8'
@@ -35,8 +34,19 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.8'
   spec.add_development_dependency 'guard', '~> 2.8'
   spec.add_development_dependency 'guard-rspec', '~> 4.3'
-  spec.add_development_dependency 'libnotify', '~> 0.9'
   spec.add_development_dependency 'turnip', '~> 1.2'
   spec.add_development_dependency 'sass', '~> 3.4'
   spec.add_development_dependency 'timeout', '~> 0.0'
+
+  case ENV['BUILD_PLATFORM']
+    when 'ruby'
+      spec.add_dependency 'redcarpet', '~> 3.2', '>= 3.2.1'
+      spec.add_development_dependency 'libnotify', '~> 0.9'
+    when 'java'
+      spec.platform = 'java'
+      spec.add_dependency 'kramdown', '~> 1.5'
+    when nil
+    else
+      STDERR.puts "WARNING: Unknown platform: #{ENV['BUILD_PLATFORM']}. This may not result in a working gem."
+  end
 end
