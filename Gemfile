@@ -2,12 +2,10 @@ source 'https://rubygems.org'
 
 unless ENV['BUILD_PLATFORM']
   ENV['BUILD_PLATFORM'] = case RUBY_ENGINE
-                            when 'ruby'
-                              'ruby'
                             when 'jruby'
                               'java'
                             else
-                              nil
+                              'ruby'
                           end
 end
 
