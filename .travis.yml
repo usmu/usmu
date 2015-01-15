@@ -6,17 +6,17 @@ rvm:
   - 2.1
   - 2.2
   - ruby-head
-  - mruby-head
-  - rbx-2.1
-  - rbx-2.2
-  - rbx-2.3
+  #- mruby-head
+  #- rbx-2.1
+  #- rbx-2.2
+  #- rbx-2.3
   - rbx-2.4
+  - jruby
+  - jruby-head
 matrix:
   include:
     - rvm: jruby
-    - rvm: jruby
       env: JRUBY_OPTS='--2.0'
-    - rvm: jruby-head
     - rvm: jruby-head
       env: JRUBY_OPTS='--2.0'
   allow_failures:
