@@ -11,7 +11,7 @@ RSpec.describe Usmu::SiteGenerator do
 
   it 'should have a list of renderable items' do
     expect(generator.respond_to? :renderables).to eq(true)
-    expect(generator.renderables.map {|r| r.name}.sort).to eq(%w{.dotfiletest.txt css/app.scss default.md embedded.md index.md posts/test-post.md robots.txt})
+    expect(generator.renderables.map {|r| r.name}.sort).to eq(%w{.dotfiletest.txt assets/external.scss css/app.scss default.md embedded.md index.md posts/test-post.md robots.txt})
   end
 
   it 'should have pages' do
@@ -21,7 +21,7 @@ RSpec.describe Usmu::SiteGenerator do
 
   it 'should have files' do
     expect(generator.respond_to? :files).to eq(true)
-    expect(generator.files.map {|f| f.name}.sort).to eq(%w{.dotfiletest.txt robots.txt})
+    expect(generator.files.map {|f| f.name}.sort).to eq(%w{.dotfiletest.txt assets/external.scss robots.txt})
   end
 
   it 'should not list directories' do
