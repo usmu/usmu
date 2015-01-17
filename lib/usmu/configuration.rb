@@ -1,4 +1,5 @@
 require 'yaml'
+require 'usmu/metadata_service'
 
 module Usmu
   # This class is used to represent a configuration file. This file should be a YAML file and called `usmu.yml`
@@ -41,6 +42,10 @@ module Usmu
       get_files source_path
     end
 
+    def source_metadata
+      @source_metadata ||= MetadataService.new(source_path)
+    end
+
     # @!attribute [r] destination_path
     # @return [String] the full path to the destination folder
     def destination_path
@@ -59,6 +64,10 @@ module Usmu
       get_files layouts_path
     end
 
+    def layouts_metadata
+      @layouts_metadata ||= MetadataService.new(layouts_path)
+    end
+
     # @!attribute [r] layouts_path
     # @return [String] the full path to the layouts folder
     def includes_path
@@ -69,6 +78,10 @@ module Usmu
     # @return [Array<String>] a list of renderable files in the layouts folder
     def includes_files
       get_files includes_path
+    end
+
+    def includes_metadata
+      @includes_metadata ||= MetadataService.new(includes_path)
     end
 
     # An index accessor to directly access the configuration file. It should be noted that `['source']` and
@@ -161,7 +174,7 @@ module Usmu
     def get_files(directory)
       Dir["#{directory}/**/{*,.??*}"].
           select {|f| not File.directory? f }.
-          select {|f| !f.match(/\.meta.yml$/) }.
+          select {|f| !f.match(/[\.\/]meta\.yml$/) }.
           map {|f| f[directory.length + 1, f.length] }.
           select {|f| not excluded? f }
     end

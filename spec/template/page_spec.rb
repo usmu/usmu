@@ -7,12 +7,12 @@ RSpec.describe Usmu::Template::Page do
   let(:configuration) { Usmu::Configuration.from_hash({}) }
 
   it 'uses the \'source\' folder' do
-    page = Usmu::Template::Page.new(configuration, 'index.md', 'md', '# test', {})
+    page = Usmu::Template::Page.new(configuration, 'index.md', {}, 'md', '# test')
     expect(page.send :content_path).to eq('src')
   end
 
   it 'has an input path' do
-    page = Usmu::Template::Page.new(configuration, 'index.md', 'md', '# test', {})
+    page = Usmu::Template::Page.new(configuration, 'index.md', {}, 'md', '# test')
     expect(page.respond_to? :input_path).to eq(true)
     expect(page.input_path).to eq('src/index.md')
   end

@@ -42,8 +42,7 @@ desc 'Clean up after tests'
 task :clean do
   [
       'tmp',
-      'test/coverage',
-      'test/site/site',
+      'test-site/site',
       current_gems,
   ].flatten.each do |f|
     rm_r f if File.exist? f

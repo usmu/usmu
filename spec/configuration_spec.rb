@@ -133,6 +133,30 @@ RSpec.describe Usmu::Configuration do
     end
   end
 
+  context '#source_metadata' do
+    it 'should return a new metadata service for the source folder' do
+      ms = {fake: 'success'}
+      expect(Usmu::MetadataService).to receive(:new).with(empty_configuration.source_path).and_return(ms)
+      expect(empty_configuration.source_metadata).to eq(ms)
+    end
+  end
+
+  context '#layouts_metadata' do
+    it 'should return a new metadata service for the layouts folder' do
+      ms = {fake: 'success'}
+      expect(Usmu::MetadataService).to receive(:new).with(empty_configuration.layouts_path).and_return(ms)
+      expect(empty_configuration.layouts_metadata).to eq(ms)
+    end
+  end
+
+  context '#includes_metadata' do
+    it 'should return a new metadata service for the layouts folder' do
+      ms = {fake: 'success'}
+      expect(Usmu::MetadataService).to receive(:new).with(empty_configuration.includes_path).and_return(ms)
+      expect(empty_configuration.includes_metadata).to eq(ms)
+    end
+  end
+
   context '#exclude' do
     it 'returns the exclude option in the configuration array' do
       expect(Usmu::Configuration.from_hash({'exclude' => ['test.md']}).exclude).to eq(['test.md'])

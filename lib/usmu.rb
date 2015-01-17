@@ -75,6 +75,7 @@ end
 %W{
   usmu/version
   usmu/configuration
+  usmu/metadata_service
   usmu/site_generator
   usmu/plugin
   usmu/plugin/core

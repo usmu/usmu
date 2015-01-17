@@ -11,16 +11,17 @@ module Usmu
 
       # @param configuration [Usmu::Configuration] The configuration for the website we're generating.
       # @param name [String] The name of the file in the source directory.
+      # @param metadata [Hash] The metadata for the file.
       # @param type [String] The type of template to use with the file. Not used for StaticFile.
       #   Used for testing purposes.
       # @param content [String] The content of the file. Used for testing purposes.
-      # @param metadata [String] The metadata for the file. Used for testing purposes.
-      def initialize(configuration, name, type = nil, content = nil, metadata = nil)
+      def initialize(configuration, name, metadata, type = nil, content = nil)
         @log = Logging.logger[self]
         @log.debug("Creating <##{self.class.name} @name=\"#{name}\">")
 
         @configuration = configuration
         @name = name
+        @metadata = metadata
         @type = type
         @content = content
       end

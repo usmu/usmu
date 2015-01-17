@@ -16,11 +16,11 @@ module Usmu
 
       # @param configuration [Usmu::Configuration] The configuration for the website we're generating.
       # @param name [String] The name of the file in the source directory.
+      # @param metadata [Hash] The metadata for the file.
       # @param type [String] The type of template to use with the file. Used for testing purposes.
       # @param content [String] The content of the file. Used for testing purposes.
-      # @param metadata [String] The metadata for the file. Used for testing purposes.
-      def initialize(configuration, name, type = nil, content = nil, metadata = nil)
-        super(configuration, name)
+      def initialize(configuration, name, metadata, type = nil, content = nil)
+        super(configuration, name, metadata, type, content)
 
         if type.nil?
           type = name.split('.').last
@@ -36,16 +36,6 @@ module Usmu
           content = File.read("#{path}.#{type}")
         end
         @content = content
-
-        if metadata.nil?
-          meta_file = "#{path}.meta.yml"
-          metadata = if File.exist? meta_file
-            YAML.load_file(meta_file)
-          else
-            {}
-          end
-        end
-        @metadata = metadata
 
         @parent = Layout.find_layout(configuration, self.metadata['layout'])
 
@@ -64,7 +54,7 @@ module Usmu
       # This will include any metadata from parent templates and default metadata
       def metadata
         if @parent.nil?
-          (@configuration['default meta'] || {}).dup.deep_merge!(@metadata)
+          @configuration['default meta', default: {}].deep_merge!(@metadata)
         else
           @parent.metadata.deep_merge!(@metadata)
         end
@@ -252,7 +242,8 @@ module Usmu
           Dir["#{layouts_path}/#{name}.*"].each do |f|
             filename = File.basename(f)
             if filename != "#{name}.meta.yml"
-              return new(configuration, f[(layouts_path.length + 1)..f.length])
+              path = f[(layouts_path.length + 1)..f.length]
+              return new(configuration, path, configuration.layouts_metadata.metadata(path))
             end
           end
         else

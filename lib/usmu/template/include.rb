@@ -34,7 +34,8 @@ module Usmu
           Dir["#{configuration.includes_path}/#{name}.*"].each do |f|
             filename = File.basename(f)
             if filename != "#{name}.meta.yml"
-              return new(configuration, f[(configuration.includes_path.length + 1)..f.length])
+              path = f[(configuration.includes_path.length + 1)..f.length]
+              return new(configuration, path, configuration.includes_metadata.metadata(path))
             end
           end
           nil

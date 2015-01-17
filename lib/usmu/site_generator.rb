@@ -15,7 +15,7 @@ module Usmu
     # @!attribute [r] layouts
     # @return [Array<Usmu::Layout>] a list of layouts available in this website.
     def layouts
-      @configuration.layouts_files.map {|l| Usmu::Template::Layout.new(@configuration, l) }
+      @configuration.layouts_files.map {|l| Usmu::Template::Layout.new(@configuration, l, @configuration.layouts_metadata.metadata(l)) }
     end
 
     # @!attribute [r] renderables
@@ -29,10 +29,11 @@ module Usmu
     # Usmu::Template::StaticFile and thus be renderable, however most files will be one of the subclasses of that class.
     def renderables
       @configuration.source_files.map do |filename|
+        metadata = @configuration.source_metadata.metadata(filename)
         if Usmu::Template::Layout.is_valid_file? 'source', filename
-          Usmu::Template::Page.new(@configuration, filename)
+          Usmu::Template::Page.new(@configuration, filename, metadata)
         else
-          Usmu::Template::StaticFile.new(@configuration, filename)
+          Usmu::Template::StaticFile.new(@configuration, filename, metadata)
         end
       end
     end
