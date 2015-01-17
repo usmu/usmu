@@ -54,7 +54,7 @@ module Usmu
       # This will include any metadata from parent templates and default metadata
       def metadata
         if @parent.nil?
-          @configuration['default meta', default: {}].deep_merge!(@metadata)
+          @configuration['default meta', default: {}].dup.deep_merge!(@metadata)
         else
           @parent.metadata.deep_merge!(@metadata)
         end

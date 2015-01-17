@@ -1,4 +1,5 @@
 require 'yaml'
+require 'deep_merge'
 
 module Usmu
   class MetadataService
@@ -8,7 +9,7 @@ module Usmu
 
     def metadata(file)
       last_folder = file.rindex('/')
-      base_meta = last_folder ? metadata(file[0..(last_folder - 1)]) : {}
+      base_meta = last_folder ? metadata(file[0..(last_folder - 1)]).dup : {}
 
       metafile = if File.directory?(File.join(@base, file))
                    file + '/meta.yml'
