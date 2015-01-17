@@ -30,7 +30,7 @@ module Usmu
     def renderables
       @configuration.source_files.map do |filename|
         metadata = @configuration.source_metadata.metadata(filename)
-        if Usmu::Template::Layout.is_valid_file? 'source', filename
+        if Usmu::Template::Layout.is_valid_file?('source', filename) && (!metadata['static'])
           Usmu::Template::Page.new(@configuration, filename, metadata)
         else
           Usmu::Template::StaticFile.new(@configuration, filename, metadata)
