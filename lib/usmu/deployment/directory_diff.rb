@@ -58,9 +58,9 @@ module Usmu
       end
 
       def local_files_list
-        Dir[@configuration.destination_path + '/**/{*,.??*}'].map do |f|
-          f[(@configuration.destination_path.length + 1), f.length]
-        end
+        Dir[@configuration.destination_path + '/**/{*,.??*}'].
+            select {|f| not File.directory? f }.
+            map {|f| f[(@configuration.destination_path.length + 1), f.length]}
       end
     end
   end

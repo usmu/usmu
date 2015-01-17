@@ -108,5 +108,14 @@ RSpec.describe Usmu::Deployment::DirectoryDiff do
 
       expect(diff.send :local_files_list).to eq(%w{index.html})
     end
+
+    it 'doesn\'t return directories listed in the output directory' do
+      expect(Dir).to receive(:[]).with('site/**/{*,.??*}').and_return(%w{site/assets site/assets/test.css site/index.html})
+      allow(File).to receive(:directory?).and_return(false)
+      expect(File).to receive(:directory?).with('site/assets').and_return(true)
+      diff = Usmu::Deployment::DirectoryDiff.new(configuration, nil)
+
+      expect(diff.send :local_files_list).to eq(%w{assets/test.css index.html})
+    end
   end
 end
