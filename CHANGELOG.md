@@ -1,5 +1,23 @@
 # Usmu Change Log
 
+## 0.3.3
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Disallow mutant on 2.2 (f6afd151d54c8fefb6a9af68a7cea1bae8f32265)
+* Cleanup gem builds to use the same gemspec (48cce89d6936e0b0668bf9714989d786ac573aaf)
+* Cleanup Travis since we don't need includes (as much) (8453421218e0b63755bccae6b2e01754225bbe7a)
+* [skip ci] Add a minimum Ruby requirement (c90711ac1e41c8a9973e987aa308a88c951e05dc)
+* Hopefully fix rbx (e6a51d07986b4347394ae3b571bb6b2a16ad1db3)
+* [skip ci] minor cleanup (662e0e6e82aa01fe0883e794dc9fea0407dfdadc)
+* [#15][#16] Add an example of directory metadata and static parsing (b369fdde02a5b7c25f60e86fabc248a448b68b19)
+* [#15] Add directory metadata (66dd094ffdcafb8ecced06a9ad7c578b64885689)
+* [#16] add a metadata value to force static parsing (02dc5794f9dc3efc2655d375cd2dd17c45e8cea7)
+* Fix minor regression from #15 (e179fd27d133d647d7025d82a697e6d1f202224b)
+* [#21] Add some ignored classes for mutant (0bf4a328e6aebf87ed489bcf3d6f19ea111fa95e)
+* [#21] Cover Usmu::Deployment::DirectoryDiff (d4836b1ddb950223786e35b024e2692e106a2c41)
+* [#18] Initialise logging before commander (6117299b6303b54249c06d894e074cbb437623c2)
+
 ## 0.3.2
 
 Matthew Scharley <matt.scharley@gmail.com>
