@@ -9,7 +9,7 @@ module Usmu
 
     def metadata(file)
       last_folder = file.rindex('/')
-      base_meta = last_folder ? metadata(file[0..(last_folder - 1)]).dup : {}
+      base_meta = last_folder ? metadata(file[0..(last_folder - 1)]) : {}
 
       metafile = if File.directory?(File.join(@base, file))
                    file + '/meta.yml'

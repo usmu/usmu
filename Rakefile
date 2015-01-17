@@ -30,7 +30,13 @@ task :mutant, [:target] => [:clean] do |t,args|
   if `which mutant 2>&1 > /dev/null; echo \$?`.to_i != 0
     puts 'Mutant isn\'t supported on your platform. Please run these tests on MRI <= 2.1.5.'
   else
-    sh('bundle', 'exec', 'mutant', '--include', 'lib', '--require', 'usmu', '--use', 'rspec', args[:target] || 'Usmu*')
+    sh 'bundle', 'exec', 'mutant',
+       '--include', 'lib',
+       '--require', 'usmu',
+       '--use', 'rspec',
+       '--ignore-subject', 'Usmu::Deployment::RemoteFileInterface',
+       '--ignore-subject', 'Usmu::Plugin::CoreHooks',
+       args[:target] || 'Usmu*'
   end
   ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
 end
