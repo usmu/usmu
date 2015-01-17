@@ -33,9 +33,11 @@ task :mutant, [:target] => [:clean] do |t,args|
     sh 'bundle', 'exec', 'mutant',
        '--include', 'lib',
        '--require', 'usmu',
+       '--require', 'usmu/deployment',
        '--use', 'rspec',
-       '--ignore-subject', 'Usmu::Deployment::RemoteFileInterface',
-       '--ignore-subject', 'Usmu::Plugin::CoreHooks',
+       # Interfaces and documentation classes
+       '--ignore-subject', 'Usmu::Deployment::RemoteFileInterface*',
+       '--ignore-subject', 'Usmu::Plugin::CoreHooks*',
        args[:target] || 'Usmu*'
   end
   ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?

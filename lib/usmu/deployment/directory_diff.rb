@@ -31,12 +31,15 @@ module Usmu
 
       private
 
+      attr_reader :configuration
+      attr_reader :remote_files
+
       def filter_files(f)
         lstat = File.stat("#{@configuration.destination_path}/#{f}")
         rstat = @remote_files.stat(f)
         lhash = File.read("#{@configuration.destination_path}/#{f}")
 
-        hash_comparison = check_hash(lhash, rstat)
+        hash_comparison = !check_hash(lhash, rstat)
         time_comparison = lstat.mtime > rstat[:mtime]
 
         time_comparison || hash_comparison
@@ -45,18 +48,18 @@ module Usmu
       def check_hash(lhash, rstat)
         if not rstat[:md5].nil?
           rhash = rstat[:md5]
-          Digest::MD5.hexdigest(lhash) != rhash
+          Digest::MD5.hexdigest(lhash).eql? rhash
         elsif not rstat[:sha1].nil?
           rhash = rstat[:sha1]
-          Digest::SHA1.hexdigest(lhash) != rhash
+          Digest::SHA1.hexdigest(lhash).eql? rhash
         else
-          false
+          true
         end
       end
 
       def local_files_list
         Dir[@configuration.destination_path + '/**/{*,.??*}'].map do |f|
-          f[(@configuration.destination_path.length + 1)..f.length]
+          f[(@configuration.destination_path.length + 1), f.length]
         end
       end
     end
