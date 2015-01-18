@@ -1,5 +1,13 @@
 # Usmu Change Log
 
+## 0.4.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Bump to 0.4.0.dev for further dev (32596fe063dfb0452098b0bcac7d97f57ee772a5)
+* Ensure that loggers have the right functions available (df1c685c9ee7f3e4070351700d0ec28d999bc345)
+* [#25] Include a Rack app for viewing site dynamically (964486386bfa6325f191a44be0eb301ce5d200be)
+
 ## 0.3.4
 
 Matthew Scharley <matt.scharley@gmail.com>
