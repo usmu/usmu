@@ -21,6 +21,7 @@ module Usmu
       def initialize(args)
         @log = Logging.logger[self]
         initialize_logging args
+        Usmu.load_lazy_tilt_modules
         @commander = initialize_commander(args)
 
         Usmu.plugins.load_plugins

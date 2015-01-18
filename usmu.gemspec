@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'slim', '~> 3.0'
   spec.add_dependency 'tilt', '~> 2.0'
+  spec.add_dependency 'rack', '~> 1.6'
   spec.add_dependency 'deep_merge', '~> 1.0'
   spec.add_dependency 'commander', '~> 4.2'
   spec.add_dependency 'logging', '~> 1.8'

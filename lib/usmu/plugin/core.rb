@@ -28,6 +28,12 @@ module Usmu
           command.description = 'Initialise a new website in the given path, or the current directory if none given.'
           command.action &method(:command_init)
         end
+
+        c.command(:serve) do |command|
+          command.syntax = 'usmu server'
+          command.description = 'Serve files processed files directly. This won\'t update files on disk, but you will be able to view your website as rendered.'
+          command.action &method(:command_serve)
+        end
       end
 
       # Command to generate a website.
@@ -57,6 +63,17 @@ module Usmu
 
         @log.info("Copying #{from} -> #{path}")
         Dir["#{from}/**/{*,.??*}"].each {|f| init_copy_file(from, path, f) }
+      end
+
+      def command_serve(args, options)
+        configuration = @ui.configuration
+        @log.info('Starting webserver...')
+        require 'rack'
+        require 'usmu/ui/rack_server'
+
+        Rack::Handler::WEBrick.run Ui::RackServer.new(configuration),
+                                   host: configuration['serve', 'host', default: '0.0.0.0'],
+                                   port: configuration['serve', 'port', default: 8080]
       end
 
       private

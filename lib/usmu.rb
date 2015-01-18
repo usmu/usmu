@@ -70,6 +70,18 @@ module Usmu
   def self.plugins
     @plugins ||= Usmu::Plugin.new
   end
+
+  def self.load_lazy_tilt_modules
+    # There be magic here. Not nice, but gets the job done. Tilt's data structure here is a little unusual.
+    Tilt.default_mapping.lazy_map.map {|pair| pair[1]}.map {|i| i.map {|j| j[1]}}.flatten.uniq.each do |f|
+      begin
+        require f
+        @log.debug("Loaded #{f}")
+      rescue LoadError => e
+        @log.debug("Failed to load #{f}: #{e.inspect}")
+      end
+    end
+  end
 end
 
 %W{
