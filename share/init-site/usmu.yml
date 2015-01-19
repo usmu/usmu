@@ -3,4 +3,4 @@
 title: Example site
 
 exclude:
-- '**/_*.s[ca]ss
+- '**/_*.s[ca]ss'
