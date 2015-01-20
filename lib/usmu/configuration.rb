@@ -1,11 +1,16 @@
 require 'yaml'
 require 'usmu/metadata_service'
+require 'usmu/helpers/indexer'
 
 module Usmu
   # This class is used to represent a configuration file. This file should be a YAML file and called `usmu.yml`
   # by default.
   class Configuration
+    include Usmu::Helpers::Indexer
+
     @log = Logging.logger[self]
+
+    indexer :@config
 
     # @!attribute [r] config_file
     # @return [String] the name of the file used to load the configuration.
@@ -82,41 +87,6 @@ module Usmu
 
     def includes_metadata
       @includes_metadata ||= MetadataService.new(includes_path)
-    end
-
-    # An index accessor to directly access the configuration file. It should be noted that `['source']` and
-    # `#source_path` and other similar pairs will have different values. `['source']` is the raw value from the
-    # configuration file while the latter is a path on the system, potentially altered by the path from the current
-    # working directory to the configuration file and other factors. The accessor functions such as `#source_path`
-    # should be preferred for most usages.
-    #
-    # @param [String, Symbol] indices
-    #   A list of indices to use to find the value to return. Can also include an options hash with the
-    #   following options:
-    #
-    #   * `:default`: Sets the default value if the value can't be found.
-    #
-    # @return [Array, Hash, String, Symbol]
-    #   Returns a value from the hash loaded from YAML. The type of value will ultimately depend on the configuration
-    #   file and the indices provided.
-    def [](*indices)
-      if indices.last.instance_of? Hash
-        opts = indices.pop
-      else
-        opts = {}
-      end
-
-      value = @config
-      while indices.length > 0
-        i = indices.shift
-        if value.key? i
-          value = value[i]
-        else
-          return opts[:default]
-        end
-      end
-
-      value
     end
 
     # Returns an array of exclusions

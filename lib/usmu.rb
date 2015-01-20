@@ -96,4 +96,5 @@ end
   usmu/template/layout
   usmu/template/page
   usmu/template/static_file
+  usmu/helpers/indexer
 }.each { |f| require f }
