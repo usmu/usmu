@@ -1,9 +1,15 @@
 require 'usmu/template/layout'
+require 'time'
 
 module Usmu
   module Template
     # Represents a page in the source directory of the website.
     class Page < Layout
+
+      private
+      alias :super_output_filename :output_filename
+
+      public
 
       # @param configuration [Usmu::Configuration] The configuration for the website we're generating.
       # @param name [String] The name of the file in the source directory.
@@ -21,6 +27,10 @@ module Usmu
         end
       end
 
+      def output_filename
+        permalink || super_output_filename
+      end
+
       protected
 
       # @!attribute [r] content_path
@@ -33,6 +43,31 @@ module Usmu
       # @see #name
       def content_path
         @configuration.source_path
+      end
+
+      def permalink
+        link = self['permalink']
+        return nil unless link
+
+        date = self['date']
+        p link
+        p date
+        unless date.is_a? Time
+          if date
+            date = Time.parse(date) rescue nil
+          end
+
+          unless date
+            date = File.stat(input_path).mtime
+          end
+        end
+
+        extension = output_extension
+        extension = '.' + extension if extension
+
+        link_tr = link.gsub('%f', File.basename(@name[0..(@name.rindex('.') - 1)]))
+        p link_tr
+        date.strftime(link_tr) + extension
       end
     end
   end
