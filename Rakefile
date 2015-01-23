@@ -49,6 +49,7 @@ task :ci => [:clean, :spec]
 desc 'Clean up after tests'
 task :clean do
   [
+      'doc',
       'tmp',
       'test-site/site',
       current_gems,
