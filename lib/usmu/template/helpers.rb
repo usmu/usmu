@@ -29,6 +29,13 @@ module Usmu
       end
 
       def url(path)
+        path = if path.is_a? String
+                 path
+               elsif path.respond_to? :output_filename
+                 path.output_filename
+               else
+                 path.to_s
+               end
         @configuration['base path', default: '/'] + path
       end
 
@@ -40,6 +47,10 @@ module Usmu
       def next_page
         collection = @layout['page', 'collection', default: @layout['collection', default: '']]
         @configuration.generator.collections[collection].next_from(@layout['page', default: @layout])
+      end
+
+      def collection(name)
+        @configuration.generator.collections[name]
       end
     end
   end

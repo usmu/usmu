@@ -1,0 +1,13 @@
+p Chronological order:
+
+ul
+  - for page in collection('posts')
+    li
+      a href="#{url page}" #{page['title']}
+
+p Reverse order:
+
+ul
+  - for page in collection('posts').pages.reverse
+    li
+      a href="#{url page}" #{page['title']}

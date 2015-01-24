@@ -21,21 +21,29 @@ module Usmu
     end
 
     class Collection
-      # @param [Array<Usmu::Template::Page>] files
-      def initialize(files)
-        @files = files
+      # @param [Array<Usmu::Template::Page>] pages
+      def initialize(pages)
+        @pages = pages
+      end
+
+      def pages
+        @pages.dup
+      end
+
+      def each(&block)
+        pages.each &block
       end
 
       def previous_from(file)
-        i = @files.index file
+        i = @pages.index file
         return unless i
-        @files[(i - 1) % @files.length]
+        @pages[(i - 1) % @pages.length]
       end
 
       def next_from(file)
-        i = @files.index file
+        i = @pages.index file
         return unless i
-        @files[(i + 1) % @files.length]
+        @pages[(i + 1) % @pages.length]
       end
     end
   end
