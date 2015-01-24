@@ -39,16 +39,17 @@ module Usmu
     end
 
     # @!attribute [r] pages
-    # @return [Array<Usmu::Template::Page>] a list of pages from the source folder. This is any file in the source
-    #   folder which is not static.
+    # @return [Array<Usmu::Template::Page>]
+    #   a list of pages from the source folder. This is any file in the source folder which is not static.
     def pages
-      renderables.select {|r| r.class.name != 'Usmu::Template::StaticFile'}
+      renderables.select {|r| r.class < Usmu::Template::Layout }
     end
 
     # @!attribute [r] files
-    # @return [Array<Usmu::Template::StaticFile>] a list of static files from the source folder.
+    # @return [Array<Usmu::Template::StaticFile>]
+    #   a list of static files from the source folder.
     def files
-      renderables.select {|r| r.class.name == 'Usmu::Template::StaticFile'}
+      renderables.select {|r| r.class >= Usmu::Template::Layout }
     end
 
     # Generate the website according to the configuration given.
@@ -63,12 +64,17 @@ module Usmu
       nil
     end
 
+    # Returns an interface for interacting with collections defined in this site.
+    #
+    # @return [Usmu::Collections]
     def collections
       @collections ||= Collections.new(self)
     end
 
+    # Refresh information about this site.
     def refresh
       collections.refresh
+      nil
     end
 
     private
