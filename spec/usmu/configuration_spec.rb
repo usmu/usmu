@@ -167,6 +167,14 @@ RSpec.describe Usmu::Configuration do
     end
   end
 
+  context '#generator' do
+    it 'should return a new SiteGenerator' do
+      sg = {fake: 'success'}
+      expect(Usmu::SiteGenerator).to receive(:new).with(empty_configuration).and_return(sg)
+      expect(empty_configuration.generator).to eq(sg)
+    end
+  end
+
   context '#[]' do
     it 'should remember arbitrary configuration' do
       configuration = Usmu::Configuration.from_hash({:test => 'foo'})

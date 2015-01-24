@@ -47,6 +47,8 @@ module Usmu
       get_files source_path
     end
 
+    # @!attribute [r] source_metadata
+    # @return [MetadataService] a metadata service for retrieving metadata about pages in #source_path
     def source_metadata
       @source_metadata ||= MetadataService.new(source_path)
     end
@@ -85,6 +87,8 @@ module Usmu
       get_files includes_path
     end
 
+    # @!attribute [r] includes_metadata
+    # @return [MetadataService] a metadata service for retrieving metadata about includes
     def includes_metadata
       @includes_metadata ||= MetadataService.new(includes_path)
     end
