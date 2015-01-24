@@ -7,8 +7,9 @@ module Usmu
     class Helpers
       # Create a new Helpers instance. These are created on demand as needed by templates, there is not a singleton
       # instance.
-      def initialize(configuration)
+      def initialize(configuration, layout)
         @configuration = configuration
+        @layout = layout
       end
 
       # Finds and renders a named include.
@@ -25,6 +26,20 @@ module Usmu
         inc = Usmu::Template::Include.find_include(@configuration, name)
         inc.arguments = args
         inc.render
+      end
+
+      def url(path)
+        @configuration['base path', default: '/'] + path
+      end
+
+      def previous_page
+        collection = @layout['page', 'collection', default: @layout['collection', default: '']]
+        @configuration.generator.collections[collection].previous_from(@layout)
+      end
+
+      def next_page
+        collection = @layout['page', 'collection', default: @layout['collection', default: '']]
+        @configuration.generator.collections[collection].next_from(@layout['page', default: @layout])
       end
     end
   end

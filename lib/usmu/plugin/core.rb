@@ -41,8 +41,7 @@ module Usmu
       # @param [Array<String>] args arguments passed by the user.
       # @param [Hash] options options parsed by Commander
       def command_generate(args, options)
-        @site_generator = Usmu::SiteGenerator.new(@ui.configuration)
-        @site_generator.generate
+        @ui.configuration.generator.generate
       end
 
       # Command to initialise a new website.

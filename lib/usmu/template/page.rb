@@ -31,6 +31,23 @@ module Usmu
         permalink || super_output_filename
       end
 
+      def date
+        date = self['date']
+        if date.is_a? Time
+          return date
+        end
+
+        if date
+          date = Time.parse(date) rescue nil
+        end
+
+        unless date
+          date = File.stat(input_path).mtime
+        end
+
+        date
+      end
+
       protected
 
       # @!attribute [r] content_path
@@ -49,24 +66,12 @@ module Usmu
         link = self['permalink']
         return nil unless link
 
-        date = self['date']
-        p link
-        p date
-        unless date.is_a? Time
-          if date
-            date = Time.parse(date) rescue nil
-          end
-
-          unless date
-            date = File.stat(input_path).mtime
-          end
-        end
+        date = self.date
 
         extension = output_extension
         extension = '.' + extension if extension
 
         link_tr = link.gsub('%f', File.basename(@name[0..(@name.rindex('.') - 1)]))
-        p link_tr
         date.strftime(link_tr) + extension
       end
     end

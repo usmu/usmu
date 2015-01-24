@@ -63,6 +63,14 @@ module Usmu
       nil
     end
 
+    def collections
+      @collections ||= Collections.new(self)
+    end
+
+    def refresh
+      collections.refresh
+    end
+
     private
 
     # Helper function to generate a page

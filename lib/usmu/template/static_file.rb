@@ -5,9 +5,13 @@ module Usmu
     # Represents a static file which should be transferred to the destination unchanged. This also acts as the base
     # class for all layouts and page types. The basic interface defined here is used to process all types of files.
     class StaticFile
+      include Usmu::Helpers::Indexer
+
       # @!attribute [r] name
       # @return [String] the name of the file in the source directory
       attr_reader :name
+
+      indexer :metadata
 
       # @param configuration [Usmu::Configuration] The configuration for the website we're generating.
       # @param name [String] The name of the file in the source directory.
@@ -40,12 +44,26 @@ module Usmu
         File.join(@configuration.source_path, @name)
       end
 
+      def metadata
+        {}
+      end
+
       # @!attribute [r] output_filename
       # @return [String] the filename to use in the output directory.
       #
       # Returns the filename to use for the output directory with any modifications to the input filename required.
       def output_filename
         @name
+      end
+
+      def inspect
+        "\#<#{self.class}:#{'0x%08x' % __id__} #{@name} => #{output_filename}>"
+      end
+
+      def ==(other)
+        return false unless self.class == other.class
+
+        self.input_path == other.input_path && self.output_filename == other.output_filename
       end
     end
   end

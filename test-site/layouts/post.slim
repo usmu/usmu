@@ -1,0 +1,10 @@
+article
+  h1 #{page['title']}
+  | #{{content}}
+nav.article-nav
+  - if previous_page
+    .previous
+      a href="#{url previous_page.output_filename}" #{previous_page['title']}
+  - if next_page
+    .next
+      a href="#{url next_page.output_filename}" #{next_page['title']}

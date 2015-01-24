@@ -4,8 +4,8 @@ module Usmu
     class RackServer
       def initialize(configuration)
         @log = Logging.logger[self]
-        @generator = SiteGenerator.new(configuration)
         @configuration = configuration
+        @generator = @configuration.generator
         @index = configuration['serve', 'index', default: 'index.html']
       end
 
@@ -19,6 +19,7 @@ module Usmu
         valid = @generator.renderables.select {|r| r.output_filename == path }
 
         if valid.length > 0
+          @generator.refresh
           page = valid[0]
           type = case page.output_filename[page.output_filename.rindex('.')...page.output_filename.length]
                    when '.html', '.php'

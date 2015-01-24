@@ -6,17 +6,17 @@ RSpec.describe Usmu::SiteGenerator do
 
   it 'should have layouts' do
     expect(generator.respond_to? :layouts).to eq(true)
-    expect(generator.layouts.map {|l| l.name}.sort).to eq(%w{embedded.slim html.slim})
+    expect(generator.layouts.map {|l| l.name}.sort).to eq(%w{embedded.slim html.slim post.slim})
   end
 
   it 'should have a list of renderable items' do
     expect(generator.respond_to? :renderables).to eq(true)
-    expect(generator.renderables.map {|r| r.name}.sort).to eq(%w{.dotfiletest.txt assets/external.scss css/app.scss default.md embedded.md index.md posts/test-post.md robots.txt})
+    expect(generator.renderables.map {|r| r.name}.sort).to eq(%w{.dotfiletest.txt assets/external.scss css/app.scss default.md embedded.md index.md posts/second-post.md posts/test-post.md robots.txt})
   end
 
   it 'should have pages' do
     expect(generator.respond_to? :pages).to eq(true)
-    expect(generator.pages.map {|p| p.name}.sort).to eq(%w{css/app.scss default.md embedded.md index.md posts/test-post.md})
+    expect(generator.pages.map {|p| p.name}.sort).to eq(%w{css/app.scss default.md embedded.md index.md posts/second-post.md posts/test-post.md})
   end
 
   it 'should have files' do

@@ -86,6 +86,7 @@ end
 
 %W{
   usmu/version
+  usmu/collections
   usmu/configuration
   usmu/metadata_service
   usmu/site_generator

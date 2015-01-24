@@ -42,6 +42,11 @@ module Usmu
 
             value
           end
+
+          define_method(:key?) do |index|
+            value = variable.to_s[0] == '@' ? instance_variable_get(variable) : send(variable)
+            value.key? index
+          end
         end
       end
     end

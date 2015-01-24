@@ -1,2 +1,4 @@
 ---
 permalink: '%Y/%m/%f'
+collection: posts
+layout: post

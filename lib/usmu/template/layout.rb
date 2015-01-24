@@ -8,16 +8,12 @@ module Usmu
   module Template
     # Class to represent files templated with a Tilt library. Most of the custom rendering logic is contained here.
     class Layout < StaticFile
-      include Usmu::Helpers::Indexer
-
       @layout_history = Hash.new({})
       @log = Logging.logger[self]
 
       # @!attribute [r] type
       # @return [String] the type of file this is. This is used to determine which template engine to use.
       attr_reader :type
-
-      indexer :metadata
 
       # @param configuration [Usmu::Configuration] The configuration for the website we're generating.
       # @param name [String] The name of the file in the source directory.
@@ -202,7 +198,7 @@ module Usmu
       # @!attribute [r] helpers
       # @return [Usmu::Template::Helpers] the Helpers class to use as a scope for templates
       def helpers
-        @helpers ||= Usmu::Template::Helpers.new(@configuration)
+        @helpers ||= Usmu::Template::Helpers.new(@configuration, self)
       end
 
       # Adds defaults for the given generator engine

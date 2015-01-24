@@ -5,10 +5,6 @@ module Usmu
   module Ui
     # This is the CLI UI controller. This is initialised by the usmu binary to control the generation process.
     class Console
-      # @!attribute [r] site_generator
-      # @return [Usmu::SiteGenerator]
-      attr_reader :site_generator
-
       # @!attribute [r] configuration
       # Do not access this till your command starts running, eg. in Hooks#commands, otherwise you may not get the right
       # value for the configuration as option parsing may not have happened yet.

@@ -96,6 +96,11 @@ module Usmu
       self['exclude'] || []
     end
 
+    # @return [Usmu::SiteGenerator]
+    def generator
+      @generator ||= SiteGenerator.new(self)
+    end
+
     private
 
     attr_reader :log
