@@ -1,5 +1,5 @@
 
 module Usmu
   # The current version string for the gem
-  VERSION = '0.5.0.dev'
+  VERSION = '1.0.0'
 end

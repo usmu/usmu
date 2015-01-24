@@ -1,5 +1,16 @@
 # Usmu Change Log
 
+## 1.0.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Minor refactor of /spec (d353c8a1f8914dc9fb554770479092cfc1e526bc)
+* Small update to the init site (d86e9a205a3a2f1cc76dec7e66f0540edc9e13c1)
+* [#29] Generalise Configuration#[] into Helpers::Indexer and add to Layout (474b5d778f841595602a4ec7913a646ff5e90106)
+* [#27] Add permalinks (ce190c0d33e84bf38b26cc134fe96bb9a3bb3f22)
+* [#19] Basic functional collection support for paging (de2fa4194fe9db955e09a302a1b87816557e8f3e)
+* [#19] Add enumeration of collections (e6923cf10426e62bc5f35c3649303a1ae65466fd)
+
 ## 0.4.0
 
 Matthew Scharley <matt.scharley@gmail.com>
