@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'usmu/collections'
 require 'usmu/configuration'
 require 'usmu/template/page'
 require 'usmu/template/static_file'
@@ -15,7 +16,7 @@ module Usmu
     # @!attribute [r] layouts
     # @return [Array<Usmu::Layout>] a list of layouts available in this website.
     def layouts
-      @configuration.layouts_files.map {|l| Usmu::Template::Layout.new(@configuration, l, @configuration.layouts_metadata.metadata(l)) }
+      @configuration.layouts_files.map {|l| Template::Layout.new(@configuration, l, @configuration.layouts_metadata.metadata(l)) }
     end
 
     # @!attribute [r] renderables
@@ -30,10 +31,10 @@ module Usmu
     def renderables
       @configuration.source_files.map do |filename|
         metadata = @configuration.source_metadata.metadata(filename)
-        if Usmu::Template::Layout.is_valid_file?('source', filename) && (!metadata['static'])
-          Usmu::Template::Page.new(@configuration, filename, metadata)
+        if Template::Layout.is_valid_file?('source', filename) && (!metadata['static'])
+          Template::Page.new(@configuration, filename, metadata)
         else
-          Usmu::Template::StaticFile.new(@configuration, filename, metadata)
+          Template::StaticFile.new(@configuration, filename, metadata)
         end
       end
     end
@@ -42,14 +43,14 @@ module Usmu
     # @return [Array<Usmu::Template::Page>]
     #   a list of pages from the source folder. This is any file in the source folder which is not static.
     def pages
-      renderables.select {|r| r.class < Usmu::Template::Layout }
+      renderables.select {|r| r.class <= Template::Layout }
     end
 
     # @!attribute [r] files
     # @return [Array<Usmu::Template::StaticFile>]
     #   a list of static files from the source folder.
     def files
-      renderables.select {|r| r.class >= Usmu::Template::Layout }
+      renderables - pages
     end
 
     # Generate the website according to the configuration given.
@@ -94,7 +95,8 @@ module Usmu
       end
 
       File.write file, page.render
-      FileUtils.touch file, :mtime => File.stat(page.input_path).mtime
+      FileUtils.touch file, mtime: File.stat(page.input_path).mtime
+      nil
     end
   end
 end
