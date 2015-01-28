@@ -6,10 +6,14 @@ Matthew Scharley <matt.scharley@gmail.com>
 
 * Minor refactor of /spec (d353c8a1f8914dc9fb554770479092cfc1e526bc)
 * Small update to the init site (d86e9a205a3a2f1cc76dec7e66f0540edc9e13c1)
-* [#29] Generalise Configuration#[] into Helpers::Indexer and add to Layout (474b5d778f841595602a4ec7913a646ff5e90106)
-* [#27] Add permalinks (ce190c0d33e84bf38b26cc134fe96bb9a3bb3f22)
-* [#19] Basic functional collection support for paging (de2fa4194fe9db955e09a302a1b87816557e8f3e)
-* [#19] Add enumeration of collections (e6923cf10426e62bc5f35c3649303a1ae65466fd)
+* [\[\#29\]][GH-29] Generalise Configuration\#\[\] into Helpers::Indexer and add to Layout (474b5d778f841595602a4ec7913a646ff5e90106)
+* [\[\#27\]][GH-27] Add permalinks (ce190c0d33e84bf38b26cc134fe96bb9a3bb3f22)
+* [\[\#19\]][GH-19] Basic functional collection support for paging (de2fa4194fe9db955e09a302a1b87816557e8f3e)
+* [\[\#19\]][GH-19] Add enumeration of collections (e6923cf10426e62bc5f35c3649303a1ae65466fd)
+
+  [GH-19]:  https://github.com/usmu/usmu/issues/19
+  [GH-27]:  https://github.com/usmu/usmu/issues/27
+  [GH-29]:  https://github.com/usmu/usmu/issues/29
 
 ## 0.4.0
 
@@ -17,7 +21,9 @@ Matthew Scharley <matt.scharley@gmail.com>
 
 * Bump to 0.4.0.dev for further dev (32596fe063dfb0452098b0bcac7d97f57ee772a5)
 * Ensure that loggers have the right functions available (df1c685c9ee7f3e4070351700d0ec28d999bc345)
-* [#25] Include a Rack app for viewing site dynamically (964486386bfa6325f191a44be0eb301ce5d200be)
+* [\[\#25\]][GH-25] Include a Rack app for viewing site dynamically (964486386bfa6325f191a44be0eb301ce5d200be)
+
+  [GH-25]:  https://github.com/usmu/usmu/issues/25
 
 ## 0.3.4
 
@@ -42,6 +48,10 @@ Matthew Scharley <matt.scharley@gmail.com>
 * [\[#21\]][GH-21] Add some ignored classes for mutant (0bf4a328e6aebf87ed489bcf3d6f19ea111fa95e)
 * [\[#21\]][GH-21] Cover Usmu::Deployment::DirectoryDiff (d4836b1ddb950223786e35b024e2692e106a2c41)
 * [\[#18\]][GH-16] Initialise logging before commander (6117299b6303b54249c06d894e074cbb437623c2)
+
+  [GH-15]: https://github.com/usmu/usmu/issues/15
+  [GH-16]: https://github.com/usmu/usmu/issues/16
+  [GH-21]: https://github.com/usmu/usmu/issues/21
 
 ## 0.3.2
 
@@ -89,6 +99,11 @@ Matthew Scharley <matt.scharley@gmail.com>
 * [\[\#13\]][GH-13] Add page metadata to parent layouts (c2da294e1f19e6404df178ee650c3818cc0f3846)
 * Add a Sass partials exclude to default init site (4f70d5b1b5958b6c56338b8d077711c780c85763)
 
+  [GH-12]: https://github.com/usmu/usmu/issues/12
+  [GH-13]: https://github.com/usmu/usmu/issues/13
+  [GH-14]: https://github.com/usmu/usmu/issues/14
+  [GH-17]: https://github.com/usmu/usmu/issues/17
+
 ## 0.2.2
 
 Matthew Scharley <matt.scharley@gmail.com>
@@ -125,6 +140,9 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Remove RBX 2.3 again. (b8675c07d0fe066c466144c27e690f1863a88888)
 * Release 0.2.2 (986f611b167a0503108d41ac0a115e38d6aac2f9)
 
+  [GH-8]:  https://github.com/usmu/usmu/issues/8
+  [GH-9]:  https://github.com/usmu/usmu/issues/9
+
 ## 0.2.1
 
 Matthew Scharley <matt.scharley@gmail.com>
@@ -159,6 +177,9 @@ Matthew Scharley <matt.scharley@gmail.com>
 * 1.9.3 compatibility (cba51ad465576ac542111d200cfcbb62835c097c)
 * Re-enable 1.9.3 CI and add some compat notes to the readme (cf34053aaaf6a85752ec8be70f7c9969a89990d9)
 * Bump to 0.2.0 release (7e7dde04c180b5ae63268db647ba45ef63a6b3f3)
+
+  [GH-5]:  https://github.com/usmu/usmu/issues/5
+  [GH-7]:  https://github.com/usmu/usmu/issues/7
 
 ## 0.1.0
 
@@ -205,16 +226,3 @@ Matthew Scharley <matt.scharley@gmail.com>
 * Small stylistic change (ae008aa5492b2463774e4e4659d90666059b45e0)
 * Add new custom rake tasks for building gems and fix a few small issues with the specs (5b1a4241cd9f31f39179ffaad49f7155617c0e6f)
 * Bump to full 0.1.0 release (fb91c2b54f79eeaeb615f98f874c990e4cdddfd3)
-
-  [GH-5]:  https://github.com/usmu/usmu/issues/5
-  [GH-7]:  https://github.com/usmu/usmu/issues/7
-  [GH-8]:  https://github.com/usmu/usmu/issues/8
-  [GH-9]:  https://github.com/usmu/usmu/issues/9
-  [GH-12]: https://github.com/usmu/usmu/issues/12
-  [GH-13]: https://github.com/usmu/usmu/issues/13
-  [GH-14]: https://github.com/usmu/usmu/issues/14
-  [GH-15]: https://github.com/usmu/usmu/issues/15
-  [GH-16]: https://github.com/usmu/usmu/issues/16
-  [GH-17]: https://github.com/usmu/usmu/issues/17
-  [GH-18]: https://github.com/usmu/usmu/issues/18
-  [GH-21]: https://github.com/usmu/usmu/issues/21
