@@ -27,8 +27,9 @@ module Usmu
       @plugins ||= []
     end
 
-    # Call all plugins and collate any data returned. nil can be returned explicitly to say this plugin has nothing to
-    # return.
+    # Call all plugins and collate any data returned.
+    #
+    # nil can be returned explicitly to say this plugin has nothing to return.
     #
     # @param [Symbol] method The name of the method to call. This should be namespaced somehow. For example, a plugin
     #                        called `usmu-s3` could use the method namespace `s3` and have a hook called `:s3_upload`
@@ -44,6 +45,26 @@ module Usmu
           nil
         end
       end.select {|i| i}
+    end
+
+    # Call all plugins and allow for altering a value.
+    #
+    # The return value of each hook is passed into the next alter function, hence all implementations must always
+    # return a value. If the hook doesn't wish to modify data this call then it should return the original value.
+    #
+    # @param [Symbol] method The name of the method to call. This should be namespaced somehow. For example, a plugin
+    #                        called `usmu-s3` could use the method namespace `s3` and have a hook called `:s3_upload`
+    # @param [Object] value The value to modify.
+    # @return [Object] The modified value.
+    def alter(method, value)
+      @log.debug("Invoking plugin alter API #{method}")
+      plugin.each do |p|
+        if p.respond_to? "#{method}_alter"
+          @log.debug("Sending message to #{p.class.name}")
+          value = p.public_send "#{method}_alter", value
+        end
+      end
+      value
     end
 
     private

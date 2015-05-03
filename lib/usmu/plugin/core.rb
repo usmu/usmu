@@ -77,6 +77,8 @@ module Usmu
 
       private
 
+      attr_writer :ui
+
       # Helper to copy a file.
       #
       # @param [String] from
