@@ -23,7 +23,20 @@ to generate locally if you don't wish to use the web-based editor.
 
 ## Usage
 
-TODO: Write usage instructions here
+You can generate a new basic website using `usmu init`.
+
+    $ usmu init site-name
+
+This will create a new site in the `site-name` folder. You can now use `usmu generate` to build the test site.
+
+    $ cd site-name
+    $ usmu generate
+
+You can also use `usmu serve` to get a live server that you can use to test changes you make. This will not modify any
+files in your output folder but will instead dynamically generate and serve content directly from your files. Note,
+this is in no way secure and it is highly recommended to only deploy static versions of your website.
+
+    $ usmu serve
 
 ## Compatibility
 
