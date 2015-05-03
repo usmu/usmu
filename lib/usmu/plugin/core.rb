@@ -1,4 +1,6 @@
 require 'fileutils'
+require 'rack'
+require 'usmu/ui/rack_server'
 
 module Usmu
   class Plugin
@@ -30,7 +32,7 @@ module Usmu
         end
 
         c.command(:serve) do |command|
-          command.syntax = 'usmu server'
+          command.syntax = 'usmu serve'
           command.description = 'Serve files processed files directly. This won\'t update files on disk, but you will be able to view your website as rendered.'
           command.action &method(:command_serve)
         end
@@ -41,6 +43,9 @@ module Usmu
       # @param [Array<String>] args arguments passed by the user.
       # @param [Hash] options options parsed by Commander
       def command_generate(args, options)
+        raise 'This command does not take arguments' unless args.empty?
+        raise 'Invalid options' unless options.inspect.start_with? '<Commander::Command::Options '
+
         @ui.configuration.generator.generate
       end
 
@@ -52,6 +57,7 @@ module Usmu
         @log.info("Usmu v#{Usmu::VERSION}")
         @log.info('')
 
+        raise 'Invalid options' unless options.inspect.start_with? '<Commander::Command::Options '
         if args.length > 1
           @log.fatal('Only one path allowed to be initialised at a time.')
           raise
@@ -65,19 +71,20 @@ module Usmu
       end
 
       def command_serve(args, options)
+        raise 'This command does not take arguments' unless args.empty?
+        raise 'Invalid options' unless options.inspect.start_with? '<Commander::Command::Options '
+
         configuration = @ui.configuration
         @log.info('Starting webserver...')
-        require 'rack'
-        require 'usmu/ui/rack_server'
 
         Rack::Handler::WEBrick.run Ui::RackServer.new(configuration),
-                                   host: configuration['serve', 'host', default: '0.0.0.0'],
+                                   host: configuration['serve', 'host', default: 'localhost'],
                                    port: configuration['serve', 'port', default: 8080]
       end
 
       private
 
-      attr_writer :ui
+      attr_accessor :ui
 
       # Helper to copy a file.
       #
