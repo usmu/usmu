@@ -29,28 +29,18 @@ module Usmu
     # The only guarantee made for individual files is that they will conform to the interface defined by
     # Usmu::Template::StaticFile and thus be renderable, however most files will be one of the subclasses of that class.
     def renderables
-      @configuration.source_files.map do |filename|
-        metadata = @configuration.source_metadata.metadata(filename)
-        if Template::Layout.is_valid_file?('source', filename) && (!metadata['static'])
-          Template::Page.new(@configuration, filename, metadata)
-        else
-          Template::StaticFile.new(@configuration, filename, metadata)
+      @renderables ||= begin
+        rs = @configuration.source_files.map do |filename|
+          metadata = @configuration.source_metadata.metadata(filename)
+          if Template::Layout.is_valid_file?('source', filename) && (!metadata['static'])
+            Template::Page.new(@configuration, filename, metadata)
+          else
+            Template::StaticFile.new(@configuration, filename, metadata)
+          end
         end
+
+        Usmu.plugins.alter(:renderables, rs, self)
       end
-    end
-
-    # @!attribute [r] pages
-    # @return [Array<Usmu::Template::Page>]
-    #   a list of pages from the source folder. This is any file in the source folder which is not static.
-    def pages
-      renderables.select {|r| r.class <= Template::Layout }
-    end
-
-    # @!attribute [r] files
-    # @return [Array<Usmu::Template::StaticFile>]
-    #   a list of static files from the source folder.
-    def files
-      renderables - pages
     end
 
     # Generate the website according to the configuration given.
@@ -95,7 +85,9 @@ module Usmu
       end
 
       File.write file, page.render
-      FileUtils.touch file, mtime: File.stat(page.input_path).mtime
+
+      mtime = page.input_path.nil? ? Time.now.to_i : File.stat(page.input_path).mtime
+      FileUtils.touch file, mtime: mtime
       nil
     end
   end

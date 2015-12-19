@@ -42,7 +42,7 @@ Gem::Specification.new do |spec|
 
   case ENV['BUILD_PLATFORM']
     when 'ruby'
-      spec.add_dependency 'redcarpet', '~> 3.2', '>= 3.2.1'
+      spec.add_dependency 'redcarpet', '~> 3.3'
       spec.add_development_dependency 'libnotify', '~> 0.9'
     when 'java'
       spec.platform = 'java'

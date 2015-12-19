@@ -55,13 +55,14 @@ module Usmu
     # @param [Symbol] method The name of the method to call. This should be namespaced somehow. For example, a plugin
     #                        called `usmu-s3` could use the method namespace `s3` and have a hook called `:s3_upload`
     # @param [Object] value The value to modify.
+    # @param [Array]  context Optional extra parameters to provide.
     # @return [Object] The modified value.
-    def alter(method, value)
+    def alter(method, value, *context)
       @log.debug("Invoking plugin alter API #{method}")
-      plugin.each do |p|
+      plugins.each do |p|
         if p.respond_to? "#{method}_alter"
           @log.debug("Sending message to #{p.class.name}")
-          value = p.public_send "#{method}_alter", value
+          value = p.public_send "#{method}_alter", value, *context
         end
       end
       value
