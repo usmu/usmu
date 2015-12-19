@@ -27,19 +27,15 @@ task :test => [:clean, :spec, :mutant]
 desc 'Run mutation tests'
 task :mutant, [:target] => [:clean] do |t,args|
   old = ENV.delete('CODECLIMATE_REPO_TOKEN')
-  if `which mutant 2>&1 > /dev/null; echo \$?`.to_i != 0
-    puts 'Mutant isn\'t supported on your platform. Please run these tests on MRI <= 2.1.5.'
-  else
-    sh 'bundle', 'exec', 'mutant',
-       '--include', 'lib',
-       '--require', 'usmu',
-       '--require', 'usmu/deployment',
-       '--use', 'rspec',
-       # Interfaces and documentation classes
-       '--ignore-subject', 'Usmu::Deployment::RemoteFileInterface*',
-       '--ignore-subject', 'Usmu::Plugin::CoreHooks*',
-       args[:target] || 'Usmu*'
-  end
+  sh 'bundle', 'exec', 'mutant',
+     '--include', 'lib',
+     '--require', 'usmu',
+     '--require', 'usmu/deployment',
+     '--use', 'rspec',
+     # Interfaces and documentation classes
+     '--ignore-subject', 'Usmu::Deployment::RemoteFileInterface*',
+     '--ignore-subject', 'Usmu::Plugin::CoreHooks*',
+     args[:target] || 'Usmu*'
   ENV['CODECLIMATE_REPO_TOKEN'] = old unless old.nil?
 end
 
