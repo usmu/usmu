@@ -57,19 +57,17 @@ end
 namespace :gem do
   desc 'Build gems'
   task :build => [:clean] do
-    if ENV['BUNDLE_GEMFILE']
-      STDERR.puts 'This command will fail if run via bundler. If you are using RVM, please try running the following command:'
-      STDERR.puts "  NOEXEC_DISABLE=1 #{File.basename($0)} #{ARGV.join(' ')}"
-      exit 1
-    end
+    require 'bundler'
 
-    mkdir 'pkg' unless File.exist? 'pkg'
-    platforms.each do |p|
-      ENV['BUILD_PLATFORM'] = p
-      sh *%w{gem build usmu.gemspec}
-    end
-    Dir['*.gem'].each do |gem|
-      mv gem, "pkg/#{gem}"
+    Bundler.with_clean_env do
+      mkdir 'pkg' unless File.exist? 'pkg'
+      platforms.each do |p|
+        ENV['BUILD_PLATFORM'] = p
+        sh *%w{gem build usmu.gemspec}
+      end
+      Dir['*.gem'].each do |gem|
+        mv gem, "pkg/#{gem}"
+      end
     end
   end
 
