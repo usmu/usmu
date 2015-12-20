@@ -86,8 +86,7 @@ module Usmu
 
       File.write file, page.render
 
-      mtime = page.input_path.nil? ? Time.now.to_i : File.stat(page.input_path).mtime
-      FileUtils.touch file, mtime: mtime
+      FileUtils.touch file, mtime: page.mtime
       nil
     end
   end

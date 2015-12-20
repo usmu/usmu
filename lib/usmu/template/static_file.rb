@@ -56,6 +56,12 @@ module Usmu
         @name
       end
 
+      # @!attribute [r] mtime
+      # @return [Fixnum] The modification time of this file.
+      def mtime
+        input_path.nil? ? Time.now.to_i : File.stat(input_path).mtime
+      end
+
       def inspect
         "\#<#{self.class}:#{'0x%08x' % __id__} #{@name} => #{output_filename}>"
       end
