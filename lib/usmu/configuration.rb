@@ -141,7 +141,7 @@ module Usmu
     def excluded?(filename)
       exclude.each do |f|
         f += '**/*' if f.end_with? '/'
-        return true if File.fnmatch(f, filename, FILE_GLOB_FLAGS)
+        return true if File.fnmatch(f, filename, File::FNM_EXTGLOB | File::FNM_PATHNAME)
       end
       false
     end

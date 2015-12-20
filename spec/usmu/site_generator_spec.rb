@@ -59,33 +59,7 @@ RSpec.describe Usmu::SiteGenerator do
     end
 
     it 'should not list directories' do
-      expect(generator.files.select {|f| f.name == 'posts'}.length).to eq(0)
-    end
-  end
-
-  context '#pages' do
-    it 'should list pages' do
-      expect(generator).to receive(:renderables).and_return(
-                               [
-                                   instance_double('Usmu::Template::StaticFile', class: Usmu::Template::StaticFile, name: 'robots.txt'),
-                                   instance_double('Usmu::Template::Layout', class: Usmu::Template::Layout, name: 'layout.slim'),
-                                   instance_double('Usmu::Template::Page', class: Usmu::Template::Page, name: 'page.md'),
-                               ]
-                           )
-      expect(generator.pages.map {|p| p.name}.sort).to eq(%w{layout.slim page.md})
-    end
-  end
-
-  context '#files' do
-    it 'should list static files' do
-      expect(generator).to receive(:renderables).at_least(1).times.and_return(
-                               [
-                                   instance_double('Usmu::Template::StaticFile', class: Usmu::Template::StaticFile, name: 'robots.txt'),
-                                   instance_double('Usmu::Template::Layout', class: Usmu::Template::Layout, name: 'layout.slim'),
-                                   instance_double('Usmu::Template::Page', class: Usmu::Template::Page, name: 'page.md'),
-                               ]
-                           )
-      expect(generator.files.map {|f| f.name}.sort).to eq(%w{robots.txt})
+      expect(generator.renderables.select {|f| f.name == 'posts'}.length).to eq(0)
     end
   end
 

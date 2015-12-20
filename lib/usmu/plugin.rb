@@ -75,7 +75,7 @@ module Usmu
     # @param [String] klass The name of the class to load
     # @return [Object] A plugin object
     def plugin_get(klass)
-      object.const_get(klass).new
+      Object.const_get(klass).new
     end
 
     # Helper function to load a plugin from a gem specification
