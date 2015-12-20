@@ -7,9 +7,7 @@ rvm:
   - 2.1
   - 2.2
   - ruby-head
-  - rbx-2.4
-  - rbx-2.5
-  - rbx-2.6
+  - rbx
 matrix:
   include:
     - rvm: jruby
@@ -20,9 +18,7 @@ matrix:
     - rvm: jruby
     - rvm: jruby-head
     - rvm: mruby-head
-    - rvm: rbx-2.4
-    - rvm: rbx-2.5
-    - rvm: rbx-2.6
+    - rvm: rbx
 addons:
   code_climate:
     repo_token: 5ac0735331c1749a461eae94f89cd2011cc001979f9941d7241f97caeff7bde1
