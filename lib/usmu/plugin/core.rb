@@ -78,8 +78,8 @@ module Usmu
         @log.info('Starting webserver...')
 
         Rack::Handler::WEBrick.run Ui::RackServer.new(configuration),
-                                   host: configuration['serve', 'host', default: 'localhost'],
-                                   port: configuration['serve', 'port', default: 8080]
+                                   Host: configuration['serve', 'host', default: 'localhost'],
+                                   Port: configuration['serve', 'port', default: 8080]
       end
 
       private
