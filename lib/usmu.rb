@@ -25,9 +25,6 @@ module Usmu
       ),
   )
 
-  # Globbing flags. Correct across 1.9.3 and 2.0+, enabling as many features as available
-  FILE_GLOB_FLAGS = defined?(File::FNM_EXTGLOB) ? File::FNM_EXTGLOB | File::FNM_PATHNAME : File::FNM_PATHNAME
-
   # Enable logging of all events to the console
   #
   # @return [void]

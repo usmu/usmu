@@ -264,15 +264,11 @@ RSpec.describe Usmu::Configuration do
       expect(configuration.send :excluded?, 'index.md').to eq(false)
     end
 
-    # FNM_EXTGLOB is supported from MRI 2.0 onwards. We also support the 1.9.3 ABI for JRuby and Rubinius sake. Only
-    # run this test if it's possible for it to pass.
-    if defined?(File::FNM_EXTGLOB)
-      it 'should honor {a,b}' do
-        configuration = Usmu::Configuration.from_hash({'exclude' => ['{a,b}.md']})
-        expect(configuration.send :excluded?, 'a.md').to eq(true)
-        expect(configuration.send :excluded?, 'b.md').to eq(true)
-        expect(configuration.send :excluded?, 'index.md').to eq(false)
-      end
+    it 'should honor {a,b}' do
+      configuration = Usmu::Configuration.from_hash({'exclude' => ['{a,b}.md']})
+      expect(configuration.send :excluded?, 'a.md').to eq(true)
+      expect(configuration.send :excluded?, 'b.md').to eq(true)
+      expect(configuration.send :excluded?, 'index.md').to eq(false)
     end
 
     it 'should honor \\ as an escape' do

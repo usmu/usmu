@@ -76,9 +76,6 @@ module Usmu
     # @return [Object] A plugin object
     def plugin_get(klass)
       object.const_get(klass).new
-    rescue NameError
-      # Ruby 1.9.3, dowp
-      klass.split('::').reduce(Object) {|memo, o| memo.const_get o }.new
     end
 
     # Helper function to load a plugin from a gem specification
