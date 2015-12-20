@@ -1,5 +1,12 @@
 # Usmu Change Log
 
+## 1.2.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Bump turnip to 2.x (0cd3d9a08812e1361f92c4a8ec9471ac7b2392dd)
+* Add #mtime to StaticFile (2b5d43a7f282d5833a4b6a0c04f61661f333c676)
+
 ## 1.1.0
 
 Matthew Scharley <matt.scharley@gmail.com>
