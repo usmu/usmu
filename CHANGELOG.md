@@ -1,5 +1,13 @@
 # Usmu Change Log
 
+## 1.2.1
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Remove useless gem (f1a9659a03c239da7348ce75e6fcf2f055c4079e)
+* Fix options to Rack to set hostname and port correctly (1364e9ee14bf2d79fd379363a0e2e820f9382e30)
+* Fix tests (edb9e246aee28b57d2a51a3bb310c76cf3474054)
+
 ## 1.2.0
 
 Matthew Scharley <matt.scharley@gmail.com>
