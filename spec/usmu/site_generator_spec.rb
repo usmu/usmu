@@ -95,9 +95,8 @@ RSpec.describe Usmu::SiteGenerator do
     end
 
     it 'should write a file and update mtime to match source files' do
-      page = OpenStruct.new name: 'test.slim', input_path: 'src/test.slim', output_filename: 'test.html', render: '<!DOCTYPE html><h1>It works!</h1>'
+      page = OpenStruct.new name: 'test.slim', input_path: 'src/test.slim', output_filename: 'test.html', render: '<!DOCTYPE html><h1>It works!</h1>', mtime: 100
       expect(File).to receive(:write).with('site/test.html', '<!DOCTYPE html><h1>It works!</h1>')
-      expect(File).to receive(:stat).with('src/test.slim').and_return(OpenStruct.new mtime: 100)
       expect(FileUtils).to receive(:touch).with('site/test.html', mtime: 100).and_return(true)
       expect(FileUtils).to_not receive(:mkdir_p)
 
@@ -108,9 +107,8 @@ RSpec.describe Usmu::SiteGenerator do
     end
 
     it 'should create directories as necessary' do
-      page = OpenStruct.new name: 'test.slim', input_path: 'src/subdir/test.slim', output_filename: 'subdir/test.html', render: '<!DOCTYPE html><h1>It works!</h1>'
+      page = OpenStruct.new name: 'test.slim', input_path: 'src/subdir/test.slim', output_filename: 'subdir/test.html', render: '<!DOCTYPE html><h1>It works!</h1>', mtime: 100
       expect(File).to receive(:write).with('site/subdir/test.html', '<!DOCTYPE html><h1>It works!</h1>')
-      expect(File).to receive(:stat).with('src/subdir/test.slim').and_return(OpenStruct.new mtime: 100)
       expect(FileUtils).to receive(:touch).with('site/subdir/test.html', mtime: 100).and_return(true)
       expect(FileUtils).to receive(:mkdir_p).with('site/subdir')
 
