@@ -1,5 +1,26 @@
 # Usmu Change Log
 
+## 1.1.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* [\[\#21\]][GH-21] Cleanup Usmu::Configuration (1bc417de24e34c8694be4a2e8bf83d18898eec56)
+* [\[\#21\]][GH-21] Properly stub out tests for SiteGenerator (503233c7eab33f7d98714d185a1aefb70f02c73b)
+* [\[\#21\]][GH-21] Cover SiteGenerator (e91d4e2b42738f7107ed0ed3e03aa7ed6abfe17d)
+* Bump dependency modules (df1559e8ef3931e1c64530937d3361cbc330aafe)
+* [\[#5\]][GH-5] WIP initial pass at allowing alter hooks (6a474db9032974bdac53870a3e690c983af434ff)
+* [\[\#21\]][GH-21] Add an initial suite of tests for CorePlugin (d02e14aceaa24ac5708fb51bab5254f016bafa71)
+* Update usage information with basic info in the README (86f525f861d4e80aea4a54e9a7f8fbbfbf472125)
+* [\[#31\]][GH-31] Move source folder of init-site (b2e56277591468b57c45976506df603d6d7ed7d1)
+* [\[#32\]][GH-32] Fix issues with the init-site (f4c577f4b25855e3ccc928c004edc3d924ba66b5)
+* Cache the list of renderables and allow that list to be altered (990cf0bdf4353638af8b5f2f6f89a5f6338182ea)
+* Fix tests (c4089e426abc24d399f352483fab5aa61657b3ab)
+
+  [GH-5]:  https://github.com/usmu/usmu/issues/5
+  [GH-21]: https://github.com/usmu/usmu/issues/21
+  [GH-31]: https://github.com/usmu/usmu/issues/31
+  [GH-32]: https://github.com/usmu/usmu/issues/32
+
 ## 1.0.0
 
 Matthew Scharley <matt.scharley@gmail.com>
