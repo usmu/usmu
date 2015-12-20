@@ -1,5 +1,11 @@
 # Usmu Change Log
 
+## 1.2.2
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Implement Pygments support for redcarpet (5dd9140a4d9df9e9014774d74e71610a98e16c54)
+
 ## 1.2.1
 
 Matthew Scharley <matt.scharley@gmail.com>
