@@ -1,5 +1,8 @@
 language: ruby
-script: rake ci
+before_install:
+- gem update bundler
+script:
+- rake ci
 rvm:
   - 2.0
   - 2.1
