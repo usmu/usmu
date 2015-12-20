@@ -66,7 +66,7 @@ module Usmu
       # @param variables [Hash] Variables to be used in the template.
       # @return [String] The rendered file.
       def render(variables = {})
-        template_config = add_template_defaults(@configuration[provider_name] || {}, provider_name)
+        template_config = add_template_defaults((@configuration[provider_name] || {}).clone, provider_name)
         content = template_class.new("#{@name}", 1, template_config) { @content }.
             render(helpers, get_variables(variables))
 
@@ -208,6 +208,20 @@ module Usmu
       # @return [Hash] Template options to pass into the engine
       def add_template_defaults(overrides, engine)
         case engine
+          when 'redcarpet'
+            if overrides.delete :pygments
+              begin
+                require 'pygments'
+                overrides[:renderer] = Class.new(::Redcarpet::Render::HTML) do
+                  def block_code(code, language)
+                    Pygments.highlight(code, lexer: language)
+                  end
+                end
+              rescue LoadError
+                @log.warn('Unable to load pygments.rb gem.')
+              end
+              overrides
+            end
           when 'sass'
             {
                 :load_paths => [@configuration.source_path + '/' + File.dirname(@name)]
