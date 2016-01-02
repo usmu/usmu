@@ -66,17 +66,24 @@ module Usmu
       # @param variables [Hash] Variables to be used in the template.
       # @return [String] The rendered file.
       def render(variables = {})
-        template_config = add_template_defaults((@configuration[provider_name] || {}).clone, provider_name)
-        content = template_class.new("#{@name}", 1, template_config) { @content }.
-            render(helpers, get_variables(variables))
-
+        content = render_content(variables)
         has_cr = content.index("\r")
         content += (has_cr ? "\r\n" : "\n") if content[-1] != "\n"
+
         if @parent.nil?
           content
         else
           @parent.render({'content' => content})
         end
+      end
+
+      # Renders the internal content of the file with any templating language required and returns the result
+      #
+      # @param variables [Hash] Variables to be used in the template.
+      # @return [String] The rendered content.
+      def render_content(variables)
+        template_config = add_template_defaults((@configuration[provider_name] || {}).clone, provider_name)
+        template_class.new("#{@name}", 1, template_config) { @content }.render(helpers, get_variables(variables))
       end
 
       # @!attribute [r] input_path
