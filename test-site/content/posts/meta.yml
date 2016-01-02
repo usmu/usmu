@@ -1,4 +1,4 @@
 ---
-permalink: '%Y/%m/%f'
+permalink: '%Y/%m/%f.html'
 collection: posts
 layout: post

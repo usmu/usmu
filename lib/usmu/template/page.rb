@@ -68,11 +68,8 @@ module Usmu
 
         date = self.date
 
-        extension = output_extension
-        extension = '.' + extension if extension
-
         link_tr = link.gsub('%f', File.basename(@name[0..(@name.rindex('.') - 1)]))
-        date.strftime(link_tr) + extension
+        date.strftime(link_tr)
       end
     end
   end
