@@ -77,9 +77,15 @@ module Usmu
         configuration = @ui.configuration
         @log.info('Starting webserver...')
 
-        Rack::Handler::WEBrick.run Ui::RackServer.new(configuration),
+        server = Ui::RackServer.new(configuration)
+        trap :INT do
+          Rack::Handler::WEBrick.shutdown
+          server.shutdown
+        end
+        Rack::Handler::WEBrick.run server,
                                    Host: configuration['serve', 'host', default: 'localhost'],
                                    Port: configuration['serve', 'port', default: 8080]
+        @log.info('Stopped webserver.')
       end
 
       private
