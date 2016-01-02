@@ -1,5 +1,12 @@
 # Usmu Change Log
 
+## 1.4.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Fix minorly broken test (7071fbe4cc46be437154a441483bfad522e7d565)
+* Permalink should include extension if wanted. (9a2cde9f2337243d7cc1965f9f08b5ee82ae6ce9)
+
 ## 1.3.0
 
 Matthew Scharley <matt.scharley@gmail.com>
