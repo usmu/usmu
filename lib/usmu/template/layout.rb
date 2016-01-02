@@ -81,7 +81,7 @@ module Usmu
       #
       # @param variables [Hash] Variables to be used in the template.
       # @return [String] The rendered content.
-      def render_content(variables)
+      def render_content(variables = {})
         template_config = add_template_defaults((@configuration[provider_name] || {}).clone, provider_name)
         template_class.new("#{@name}", 1, template_config) { @content }.render(helpers, get_variables(variables))
       end
