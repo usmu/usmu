@@ -1,5 +1,11 @@
 # Usmu Change Log
 
+## 1.4.2
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* variables hash should be optional for #render_content (b9807b247cd9b3dd4223c244ec654cfc1a25acc4)
+
 ## 1.4.1
 
 Matthew Scharley <matt.scharley@gmail.com>
