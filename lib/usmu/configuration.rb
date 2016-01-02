@@ -102,7 +102,7 @@ module Usmu
 
     # @return [Usmu::SiteGenerator]
     def generator
-      @generator ||= SiteGenerator.new(self)
+      SiteGenerator.new(self)
     end
 
     private

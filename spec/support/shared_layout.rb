@@ -36,6 +36,16 @@ RSpec.shared_examples 'a layout' do
     EOF
   end
 
+  it 'and rendering two different files with the same name gives different output' do
+    layout = described_class.new(empty_configuration, 'body.slim', {}, 'slim', "html\n  body")
+    layout2 = described_class.new(empty_configuration, 'body.slim', {}, 'slim', 'body')
+
+    output = layout.render 'content' => ''
+    output2 = layout2.render 'content' => ''
+
+    expect(output).to_not eq(output2)
+  end
+
   context 'and when it\'s type' do
     it 'is invalid' do
       expect {described_class.new(empty_configuration, 'body.foo', {}, nil, '')}.to raise_error()
