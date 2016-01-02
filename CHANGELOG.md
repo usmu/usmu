@@ -28,6 +28,10 @@ Matthew Scharley <matt.scharley@gmail.com>
 * [\[#37\]][GH-37] Add SIGINT handling for usmu serve (d316570b5087270a2b3d54d7be9be58b0c0e0326)
 * [\[#35\]][GH-35] Don't cache SiteGenerators (13ca469c4f09c7be439d253eddc413f9210bd5bd)
 
+  [GH-35]:  https://github.com/usmu/usmu/issues/35
+  [GH-36]:  https://github.com/usmu/usmu/issues/36
+  [GH-37]:  https://github.com/usmu/usmu/issues/37
+
 ## 1.2.2
 
 Matthew Scharley <matt.scharley@gmail.com>
