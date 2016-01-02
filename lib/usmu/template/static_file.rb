@@ -35,7 +35,7 @@ module Usmu
       # @param variables [Hash] Variables to be used in the template.
       # @return [String] The rendered file
       def render(variables = {})
-        @content || File.read(input_path)
+        @content || File.read(input_path, mode: 'rb')
       end
 
       # @!attribute [r] input_path
