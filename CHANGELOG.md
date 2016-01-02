@@ -1,5 +1,14 @@
 # Usmu Change Log
 
+## 1.3.0
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Fix gem builds to work inside bundler (cb2acde15c38059eec24b677bc0d9d22df8712d1)
+* [\[#36\]][GH-36] Render static files as binary files. (61bf502b3214323fe013fa060dcab5c0574338d9)
+* [\[#37\]][GH-37] Add SIGINT handling for usmu serve (d316570b5087270a2b3d54d7be9be58b0c0e0326)
+* [\[#35\]][GH-35] Don't cache SiteGenerators (13ca469c4f09c7be439d253eddc413f9210bd5bd)
+
 ## 1.2.2
 
 Matthew Scharley <matt.scharley@gmail.com>
