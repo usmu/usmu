@@ -8,6 +8,7 @@ require 'usmu/ui/rack_server'
 RSpec.describe Usmu::Plugin::Core do
   let (:plugin) { described_class.new }
   let (:configuration) { Usmu::Configuration.from_hash({}) }
+  let (:generator) { Usmu::SiteGenerator.new(configuration) }
   let (:ui) { OpenStruct.new configuration: configuration }
   let (:commander) { Usmu::MockCommander.new }
   let (:options) { Commander::Command::Options.new }
@@ -49,6 +50,10 @@ RSpec.describe Usmu::Plugin::Core do
   end
 
   context '#command_generate' do
+    before do
+      allow(configuration).to receive(:generator).and_return(generator)
+    end
+
     it 'raises an error when arguments are specified' do
       expect { plugin.command_generate(['foo'], options) }.to raise_error('This command does not take arguments')
     end
@@ -58,7 +63,7 @@ RSpec.describe Usmu::Plugin::Core do
     end
 
     it 'should generate a site' do
-      expect(configuration.generator).to receive(:generate)
+      expect(generator).to receive(:generate)
 
       plugin.send :ui=, ui
       plugin.command_generate [], options
