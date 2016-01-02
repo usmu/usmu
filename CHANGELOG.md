@@ -1,5 +1,11 @@
 # Usmu Change Log
 
+## 1.4.1
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Add #render_content (94c5320d4c68bf864e6b01a351dc66631b317b3b)
+
 ## 1.4.0
 
 Matthew Scharley <matt.scharley@gmail.com>
