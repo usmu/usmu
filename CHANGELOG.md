@@ -1,5 +1,15 @@
 # Usmu Change Log
 
+## 1.4.3
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Enable Trusty, disable hacks (0da41246c65c549cca881a86bead8b6106f99e1e)
+* [\[#43\]][GH-43] Add a new indexor on Usmu.plugins to retrieve plugins of a specific type (49604cef8e1faa79eb38afd54bf883d1bacb447f)
+* Update ruby version requirement. (3f5607280e035fb29e6097c4ccb8f5a633d27ea5)
+
+  [GH-43]: https://github.com/usmu/usmu/issues/43
+
 ## 1.4.2
 
 Matthew Scharley <matt.scharley@gmail.com>
