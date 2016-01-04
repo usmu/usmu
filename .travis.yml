@@ -24,6 +24,8 @@ matrix:
     - rvm: jruby-head
       env: JRUBY_OPTS='--2.0'
   allow_failures:
+    - rvm: jruby
+    - rvm: jruby-head
     - rvm: rbx
 addons:
   code_climate:
