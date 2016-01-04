@@ -46,4 +46,9 @@ RSpec.describe Usmu::Plugin do
 
     expect(plugins.invoke :test).to eq([['Goodbye world!']])
   end
+
+  it 'should be indexable to retrieve a plugin instance' do
+    plugins.load_plugins
+    expect(plugins[Usmu::MockPlugin].class).to eq(Usmu::MockPlugin)
+  end
 end

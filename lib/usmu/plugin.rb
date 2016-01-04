@@ -27,6 +27,10 @@ module Usmu
       @plugins ||= []
     end
 
+    def [](klass)
+      plugins.select {|s| s.class == klass }.first
+    end
+
     # Call all plugins and collate any data returned.
     #
     # nil can be returned explicitly to say this plugin has nothing to return.
