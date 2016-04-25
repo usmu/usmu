@@ -187,7 +187,19 @@ module Usmu
       #
       # This is used to determine which settings to use from the configuration file.
       def provider_name
-        Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first[1].split('/').last
+        provider = Tilt.default_mapping.lazy_map[@type].select {|x| x[0] == template_class.name }.first
+        if provider
+          # Use the require path to choose out a name.
+          provider[1].split('/').last
+        else
+          # Approximate using class name if we can't track down a require path.
+          provider = template_class.name.split('::').last
+          if provider.end_with? 'Template'
+            provider[0..-9].downcase
+          else
+            provider.downcase
+          end
+        end
       end
 
       # @!attribute [r] content_path
