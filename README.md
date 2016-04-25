@@ -1,6 +1,6 @@
 # usmu
 
-[![Build Status](https://travis-ci.org/usmu/usmu.svg?branch=master)](https://travis-ci.org/usmu/usmu)
+[![Circle CI](https://circleci.com/gh/usmu/usmu/tree/master.svg?style=svg)](https://circleci.com/gh/usmu/usmu/tree/master)
 [![Dependency Status](https://gemnasium.com/usmu/usmu.svg)](https://gemnasium.com/usmu/usmu)
 [![Code Climate](https://codeclimate.com/github/usmu/usmu/badges/gpa.svg)](https://codeclimate.com/github/usmu/usmu)
 
@@ -44,7 +44,7 @@ As a baseline `usmu` will pull in Slim for layouts and Redcarpet for content wri
 Tilt API to render all layouts and content, therefore you should be able to use anything supported by Tilt including
 Sass, Less, Textile and [many others][tilt-support], you just need to ensure you have the correct gems installed.
 
-If you want to further [configure the way your template's are processed][template-options] then you can specify 
+If you want to further [configure the way your template's are processed][template-options] then you can specify
 configurations for each template engine. Just add it to your `usmu.yml`:
 
 ```yaml
