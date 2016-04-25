@@ -4,3 +4,4 @@
 --require spec_helper
 --format documentation
 --no-profile
+-r rspec_junit_formatter
