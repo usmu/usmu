@@ -1,5 +1,20 @@
 # Usmu Change Log
 
+## 1.4.5
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Bump copyright (90975f61e3b1814a13dce39f0ae8e3889ea9fa9a)
+* Allow for PORT env var to override port specified in config (36956be9bcfc02489c907daa5ecbfe8ec347e095)
+
+## 1.4.4
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Bump to >= Ruby 2.2 (1a386c38aeb329c00bc9fff90d1f3ddc756d1770)
+* Fix bug in #provider_name (e90dbda1ad0902ed1d717b22ef5c1f65b1500a48)
+* Bump build status to use Circle CI's badge (4aecfef22be391ec5c9acc8c69cdf8cdc7a9da9b)
+
 ## 1.4.3
 
 Matthew Scharley <matt.scharley@gmail.com>
