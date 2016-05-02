@@ -82,9 +82,11 @@ module Usmu
           Rack::Handler::WEBrick.shutdown
           server.shutdown
         end
+        host = configuration['serve', 'host', default: 'localhost']
+        port = (ENV['PORT'] || configuration['serve', 'port', default: 8080]).to_i
         Rack::Handler::WEBrick.run server,
-                                   Host: configuration['serve', 'host', default: 'localhost'],
-                                   Port: configuration['serve', 'port', default: 8080]
+                                   Host: host,
+                                   Port: port
         @log.info('Stopped webserver.')
       end
 
