@@ -113,6 +113,17 @@ RSpec.describe Usmu::Plugin::Core do
       expect(Rack::Handler::WEBrick).to receive(:run).with(rs, Host: '0.0.0.0', Port: 8008)
       plugin.command_serve [], options
     end
+
+    it 'should take port from the environment if available' do
+      ENV['PORT'] = '80'
+      plugin.send :ui=, OpenStruct.new(configuration: configuration)
+      expect(Rack::Handler::WEBrick).to receive(:run).with(rs, Host: '0.0.0.0', Port: 80)
+      plugin.command_serve [], options
+    end
+
+    after(:each) do
+      ENV.delete 'PORT'
+    end
   end
 
   context '#init_copy_file' do
