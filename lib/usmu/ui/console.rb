@@ -1,5 +1,6 @@
 require 'usmu'
 require 'commander'
+require 'dotenv'
 
 module Usmu
   module Ui
@@ -17,6 +18,8 @@ module Usmu
       def initialize(args)
         @log = Logging.logger[self]
         initialize_logging args
+        @log.debug 'Loading environment variables.'
+        ::Dotenv.load
         Usmu.load_lazy_tilt_modules
         @commander = initialize_commander(args)
 
