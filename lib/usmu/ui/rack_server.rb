@@ -1,4 +1,5 @@
 require 'dotenv'
+require 'listen'
 
 module Usmu
   module Ui
@@ -9,6 +10,13 @@ module Usmu
         ::Dotenv.load
         @configuration = configuration
         @index = configuration['serve', 'index', default: 'index.html']
+
+        config_filename = File.basename(@configuration.config_file)
+        config_listen = ::Listen.to(@configuration.config_dir, only: %r{#{::Regexp.escape config_filename}$}) do |modified, added, removed|
+          @log.info 'Usmu configuration changed, updating...'
+          @configuration = Usmu::Configuration.from_file(@configuration.config_file)
+        end
+        config_listen.start
       end
 
       def call(env)
