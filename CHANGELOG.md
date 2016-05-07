@@ -1,5 +1,12 @@
 # Usmu Change Log
 
+## 1.4.6
+
+Matthew Scharley <matt.scharley@gmail.com>
+
+* Add dotenv (`.env`) support (dc0aac6f2719efcb9ccd96f28496ec526ec6d6f6)
+* Add support for reloading configuration file during `usmu serve` (d66d02006e359b145e114fb68e29ae0985f46296)
+
 ## 1.4.5
 
 Matthew Scharley <matt.scharley@gmail.com>
