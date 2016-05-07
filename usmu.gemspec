@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = Gem::Requirement.new('>= 2.2.0')
 
+  spec.add_dependency 'dotenv', '~> 2.1'
   spec.add_dependency 'slim', '~> 3.0'
   spec.add_dependency 'tilt', '~> 2.0'
   spec.add_dependency 'rack', '~> 1.6'

@@ -1,16 +1,19 @@
+require 'dotenv'
 
 module Usmu
   module Ui
     class RackServer
       def initialize(configuration)
         @log = Logging.logger[self]
+        @log.debug 'Loading environment variables.'
+        ::Dotenv.load
         @configuration = configuration
         @index = configuration['serve', 'index', default: 'index.html']
       end
 
       def call(env)
         generator = @configuration.generator
-        
+
         path = env['PATH_INFO'][1...env['PATH_INFO'].length]
         @log.info "Received a request for: #{path}"
         path = File.join(path, @index) if File.directory? File.join(@configuration.source_path, path)
